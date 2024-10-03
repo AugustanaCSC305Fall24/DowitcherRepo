@@ -1,4 +1,4 @@
 package org.example;
 
-public class GameSettingMenuController {
+public class GameSettingMenuController extends SwitchTo{
 }

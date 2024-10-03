@@ -1,4 +1,4 @@
 package org.example;
 
-public class ControlMenuController {
+public class ControlMenuController extends SwitchTo{
 }

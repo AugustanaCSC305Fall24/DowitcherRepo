@@ -1,4 +1,4 @@
 package org.example;
 
-public class PracticeListeningController {
+public class PracticeListeningController extends SwitchTo{
 }

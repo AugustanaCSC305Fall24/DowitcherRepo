@@ -1,4 +1,4 @@
 package org.example;
 
-public class PracticeTypingController {
+public class PracticeTypingController extends SwitchTo{
 }
