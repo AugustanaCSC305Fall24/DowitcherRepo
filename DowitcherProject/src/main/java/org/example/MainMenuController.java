@@ -15,5 +15,9 @@ public class MainMenuController extends SwitchTo{
     @FXML
     private Button switchToSettingsButton;
 
+    @FXML
+    private void handleLiveChatButton(){
+        switchToLiveChatButton.setText("No For This Sprint!");
+    }
 
 }
