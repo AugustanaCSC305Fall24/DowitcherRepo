@@ -1,5 +1,4 @@
 package org.example;
 
-public class PracticeMenuController {
-
+public class PracticeMenuController extends SwitchTo {
 }

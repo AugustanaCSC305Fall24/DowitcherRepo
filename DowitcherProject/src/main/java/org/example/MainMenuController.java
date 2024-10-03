@@ -1,4 +1,9 @@
 package org.example;
 
-public class MainMenuController {
+import javafx.fxml.FXML;
+
+import java.io.IOException;
+
+public class MainMenuController extends SwitchTo{
+
 }
