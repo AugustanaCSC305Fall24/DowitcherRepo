@@ -1,14 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.ControlMenuController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ControlMenuController">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="switchToMainMenuButton" mnemonicParsing="false" onAction="#switchToMainMenuView" text="Main Menu" />
+            <Button fx:id="switchToSettingMenuViewButton" mnemonicParsing="false" onAction="#switchToSettingMenuView" text="Back" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Controls" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+   </top>
+   <center>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="113.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox alignment="CENTER" prefHeight="338.0" prefWidth="198.0">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ESC" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Space Bar" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EX beep? " />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="593.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="606.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="5.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ECT" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
