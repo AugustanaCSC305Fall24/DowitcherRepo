@@ -13,7 +13,7 @@
          </font>
       </Text>
       <Button fx:id="switchToPracticeMenuButton" mnemonicParsing="false" onAction="#switchToPracticeMenuView" text="Practice" />
-      <Button fx:id="switchToLiveChatButton" mnemonicParsing="false" text="Live Chat" />
+      <Button fx:id="switchToLiveChatButton" mnemonicParsing="false" onAction="#handleLiveChatButton" text="Live Chat" />
       <Button fx:id="switchToSettingsButton" mnemonicParsing="false" onAction="#switchToSettingMenuView" text="Settings" />
    </children>
 </VBox>
