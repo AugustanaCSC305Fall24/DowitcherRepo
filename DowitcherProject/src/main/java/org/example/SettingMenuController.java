@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import java.io.IOException;
 
-public class SettingMenuController extends SwitchTo {
+public class SettingMenuController extends SwitchTo{
     @FXML
     private Button switchToControlMenuButton;
 
