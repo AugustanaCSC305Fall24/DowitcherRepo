@@ -15,5 +15,9 @@ public class PracticeMenuController extends SwitchTo {
     @FXML private Button practiceMenuToTalkButton;
     @FXML private Button practiceMenuToMainMenuButton;
 
+    @FXML
+    private void handleToTalkButton(){
+        SwitchTo.handleUnbuiltButton(practiceMenuToTalkButton);
+    }
 
 }

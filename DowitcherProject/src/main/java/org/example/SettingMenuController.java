@@ -20,6 +20,6 @@ public class SettingMenuController extends SwitchTo {
 
     @FXML
     private void handleTutorialButton(){
-        switchToTutorialViewButton.setText("No For This Sprint!");
+        SwitchTo.handleUnbuiltButton(switchToTutorialViewButton);
     }
 }

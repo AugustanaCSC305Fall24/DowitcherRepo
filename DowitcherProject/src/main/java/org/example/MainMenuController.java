@@ -22,7 +22,7 @@ public class MainMenuController extends SwitchTo{
 
     @FXML
     private void handleLiveChatButton(){
-        switchToLiveChatButton.setText("No For This Sprint!");
+        SwitchTo.handleUnbuiltButton(switchToLiveChatButton);
     }
 
     @FXML
