@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 
@@ -45,6 +46,10 @@ public abstract class SwitchTo {
 //    private void switchTo() throws IOException {
 //        App.setRoot("");
 //    }
+    @FXML
+    public static void handleUnbuiltButton(Button object){
+        object.setText("Not For This Sprint!");
+}
 
 
 }
