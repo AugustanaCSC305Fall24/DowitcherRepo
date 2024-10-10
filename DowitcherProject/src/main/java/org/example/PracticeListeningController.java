@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
-public class PracticeListeningController extends SwitchTo{
+import java.io.IOException;
+
+public class PracticeListeningController{
 
 
     // Buttons on screen
@@ -15,5 +17,6 @@ public class PracticeListeningController extends SwitchTo{
     @FXML private TextArea userInputTextArea;
     @FXML private TextArea correctAnswerTextArea;
 
+    @FXML private void switchToHomeScreenView() throws IOException{App.setRoot("HomeScreenView");}
 
 }

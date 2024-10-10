@@ -44,8 +44,7 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="30.0">
          <children>
-            <Button fx:id="switchToMainMenuButton" mnemonicParsing="false" onAction="#switchToMainMenuView" text="Main Menu" />
-            <Button fx:id="switchToSettingMenuViewButton" mnemonicParsing="false" onAction="#switchToSettingMenuView" text="Back" />
+            <Button fx:id="switchToHomeScreenButton" mnemonicParsing="false" onAction="#switchToHomeScreenView" text="Main Menu" />
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
          </children>
       </HBox>

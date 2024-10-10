@@ -5,20 +5,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ControlMenuController extends SwitchTo{
+public class ControlMenuController {
 
     @FXML private TextField escKeyField;
     @FXML private TextField mainMenuKeyField;
     @FXML private TextField spaceBarKeyField;
     @FXML private TextField exBeepKeyField;
-    @FXML private Button switchToMainMenuButton;
-    @FXML private Button switchToSettingMenuViewButton;
+    @FXML private Button switchToHomeScreenButton;
     @FXML private Button saveButton;
 
-    private Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
+    private final Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
     private TextField activeTextField = null; //Chat gpt made
 
     @FXML public void initialize() { //Chat GPT Generated
@@ -37,6 +37,7 @@ public class ControlMenuController extends SwitchTo{
         checkForDuplicateKeys();
     }
 
+    @FXML private void switchToHomeScreenView() throws IOException {App.setRoot("HomeScreenView");}
 
     private void addFocusListeners() { //Char gpt generated
         for (TextField field : keyBindings.values()) {
@@ -93,8 +94,7 @@ public class ControlMenuController extends SwitchTo{
                     field.setStyle("");
                 }
             }
-            switchToMainMenuButton.setDisable(hasDuplicates);
-            switchToSettingMenuViewButton.setDisable(hasDuplicates);
+            switchToHomeScreenButton.setDisable(hasDuplicates);
             saveButton.setDisable(hasDuplicates);
             return hasDuplicates;
         }
