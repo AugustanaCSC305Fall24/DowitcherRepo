@@ -5,12 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PracticeMenuController">
    <children>
       <Button fx:id="practiceMenuToListenButton" layoutX="125.0" layoutY="187.0" mnemonicParsing="false" onAction="#switchToPracticeListeningView" text="Listen" />
       <Button fx:id="practiceMenuToTypeButton" layoutX="273.0" layoutY="188.0" mnemonicParsing="false" onAction="#switchToPracticeTypingView" text="Type" />
-      <Button fx:id="practiceMenuToTalkButton" layoutX="415.0" layoutY="189.0" mnemonicParsing="false" text="Talk" />
+      <Button fx:id="practiceMenuToTalkButton" layoutX="415.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleToTalkButton" text="Talk" />
       <Button fx:id="practiceMenuToMainMenuButton" layoutX="233.0" layoutY="309.0" mnemonicParsing="false" onAction="#switchToMainMenuView" text="Back To Main Menu" />
       <Label fx:id="practiceMenuTitle" layoutX="85.0" layoutY="60.0" text="Choose Your Practice Mode">
          <font>
