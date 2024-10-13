@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Sound {
-    public static Clip audioClip;
-
     // for the string use "/dit.wav" for dit and "/dah.wav" for dah
     public static void playDitOrDah(String file) {
         Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();  //find a mixer that can play the audio clip
