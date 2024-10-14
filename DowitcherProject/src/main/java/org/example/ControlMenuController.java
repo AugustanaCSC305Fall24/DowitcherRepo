@@ -29,16 +29,14 @@ public class ControlMenuController {
     @FXML private TextField settingsKeyField;
     @FXML private TextField translateKeyField;
 
-    //Data
-    private User currentUser;
-
     private final Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
     private TextField activeTextField = null; //Chat gpt made
+    private User currentUser;
 
     @FXML public void initialize() {
-        this.currentUser = new User();
         addFocusListeners();
         checkForDuplicateKeys();
+        this.currentUser = User.getInstance();
         setActionTextField();
     }
 
@@ -142,31 +140,31 @@ public class ControlMenuController {
         return String.valueOf(input.toUpperCase().charAt(0));
     }
 
-    private boolean checkForDuplicateKeys() {
-            Map<String, Integer> keyCount = new HashMap<>();
-            boolean hasDuplicates = false;
+    @FXML private void handleBackButton() throws IOException {
+        String previousView = currentUser.popLastView();
+        App.setRoot(previousView);
+    }
 
-            for (TextField field : keyBindings.values()) {
+    private boolean checkForDuplicateKeys() {
+        Map<String, Integer> keyCount = new HashMap<>();
+        boolean hasDuplicates = false;
+
+        for (TextField field : keyBindings.values()) {
                 String key = field.getText();
                 keyCount.put(key, keyCount.getOrDefault(key, 0) + 1);
             }
 
-            for (TextField field : keyBindings.values()) {
-                if (keyCount.get(field.getText()) > 1) {
-                    field.setStyle("-fx-background-color: red;");
-                    hasDuplicates = true;
-                } else {
-                    field.setStyle("");
+        for (TextField field : keyBindings.values()) {
+            if (keyCount.get(field.getText()) > 1) {
+                field.setStyle("-fx-background-color: red;");
+                hasDuplicates = true;
+            } else {
+                field.setStyle("");
                 }
             }
-            switchToHomeScreenButton.setDisable(hasDuplicates);
-            saveButton.setDisable(hasDuplicates);
-            backButton.setDisable(hasDuplicates);
-            return hasDuplicates;
-        }
-
-        @FXML private void handleBackButton() throws IOException {
-            String previousView = currentUser.popLastView();
-            App.setRoot(previousView);
-        }
+        switchToHomeScreenButton.setDisable(hasDuplicates);
+        saveButton.setDisable(hasDuplicates);
+        backButton.setDisable(hasDuplicates);
+        return hasDuplicates;
+    }
 }

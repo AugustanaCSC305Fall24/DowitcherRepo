@@ -37,10 +37,29 @@ public class HomeScreenController {
     @FXML private Slider staticSlider;
     @FXML private CheckBox showCWLettersCheckBox;
     @FXML private CheckBox showCWAcronymsCheckBox;
+    @FXML private Button saveButton;
+    private User currentUser;
+
+    @FXML public void initialize() {
+        this.currentUser = User.getInstance();
+        cwSpeedSlider.setValue(currentUser.getCwSpeed());
+        volumeSlider.setValue(currentUser.getVolume());
+        staticSlider.setValue(currentUser.getStaticAmount());
+        showCWLettersCheckBox.setSelected(currentUser.isShowCWLetters());
+        showCWAcronymsCheckBox.setSelected(currentUser.isShowCWAcronyms());
+    }
 
     @FXML void switchToControlMenuView() throws IOException {App.setRoot("ControlMenuView");}
 
     @FXML void handleCWLettersCheckBox(ActionEvent event) {}
     @FXML void handleCWAcronymsCheckBox(ActionEvent event) {}
+
+    @FXML private void handleSaveButton(){
+        currentUser.setCwSpeed(cwSpeedSlider.getValue());
+        currentUser.setVolume(volumeSlider.getValue());
+        currentUser.setStaticAmount(staticSlider.getValue());
+        currentUser.setShowCWLetters(showCWLettersCheckBox.isSelected());
+        currentUser.setShowCWAcronyms(showCWAcronymsCheckBox.isSelected());
+    }
 
 }

@@ -15,6 +15,7 @@ public class User {
     private boolean showCWAcronyms; // Boolean to show CW acronyms
     private Map<String, String> keyFirstActionMap;
     private Map<String, String> actionFirstActionMap;
+    private static User instance;
 
     // Constructor
     public User() {
@@ -146,6 +147,13 @@ escKeyField, pauseKeyField);
         else{
             return "HomeScreenView";
         }
+    }
+
+    public static User getInstance() {
+        if (instance == null) {
+            instance = new User();
+        }
+        return instance;
     }
 }
 
