@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -11,30 +12,77 @@ import java.util.Map;
 
 public class ControlMenuController {
 
-    @FXML private TextField escKeyField;
-    @FXML private TextField mainMenuKeyField;
-    @FXML private TextField spaceBarKeyField;
-    @FXML private TextField exBeepKeyField;
+    //Buttons
     @FXML private Button switchToHomeScreenButton;
     @FXML private Button saveButton;
+    @FXML private Button backButton;
+
+    //Keys
+    @FXML private TextField checkTranslationKeyField;
+    @FXML private TextField datKeyField;
+    @FXML private TextField ditKeyField;
+    @FXML private TextField escKeyField;
+    @FXML private TextField mainMenuKeyField;
+    @FXML private TextField newAudioKeyField;
+    @FXML private TextField pauseKeyField;
+    @FXML private TextField restartAudioKeyField;
+    @FXML private TextField settingsKeyField;
+    @FXML private TextField translateKeyField;
+
+    //Data
+    private User currentUser;
 
     private final Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
     private TextField activeTextField = null; //Chat gpt made
 
-    @FXML public void initialize() { //Chat GPT Generated
-        keyBindings.put("Exit Program", escKeyField);
-        keyBindings.put("Go To Main Menu", mainMenuKeyField);
-        keyBindings.put("CW", spaceBarKeyField);
-        keyBindings.put("Pause", exBeepKeyField);
-
-        // Set default key bindings
-        escKeyField.setText("ESCAPE");
-        mainMenuKeyField.setText("M");
-        spaceBarKeyField.setText("SPACE");
-        exBeepKeyField.setText("TAB");
-
+    @FXML public void initialize() {
+        this.currentUser = new User();
         addFocusListeners();
         checkForDuplicateKeys();
+        setActionTextField();
+    }
+
+    private void setActionTextField(){
+        Map<String, String> actionMap = currentUser.getActionFirstActionMap();
+        for (Map.Entry<String, String> entry : actionMap.entrySet()) {
+            String action = entry.getKey();
+            String key = entry.getValue();
+            switch (action) {
+                case "restartAudio":
+                    restartAudioKeyField.setText(key);
+                    break;
+                case "checkTranslation":
+                    checkTranslationKeyField.setText(key);
+                    break;
+                case "newAudio":
+                    newAudioKeyField.setText(key);
+                    break;
+                case "settings":
+                    settingsKeyField.setText(key);
+                    break;
+                case "mainMenu":
+                    mainMenuKeyField.setText(key);
+                    break;
+                case "translate":
+                    translateKeyField.setText(key);
+                    break;
+                case "datAction":
+                    datKeyField.setText(key);
+                    break;
+                case "ditAction":
+                    ditKeyField.setText(key);
+                    break;
+                case "escape":
+                    escKeyField.setText(key);
+                    break;
+                case "pause":
+                    pauseKeyField.setText(key);
+                    break;
+                default:
+                    // Handle any unexpected actions if needed
+                    break;
+            }
+        }
     }
 
     @FXML private void switchToHomeScreenView() throws IOException {App.setRoot("HomeScreenView");}
@@ -61,23 +109,40 @@ public class ControlMenuController {
         checkForDuplicateKeys();
     }
 
-    @FXML private void handleSaveButton() {  //Chat GPT Generated
-        // Save the key bindings
-        checkForDuplicateKeys();
-        if(!checkForDuplicateKeys()) {
-            Map<String, String> savedBindings = new HashMap<>();
-            for (Map.Entry<String, TextField> entry : keyBindings.entrySet()) {
-                savedBindings.put(entry.getKey(), entry.getValue().getText());
-            }
+    @FXML
+    private void handleSaveButton() {
+        checkForDuplicateKeys(); // Check for duplicate keys before proceeding with saving
+        if (!checkForDuplicateKeys()) {
+            // Retrieve the key bindings from each text field
+            String restartAudioKey = processedKeyInput(restartAudioKeyField.getText());
+            String checkTranslationKey = processedKeyInput(checkTranslationKeyField.getText());
+            String newAudioKey = processedKeyInput(newAudioKeyField.getText());
+            String settingsKey = processedKeyInput(settingsKeyField.getText());
+            String mainMenuKey = processedKeyInput(mainMenuKeyField.getText());
+            String translateKey = processedKeyInput(translateKeyField.getText());
+            String datKey = processedKeyInput(datKeyField.getText());
+            String ditKey = processedKeyInput(ditKeyField.getText());
+            String escKey = processedKeyInput(escKeyField.getText());
+            String pauseKey = processedKeyInput(pauseKeyField.getText());
 
-            // Here you can save the bindings to a file, database, or any other storage
-            // For demonstration, we'll just print them to the console
-            savedBindings.forEach((action, key) -> System.out.println(action + ": " + key));
+            // Update the user's action map with the new bindings
+            currentUser.setActionMap(restartAudioKey, checkTranslationKey, newAudioKey, settingsKey, mainMenuKey, translateKey, datKey, ditKey, escKey, pauseKey);
+
+            // Optionally, provide feedback to the user that the save was successful
+            System.out.println("Key bindings saved successfully.");
+            initialize();
+
+        } else {
+            // Handle the scenario where there are duplicate keys (e.g., show an error message)
+            System.out.println("Duplicate keys detected. Please resolve before saving.");
         }
     }
 
+    private String processedKeyInput(String input){
+        return String.valueOf(input.toUpperCase().charAt(0));
+    }
 
-        private boolean checkForDuplicateKeys() {
+    private boolean checkForDuplicateKeys() {
             Map<String, Integer> keyCount = new HashMap<>();
             boolean hasDuplicates = false;
 
@@ -96,6 +161,12 @@ public class ControlMenuController {
             }
             switchToHomeScreenButton.setDisable(hasDuplicates);
             saveButton.setDisable(hasDuplicates);
+            backButton.setDisable(hasDuplicates);
             return hasDuplicates;
+        }
+
+        @FXML private void handleBackButton() throws IOException {
+            String previousView = currentUser.popLastView();
+            App.setRoot(previousView);
         }
 }

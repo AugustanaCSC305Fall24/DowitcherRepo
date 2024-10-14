@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -14,37 +15,78 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <VBox alignment="CENTER" prefHeight="338.0" prefWidth="198.0" spacing="10.0">
-         <children>
-            <HBox alignment="CENTER" spacing="10.0">
+      <ScrollPane prefHeight="200.0" prefWidth="420.0">
+         <content>
+            <VBox alignment="CENTER" prefHeight="338.0" prefWidth="198.0" spacing="10.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Program" />
-                  <TextField fx:id="escKeyField" onKeyPressed="#handleKeyPress" text="ESCAPE" />
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Program" />
+                        <TextField fx:id="escKeyField" onKeyPressed="#handleKeyPress" text="ESCAPE" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu" />
+                        <TextField fx:id="mainMenuKeyField" onKeyPressed="#handleKeyPress" text="M" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dat (Long)" />
+                        <TextField fx:id="datKeyField" onKeyPressed="#handleKeyPress" text="SPACE" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dit (Short)" />
+                        <TextField fx:id="ditKeyField" onKeyPressed="#handleKeyPress" text="SPACE" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pause" />
+                        <TextField fx:id="pauseKeyField" onKeyPressed="#handleKeyPress" text="TAB" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Restart Audio" />
+                        <TextField fx:id="restartAudioKeyField" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Check Translation" />
+                        <TextField fx:id="checkTranslationKeyField" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Audio" />
+                        <TextField fx:id="newAudioKeyField" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Translate" />
+                              <TextField fx:id="translateKeyField" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
+                        <TextField fx:id="settingsKeyField" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Go To Main Menu" />
-                  <TextField fx:id="mainMenuKeyField" onKeyPressed="#handleKeyPress" text="M" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CW" />
-                  <TextField fx:id="spaceBarKeyField" onKeyPressed="#handleKeyPress" text="SPACE" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pause" />
-                  <TextField fx:id="exBeepKeyField" onKeyPressed="#handleKeyPress" text="TAB" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
+            </VBox>
+         </content>
+      </ScrollPane>
       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="30.0">
          <children>
             <Button fx:id="switchToHomeScreenButton" mnemonicParsing="false" onAction="#switchToHomeScreenView" text="Main Menu" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
          </children>
       </HBox>
