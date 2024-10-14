@@ -48,6 +48,7 @@
                   <Slider fx:id="staticSlider" />
                   <CheckBox fx:id="showCWLettersCheckBox" mnemonicParsing="false" onAction="#handleCWLettersCheckBox" text="Show CW Letters" />
                   <CheckBox fx:id="showCWAcronymsCheckBox" mnemonicParsing="false" onAction="#handleCWAcronymsCheckBox" text="Show CW Acronyms" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
                </children>
             </VBox>
          </content>
