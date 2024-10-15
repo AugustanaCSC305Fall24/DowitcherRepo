@@ -17,16 +17,14 @@ public class ControlMenuController {
     @FXML private Button backButton;
 
     //Keys
-    @FXML private TextField checkTranslationKeyField;
+    @FXML private TextField exitKeyField;
+    @FXML private TextField settingsKeyField;
     @FXML private TextField dahKeyField;
     @FXML private TextField ditKeyField;
-    @FXML private TextField escKeyField;
-    @FXML private TextField mainMenuKeyField;
-    @FXML private TextField newAudioKeyField;
-    @FXML private TextField pauseKeyField;
-    @FXML private TextField playPauseAudioKeyField;
-    @FXML private TextField settingsKeyField;
-    @FXML private TextField translateKeyField;
+    @FXML private TextField frequencyUpTextField;
+    @FXML private TextField frequencyDownTextField;
+    @FXML private TextField filterUpTextField;
+    @FXML private TextField filterDownTextField;
 
     private final Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
     private TextField activeTextField = null; //Chat gpt made
@@ -43,35 +41,29 @@ public class ControlMenuController {
             String action = entry.getKey();
             String key = entry.getValue();
             switch (action) {
-                case "playPauseAudio":
-                    playPauseAudioKeyField.setText(key);
+                case "exitProgram":
+                    exitKeyField.setText(key);
                     break;
-                case "checkTranslation":
-                    checkTranslationKeyField.setText(key);
-                    break;
-                case "newAudio":
-                    newAudioKeyField.setText(key);
-                    break;
-                case "settings":
+                case "settingsKey":
                     settingsKeyField.setText(key);
                     break;
-                case "mainMenu":
-                    mainMenuKeyField.setText(key);
-                    break;
-                case "translate":
-                    translateKeyField.setText(key);
-                    break;
-                case "dahAction":
+                case "dahKey":
                     dahKeyField.setText(key);
                     break;
-                case "ditAction":
+                case "ditKey":
                     ditKeyField.setText(key);
                     break;
-                case "escape":
-                    escKeyField.setText(key);
+                case "frequencyUpKey":
+                    frequencyUpTextField.setText(key);
                     break;
-                case "pause":
-                    pauseKeyField.setText(key);
+                case "frequencyDownKey":
+                    frequencyDownTextField.setText(key);
+                    break;
+                case "filterUpKey":
+                    filterUpTextField.setText(key);
+                    break;
+                case "filterDownKey":
+                    filterDownTextField.setText(key);
                     break;
                 default:
                     // Handle any unexpected actions if needed
@@ -109,19 +101,18 @@ public class ControlMenuController {
         checkForDuplicateKeys(); // Check for duplicate keys before proceeding with saving
         if (!checkForDuplicateKeys()) {
             // Retrieve the key bindings from each text field
-            String restartAudioKey = processedKeyInput(playPauseAudioKeyField.getText());
-            String checkTranslationKey = processedKeyInput(checkTranslationKeyField.getText());
-            String newAudioKey = processedKeyInput(newAudioKeyField.getText());
+            String exitProgram = processedKeyInput(exitKeyField.getText());
             String settingsKey = processedKeyInput(settingsKeyField.getText());
-            String mainMenuKey = processedKeyInput(mainMenuKeyField.getText());
-            String translateKey = processedKeyInput(translateKeyField.getText());
             String dahKey = processedKeyInput(dahKeyField.getText());
             String ditKey = processedKeyInput(ditKeyField.getText());
-            String escKey = processedKeyInput(escKeyField.getText());
-            String pauseKey = processedKeyInput(pauseKeyField.getText());
-
+            String frequencyUpKey = processedKeyInput(frequencyUpTextField.getText());
+            String frequencyDownKey = processedKeyInput(frequencyDownTextField.getText());
+            String filterUpKey = processedKeyInput(filterUpTextField.getText());
+            String filterDownKey = processedKeyInput(filterDownTextField.getText());
+            //exitProgram settingsKey dahKey ditKey frequencyUpKey frequencyDownKey filterUpKey filterDownKey
             // Update the user's action map with the new bindings
-            App.currentUser.setActionMap(restartAudioKey, checkTranslationKey, newAudioKey, settingsKey, mainMenuKey, translateKey, dahKey, ditKey, escKey, pauseKey);
+
+            App.currentUser.setActionMap(exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
 
             // Optionally, provide feedback to the user that the save was successful
             System.out.println("Key bindings saved successfully.");

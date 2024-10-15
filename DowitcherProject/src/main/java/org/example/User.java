@@ -27,50 +27,44 @@ public class User {
         this.keyFirstActionMap = new HashMap<>();
         this.actionFirstActionMap = new HashMap<>();
         //Setting default keys for the action map
-        setActionMap("R", "T", "N", "S", "M", "L", "A", "S", "ESC", "P");
+        setActionMap("ESC", "TAB", "D", "A", "RIGHT_ARROW", "LEFT_ARROW", "UP_ARROW", "DOWN_ARROW");
     }
 
-    public void setActionMap(String playPauseAudio, String checkTranslationKeyField, String newAudioKeyField, String settingsKeyField,
-                             String mainMenuKeyField, String translateKeyField, String dahKeyField, String ditKeyField, String escKeyField, String pauseKeyField
+    //exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey
+
+    public void setActionMap(String exitProgram, String settingsKey, String dahKey, String ditKey,
+                             String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
     ) {
-        setKeyFirstActionMap(playPauseAudio, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
-                mainMenuKeyField, translateKeyField, dahKeyField, ditKeyField, escKeyField, pauseKeyField
-        );
-        setActionFirstActionMap(playPauseAudio, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
-                mainMenuKeyField, translateKeyField, dahKeyField, ditKeyField,
-escKeyField, pauseKeyField);
+        setKeyFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+        setActionFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
     }
 
-    private void setKeyFirstActionMap(String playPauseAudio, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
-                                      String translateKey, String dahKey, String ditKey, String escKey, String pauseKey
+    private void setKeyFirstActionMap(String exitProgram, String settingsKey, String dahKey, String ditKey,
+                                      String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
     ) {
         // Map keyboard keys to actions
-        keyFirstActionMap.put(playPauseAudio, "playPauseAudio");    // Restart audio
-        keyFirstActionMap.put(checkTranslationKey, "checkTranslation"); // Check translation
-        keyFirstActionMap.put(newAudioKey, "newAudio");        // New audio
-        keyFirstActionMap.put(settingsKey, "settings");        // Settings
-        keyFirstActionMap.put(mainMenuKey, "mainMenu");        // Main menu
-        keyFirstActionMap.put(translateKey, "translate");       // Translate
-        keyFirstActionMap.put(dahKey, "dahAction");             // Dah action
-        keyFirstActionMap.put(ditKey, "ditAction");             // Dit action
-        keyFirstActionMap.put(escKey, "escape");                // Escape action
-        keyFirstActionMap.put(pauseKey, "pause");               // Pause action
+        keyFirstActionMap.put(exitProgram, "exitProgram");                      // Exit Program
+        keyFirstActionMap.put(settingsKey, "settingsKey");                      // Settings
+        keyFirstActionMap.put(dahKey, "dahKey");                                // Dah action
+        keyFirstActionMap.put(ditKey, "ditKey");                                // Dit action
+        keyFirstActionMap.put(frequencyUpKey, "frequencyUpKey");                // Frequency Up
+        keyFirstActionMap.put(frequencyDownKey, "frequencyDownKey");            // Frequency Down
+        keyFirstActionMap.put(filterUpKey, "filterUpKey");                      // Filter Up
+        keyFirstActionMap.put(filterDownKey, "filterDownKey");                  // Filter Down
     }
 
-    private void setActionFirstActionMap(String playPauseAudio, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
-                                         String translateKey, String dahKey, String ditKey, String escKey, String pauseKey
+    private void setActionFirstActionMap(String exitProgram, String settingsKey, String dahKey, String ditKey,
+                                         String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
     ) {
-        // Map actions to keyboard keys
-        actionFirstActionMap.put("playPauseAudio", playPauseAudio);    // Restart audio
-        actionFirstActionMap.put("checkTranslation", checkTranslationKey); // Check translation
-        actionFirstActionMap.put("newAudio", newAudioKey);        // New audio
-        actionFirstActionMap.put("settings", settingsKey);        // Settings
-        actionFirstActionMap.put("mainMenu", mainMenuKey);        // Main menu
-        actionFirstActionMap.put("translate", translateKey);       // Translate
-        actionFirstActionMap.put("dahAction", dahKey);             // dah action
-        actionFirstActionMap.put("ditAction", ditKey);             // Dit action
-        actionFirstActionMap.put("escape", escKey);                // Escape action
-        actionFirstActionMap.put("pause", pauseKey);               // Pause action
+        // Map keyboard keys to actions
+        keyFirstActionMap.put("exitProgram", exitProgram);                      // Exit Program
+        keyFirstActionMap.put("settingsKey", settingsKey);                      // Settings
+        keyFirstActionMap.put("dahKey", dahKey);                                // Dah action
+        keyFirstActionMap.put("ditKey", ditKey);                                // Dit action
+        keyFirstActionMap.put("frequencyUpKey", frequencyUpKey);                // Frequency Up
+        keyFirstActionMap.put("frequencyDownKey", frequencyDownKey);            // Frequency Down
+        keyFirstActionMap.put("filterUpKey", filterUpKey);                      // Filter Up
+        keyFirstActionMap.put("filterDownKey", filterDownKey);                  // Filter Down
     }
 
 
