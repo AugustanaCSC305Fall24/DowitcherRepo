@@ -14,6 +14,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    public static User currentUser = new User();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -33,6 +34,10 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static Scene getScene(){
+        return scene;
     }
 
 }
