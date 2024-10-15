@@ -14,24 +14,31 @@ import java.util.Random;
 
 
 
-public class PracticeListeningController{
+public class PracticeListeningController {
 
     // All FXML elements on screen that are interacted with
-    @FXML private Button mainMenuButton;
-    @FXML private Button goToSettingsButton;
-    @FXML private Button playPauseAudioButton;
-    @FXML private Button restartAudioButton;
-    @FXML private Button checkTranslationButton;
-    @FXML private Button newAudioButton;
-    @FXML private TextArea userInputTextArea;
-    @FXML private ScrollPane correctAnswerScrollPane;
+    @FXML
+    private Button mainMenuButton;
+    @FXML
+    private Button goToSettingsButton;
+    @FXML
+    private Button playPauseAudioButton;
+    @FXML
+    private Button restartAudioButton;
+    @FXML
+    private Button checkTranslationButton;
+    @FXML
+    private Button newAudioButton;
+    @FXML
+    private TextArea userInputTextArea;
+    @FXML
+    private ScrollPane correctAnswerScrollPane;
 
 
     private String cwMessage;
     private String cwAudio;
     HashMap<String, String> cwMessagesList;
     Random random = new Random();
-
 
 
     private Boolean isPaused = true;
@@ -50,15 +57,14 @@ public class PracticeListeningController{
     }
 
 
-
     @FXML
     // If audio is paused, plays audio and changes button to say pause
     // If audio is playing, pauses audio and changes button to say play
     private void playPauseAudio() throws InterruptedException {
         char[] messageArray = cwAudio.toCharArray();
-        if (isPaused){
+        if (isPaused) {
             isPaused = false;
-            playAudio(pauseIndex,messageArray);
+            playAudio(pauseIndex, messageArray);
             playPauseAudioButton.setText("Pause");
         } else {
             isPaused = true;
@@ -166,9 +172,15 @@ public class PracticeListeningController{
     }
 
     // Switches screen to controls screen
-    @FXML private void switchToSettingsView() throws IOException{App.setRoot("ControlMenuView");}
+    @FXML
+    private void switchToSettingsView() throws IOException {
+        App.setRoot("ControlMenuView");
+    }
 
     // Switches view to main menu
-    @FXML private void switchToHomeScreenView() throws IOException{App.setRoot("HomeScreenView");}
-
+    @FXML
+    private void switchToHomeScreenView() throws IOException {
+        App.setRoot("HomeScreenView");
+    }
 }
+
