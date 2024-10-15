@@ -55,7 +55,6 @@ public class PracticeListeningController {
         cwMessagesList.put("YES", "-.-- . ...");
         cwMessagesList.put("NO", "-. ---");
         newAudio();
-
     }
 
     @FXML
@@ -97,6 +96,7 @@ public class PracticeListeningController {
                 }
             }
         });
+        audioThread.start();
 
         App.currentUser.addView("PracticeListeningView");
         App.getScene().setOnKeyPressed(event -> {
@@ -174,10 +174,14 @@ public class PracticeListeningController {
         correctAnswerScrollPane.setContent(correctedTranslation);
     }
 
+
     @FXML
     // Sets cwMessage and cwAudio to a random new message and audio from
     // the HashMap containing all the messages and audios
     private void newAudio() {
+        pauseIndex = 0;
+        isPaused = true;
+        playPauseAudioButton.setText("Play");
         List<String> allCWMessages = new ArrayList<>(cwMessagesList.keySet());
         int randomMessageNum = random.nextInt(allCWMessages.size());
 
