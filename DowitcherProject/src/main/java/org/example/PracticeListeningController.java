@@ -12,15 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import static org.example.Sound.playDitOrDah;
 
 
-public class PracticeListeningController {
+public class PracticeListeningController{
 
     // All FXML elements on screen that are interacted with
     @FXML private Button mainMenuButton;
     @FXML private Button goToSettingsButton;
-    @FXML private Button playAudioButton;
+    @FXML private Button playPauseAudioButton;
+    @FXML private Button restartAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
     @FXML private TextArea userInputTextArea;
@@ -32,6 +32,11 @@ public class PracticeListeningController {
     HashMap<String, String> cwMessagesList;
     Random random = new Random();
 
+
+
+    private Boolean isPaused = true;
+    private int pauseIndex;
+
     @FXML
     // Initializes HashMap and fills it with all practice messages
     // Then generates a starting message
@@ -41,25 +46,57 @@ public class PracticeListeningController {
         cwMessagesList.put("ALPHA", ".- .-.. .--. .... .-");
         cwMessagesList.put("BRAVO", "-... .-. .- ...- ---");
         cwMessagesList.put("PAPA", ".--. .- .--. .-.. ---");
-        cwMessagesList.put("HI", ".... ..");
-        cwMessagesList.put("OK", "--- -.-");
-        cwMessagesList.put("YES", "-.-- . ...");
-        cwMessagesList.put("NO", "-. ---");
         newAudio();
-        App.currentUser.addView("PracticeListeningView");
+    }
+
+
+
+    @FXML
+    // If audio is paused, plays audio and changes button to say pause
+    // If audio is playing, pauses audio and changes button to say play
+    private void playPauseAudio() throws InterruptedException {
+        char[] messageArray = cwAudio.toCharArray();
+        if (isPaused){
+            isPaused = false;
+            playAudio(pauseIndex,messageArray);
+            playPauseAudioButton.setText("Pause");
+        } else {
+            isPaused = true;
+            playPauseAudioButton.setText("Play");
+        }
+    }
+
+    //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
+    private void playAudio(int index, char[] messageArray) throws InterruptedException {
+        Thread audioThread = new Thread(() -> {
+            for (int i = index; i < messageArray.length; i++) {
+                if (isPaused) {
+                    pauseIndex = i;
+                    break;
+                }
+                if (messageArray[i] == '-') {
+                    Sound.playDah();
+                } else if (messageArray[i] == '.') {
+                    Sound.playDit();
+                } else if (messageArray[i] == ' ') {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        audioThread.start();
     }
 
     @FXML
-    // Plays audio for cwMessage to be translated
-    private void playAudio() {
-        for (int i = 0; i < cwAudio.length(); i++) {
-            if (cwAudio.charAt(i) == '.') {
-                playDitOrDah("/dit.wav");
-            }
-            if (cwAudio.charAt(i) == '-') {
-                playDitOrDah("/dah.wav");
-            }
-        }
+    // Starts audio from beginning
+    private void restartAudio() throws InterruptedException {
+        char[] messageArray = cwAudio.toCharArray();
+        pauseIndex = 0;
+        isPaused = false;
+        playAudio(pauseIndex, messageArray);
     }
 
     @FXML
@@ -110,6 +147,9 @@ public class PracticeListeningController {
     // Sets cwMessage and cwAudio to a random new message and audio from
     // the HashMap containing all the messages and audios
     private void newAudio() {
+        pauseIndex = 0;
+        isPaused = true;
+        playPauseAudioButton.setText("Play");
         List<String> allCWMessages = new ArrayList<>(cwMessagesList.keySet());
         int randomMessageNum = random.nextInt(allCWMessages.size());
 
