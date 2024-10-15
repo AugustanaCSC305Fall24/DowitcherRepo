@@ -21,7 +21,7 @@ public class PracticeListeningController {
     // All FXML elements on screen that are interacted with
     @FXML private Button mainMenuButton;
     @FXML private Button goToSettingsButton;
-    @FXML private Button playAudioButton;
+    @FXML private Button playPauseAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
     @FXML private TextArea userInputTextArea;
@@ -59,7 +59,7 @@ public class PracticeListeningController {
 
     @FXML
     // Plays audio for cwMessage to be translated
-    private void playAudio() {
+    private void playPauseAudio() {
         for (int i = 0; i < cwAudio.length(); i++) {
             if (cwAudio.charAt(i) == '.') {
                 playDitOrDah("/dit.wav");
@@ -139,6 +139,10 @@ public class PracticeListeningController {
     // Switches view to main menu
     @FXML private void switchToHomeScreenView() throws IOException{App.setRoot("HomeScreenView");}
 
+    @FXML private void restartAudio(){
+
+    }
+
     private void handleKeyPress(KeyEvent event) throws IOException {
         String pressedKey = event.getCode().toString(); // Get the pressed key as a string
 
@@ -146,9 +150,9 @@ public class PracticeListeningController {
         String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
         if (action != null) {
             switch (action) {
-                case "playAudio":
-                    playAudio();
-                    System.out.println("Playing audio...");
+                case "playPauseAudio":
+                    playPauseAudio();
+                    System.out.println("Playing/Pausing audio...");
                     break;
                 case "checkTranslation":
                     checkTranslation();

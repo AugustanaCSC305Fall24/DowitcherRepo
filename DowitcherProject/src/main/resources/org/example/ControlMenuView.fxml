@@ -34,7 +34,7 @@
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dah (Long)" />
-                        <TextField fx:id="datKeyField" onKeyPressed="#handleKeyPress" />
+                        <TextField fx:id="dahKeyField" onKeyPressed="#handleKeyPress" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -52,7 +52,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Restart Audio" />
-                        <TextField fx:id="restartAudioKeyField" />
+                        <TextField fx:id="playPauseAudioKeyField" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
