@@ -21,12 +21,14 @@ public class PracticeTypingController {
         private TextArea englishOutput;
 
         private MorseCodeTranslator morseCodeTranslator;
+        private User currentUser;
 
-        // Initialize the controller and translator
+    // Initialize the controller and translator
         @FXML
         public void initialize() {
             morseCodeTranslator = new MorseCodeTranslator();
-
+            this.currentUser = User.getInstance();
+            currentUser.addView("PracticeTypingView");
             // Set the action for the translate button
             translateButton.setOnAction(event -> translateMorseCode());
 

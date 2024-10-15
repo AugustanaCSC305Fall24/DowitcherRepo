@@ -17,10 +17,9 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="12.0" layoutY="330.0" prefHeight="100.0" prefWidth="610.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="12.0" layoutY="330.0" prefHeight="100.0" prefWidth="610.0" spacing="20.0">
          <children>
-            <Button fx:id="playPauseAudioButton" mnemonicParsing="false" onAction="#playPauseAudio" text="Play" />
-            <Button fx:id="restartAudioButton" mnemonicParsing="false" onAction="#restartAudio" text="Restart Audio" />
+            <Button fx:id="playAudioButton" mnemonicParsing="false" onAction="#playAudio" text="Play Audio" />
             <Button fx:id="checkTranslationButton" mnemonicParsing="false" onAction="#checkTranslation" text="Check Translation" />
             <Button fx:id="newAudioButton" mnemonicParsing="false" onAction="#newAudio" text="New Audio" />
             <Button fx:id="goToSettingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSettingsView" prefHeight="26.0" prefWidth="69.0" text="Settings" />

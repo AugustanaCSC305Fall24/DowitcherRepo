@@ -41,13 +41,14 @@
                   </Text>
                   <Button fx:id="switchToControlMenuButton" mnemonicParsing="false" onAction="#switchToControlMenuView" text="Controls" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CW Speed" />
-                  <Slider fx:id="cwSpeedSlider" />
+                  <Slider fx:id="cwSpeedSlider" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Volume" />
-                  <Slider fx:id="volumeSlider" />
+                  <Slider fx:id="volumeSlider" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Static Amount" />
-                  <Slider fx:id="staticSlider" />
+                  <Slider fx:id="staticSlider" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
                   <CheckBox fx:id="showCWLettersCheckBox" mnemonicParsing="false" onAction="#handleCWLettersCheckBox" text="Show CW Letters" />
                   <CheckBox fx:id="showCWAcronymsCheckBox" mnemonicParsing="false" onAction="#handleCWAcronymsCheckBox" text="Show CW Acronyms" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
                </children>
             </VBox>
          </content>

@@ -5,16 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Sound {
-
-    public static void playDit(){
-        playDitOrDah("/dit.wav");
-    }
-    public static void playDah(){
-        playDitOrDah("/dah.wav");
-    }
-
-    private static void playDitOrDah(String file) {
-        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+    // for the string use "/dit.wav" for dit and "/dah.wav" for dah
+    public static void playDitOrDah(String file) {
+        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();  //find a mixer that can audioPlaying the audio clip
         Clip audioClip = null;
         for (Mixer.Info info : mixerInfo) {
             Mixer mixer = AudioSystem.getMixer(info);
