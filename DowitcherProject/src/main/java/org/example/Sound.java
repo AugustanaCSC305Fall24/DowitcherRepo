@@ -7,7 +7,7 @@ import java.net.URL;
 public class Sound {
     // for the string use "/dit.wav" for dit and "/dah.wav" for dah
     public static void playDitOrDah(String file) {
-        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();  //find a mixer that can play the audio clip
+        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();  //find a mixer that can audioPlaying the audio clip
         Clip audioClip = null;
         for (Mixer.Info info : mixerInfo) {
             Mixer mixer = AudioSystem.getMixer(info);

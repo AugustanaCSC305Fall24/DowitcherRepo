@@ -12,13 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class PracticeListeningController{
+import static org.example.Sound.playDitOrDah;
+
+
+public class PracticeListeningController {
 
     // All FXML elements on screen that are interacted with
     @FXML private Button mainMenuButton;
     @FXML private Button goToSettingsButton;
-    @FXML private Button playPauseAudioButton;
-    @FXML private Button restartAudioButton;
+    @FXML private Button playAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
     @FXML private TextArea userInputTextArea;
@@ -40,22 +42,26 @@ public class PracticeListeningController{
         cwMessagesList.put("ALPHA", ".- .-.. .--. .... .-");
         cwMessagesList.put("BRAVO", "-... .-. .- ...- ---");
         cwMessagesList.put("PAPA", ".--. .- .--. .-.. ---");
+        cwMessagesList.put("HI", ".... ..");
+        cwMessagesList.put("OK", "--- -.-");
+        cwMessagesList.put("YES", "-.-- . ...");
+        cwMessagesList.put("NO", "-. ---");
         newAudio();
         this.currentUser = User.getInstance();
         currentUser.addView("PracticeListeningView");
     }
 
     @FXML
-    // If audio is paused, plays audio and changes button to say pause
-    // If audio is playing, pauses audio and changes button to say play
-    private void playPauseAudio() {
-
-    }
-
-    @FXML
-    // Starts audio from beginning
-    private void restartAudio() {
-
+    // Plays audio for cwMessage to be translated
+    private void playAudio() {
+        for (int i = 0; i < cwAudio.length(); i++) {
+            if (cwAudio.charAt(i) == '.') {
+                playDitOrDah("/dit.wav");
+            }
+            if (cwAudio.charAt(i) == '-') {
+                playDitOrDah("/dah.wav");
+            }
+        }
     }
 
     @FXML
