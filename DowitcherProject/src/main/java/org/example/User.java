@@ -30,22 +30,22 @@ public class User {
         setActionMap("R", "T", "N", "S", "M", "L", "A", "S", "ESC", "P");
     }
 
-    public void setActionMap(String restartAudioKeyField, String checkTranslationKeyField, String newAudioKeyField, String settingsKeyField,
+    public void setActionMap(String playAudioKeyField, String checkTranslationKeyField, String newAudioKeyField, String settingsKeyField,
                              String mainMenuKeyField, String translateKeyField, String dahKeyField, String ditKeyField, String escKeyField, String pauseKeyField
     ) {
-        setKeyFirstActionMap(restartAudioKeyField, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
+        setKeyFirstActionMap(playAudioKeyField, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
                 mainMenuKeyField, translateKeyField, dahKeyField, ditKeyField, escKeyField, pauseKeyField
         );
-        setActionFirstActionMap(restartAudioKeyField, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
+        setActionFirstActionMap(playAudioKeyField, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
                 mainMenuKeyField, translateKeyField, dahKeyField, ditKeyField,
 escKeyField, pauseKeyField);
     }
 
-    private void setKeyFirstActionMap(String restartAudioKey, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
+    private void setKeyFirstActionMap(String playAudio, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
                                       String translateKey, String dahKey, String ditKey, String escKey, String pauseKey
     ) {
         // Map keyboard keys to actions
-        keyFirstActionMap.put(restartAudioKey, "restartAudio");    // Restart audio
+        keyFirstActionMap.put(playAudio, "playAudio");    // Restart audio
         keyFirstActionMap.put(checkTranslationKey, "checkTranslation"); // Check translation
         keyFirstActionMap.put(newAudioKey, "newAudio");        // New audio
         keyFirstActionMap.put(settingsKey, "settings");        // Settings
@@ -57,11 +57,11 @@ escKeyField, pauseKeyField);
         keyFirstActionMap.put(pauseKey, "pause");               // Pause action
     }
 
-    private void setActionFirstActionMap(String restartAudioKey, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
+    private void setActionFirstActionMap(String playAudio, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
                                          String translateKey, String dahKey, String ditKey, String escKey, String pauseKey
     ) {
         // Map actions to keyboard keys
-        actionFirstActionMap.put("restartAudio", restartAudioKey);    // Restart audio
+        actionFirstActionMap.put("playAudio", playAudio);    // Restart audio
         actionFirstActionMap.put("checkTranslation", checkTranslationKey); // Check translation
         actionFirstActionMap.put("newAudio", newAudioKey);        // New audio
         actionFirstActionMap.put("settings", settingsKey);        // Settings

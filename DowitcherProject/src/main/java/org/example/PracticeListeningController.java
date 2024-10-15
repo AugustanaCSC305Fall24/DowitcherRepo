@@ -1,9 +1,11 @@
 package org.example;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import java.io.IOException;
@@ -47,6 +49,13 @@ public class PracticeListeningController {
         cwMessagesList.put("NO", "-. ---");
         newAudio();
         App.currentUser.addView("PracticeListeningView");
+        App.getScene().setOnKeyPressed(event -> {
+            try {
+                handleKeyPress(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FXML
@@ -131,4 +140,37 @@ public class PracticeListeningController {
     // Switches view to main menu
     @FXML private void switchToHomeScreenView() throws IOException{App.setRoot("HomeScreenView");}
 
+    private void handleKeyPress(KeyEvent event) throws IOException {
+        String pressedKey = event.getCode().toString(); // Get the pressed key as a string
+
+        // Check if the pressed key has a corresponding action in the map
+        String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
+        if (action != null) {
+            switch (action) {
+                case "playAudio":
+                    playAudio();
+                    System.out.println("Playing audio...");
+                    break;
+                case "checkTranslation":
+                    checkTranslation();
+                    System.out.println("Checking translation...");
+                    break;
+                case "newAudio":
+                    newAudio();
+                    System.out.println("New audio...");
+                    break;
+                case "settings":
+                    switchToSettingsView();
+                    System.out.println("Switching to controls view.");
+                    break;
+                case "mainMenu":
+                    switchToHomeScreenView();
+                    System.out.println("Switching to main menu.");
+                    break;
+                default:
+                    System.out.println("No action assigned for this key.");
+                    break;
+            }
+        }
+    }
 }
