@@ -31,7 +31,6 @@ public class PracticeListeningController {
     private String cwAudio;
     HashMap<String, String> cwMessagesList;
     Random random = new Random();
-    private User currentUser;
 
     @FXML
     // Initializes HashMap and fills it with all practice messages
@@ -47,8 +46,7 @@ public class PracticeListeningController {
         cwMessagesList.put("YES", "-.-- . ...");
         cwMessagesList.put("NO", "-. ---");
         newAudio();
-        this.currentUser = User.getInstance();
-        currentUser.addView("PracticeListeningView");
+        App.currentUser.addView("PracticeListeningView");
     }
 
     @FXML

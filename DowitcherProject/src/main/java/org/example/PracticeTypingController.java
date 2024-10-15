@@ -21,14 +21,12 @@ public class PracticeTypingController {
         private TextArea englishOutput;
 
         private MorseCodeTranslator morseCodeTranslator;
-        private User currentUser;
 
     // Initialize the controller and translator
         @FXML
         public void initialize() {
             morseCodeTranslator = new MorseCodeTranslator();
-            this.currentUser = User.getInstance();
-            currentUser.addView("PracticeTypingView");
+            App.currentUser.addView("PracticeTypingView");
             // Set the action for the translate button
             translateButton.setOnAction(event -> translateMorseCode());
 
@@ -41,9 +39,8 @@ public class PracticeTypingController {
             englishOutput.setText(translatedText);
         }
 
-    @FXML
-    private void switchToHomeScreenView() throws IOException {
-        App.setRoot("HomeScreenView");
-    }
+    @FXML private void switchToHomeScreenView() throws IOException {App.setRoot("HomeScreenView");}
+    @FXML private void switchToSettingsView() throws IOException{App.setRoot("ControlMenuView");}
+
 }
 

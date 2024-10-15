@@ -15,7 +15,6 @@ public class User {
     private boolean showCWAcronyms; // Boolean to show CW acronyms
     private Map<String, String> keyFirstActionMap;
     private Map<String, String> actionFirstActionMap;
-    private static User instance;
 
     // Constructor
     public User() {
@@ -32,18 +31,18 @@ public class User {
     }
 
     public void setActionMap(String restartAudioKeyField, String checkTranslationKeyField, String newAudioKeyField, String settingsKeyField,
-                             String mainMenuKeyField, String translateKeyField, String datKeyField, String ditKeyField, String escKeyField, String pauseKeyField
+                             String mainMenuKeyField, String translateKeyField, String dahKeyField, String ditKeyField, String escKeyField, String pauseKeyField
     ) {
         setKeyFirstActionMap(restartAudioKeyField, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
-                mainMenuKeyField, translateKeyField, datKeyField, ditKeyField, escKeyField, pauseKeyField
+                mainMenuKeyField, translateKeyField, dahKeyField, ditKeyField, escKeyField, pauseKeyField
         );
         setActionFirstActionMap(restartAudioKeyField, checkTranslationKeyField, newAudioKeyField, settingsKeyField,
-                mainMenuKeyField, translateKeyField, datKeyField, ditKeyField,
+                mainMenuKeyField, translateKeyField, dahKeyField, ditKeyField,
 escKeyField, pauseKeyField);
     }
 
     private void setKeyFirstActionMap(String restartAudioKey, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
-                                      String translateKey, String datKey, String ditKey, String escKey, String pauseKey
+                                      String translateKey, String dahKey, String ditKey, String escKey, String pauseKey
     ) {
         // Map keyboard keys to actions
         keyFirstActionMap.put(restartAudioKey, "restartAudio");    // Restart audio
@@ -52,14 +51,14 @@ escKeyField, pauseKeyField);
         keyFirstActionMap.put(settingsKey, "settings");        // Settings
         keyFirstActionMap.put(mainMenuKey, "mainMenu");        // Main menu
         keyFirstActionMap.put(translateKey, "translate");       // Translate
-        keyFirstActionMap.put(datKey, "datAction");             // Dat action
+        keyFirstActionMap.put(dahKey, "dahAction");             // Dah action
         keyFirstActionMap.put(ditKey, "ditAction");             // Dit action
         keyFirstActionMap.put(escKey, "escape");                // Escape action
         keyFirstActionMap.put(pauseKey, "pause");               // Pause action
     }
 
     private void setActionFirstActionMap(String restartAudioKey, String checkTranslationKey, String newAudioKey, String settingsKey, String mainMenuKey,
-                                         String translateKey, String datKey, String ditKey, String escKey, String pauseKey
+                                         String translateKey, String dahKey, String ditKey, String escKey, String pauseKey
     ) {
         // Map actions to keyboard keys
         actionFirstActionMap.put("restartAudio", restartAudioKey);    // Restart audio
@@ -68,7 +67,7 @@ escKeyField, pauseKeyField);
         actionFirstActionMap.put("settings", settingsKey);        // Settings
         actionFirstActionMap.put("mainMenu", mainMenuKey);        // Main menu
         actionFirstActionMap.put("translate", translateKey);       // Translate
-        actionFirstActionMap.put("datAction", datKey);             // Dat action
+        actionFirstActionMap.put("dahAction", dahKey);             // dah action
         actionFirstActionMap.put("ditAction", ditKey);             // Dit action
         actionFirstActionMap.put("escape", escKey);                // Escape action
         actionFirstActionMap.put("pause", pauseKey);               // Pause action
@@ -147,13 +146,6 @@ escKeyField, pauseKeyField);
         else{
             return "HomeScreenView";
         }
-    }
-
-    public static User getInstance() {
-        if (instance == null) {
-            instance = new User();
-        }
-        return instance;
     }
 }
 

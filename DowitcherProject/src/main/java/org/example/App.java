@@ -14,11 +14,10 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    private User currentUser;
+    public static User currentUser = new User();
 
     @Override
     public void start(Stage stage) throws IOException {
-        User user = User.getInstance();
         scene = new Scene(loadFXML("HomeScreenView"), 640, 480);
         stage.setScene(scene);
         stage.show();

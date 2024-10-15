@@ -31,17 +31,15 @@ public class ControlMenuController {
 
     private final Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
     private TextField activeTextField = null; //Chat gpt made
-    private User currentUser;
 
     @FXML public void initialize() {
         addFocusListeners();
         checkForDuplicateKeys();
-        this.currentUser = User.getInstance();
         setActionTextField();
     }
 
     private void setActionTextField(){
-        Map<String, String> actionMap = currentUser.getActionFirstActionMap();
+        Map<String, String> actionMap = App.currentUser.getActionFirstActionMap();
         for (Map.Entry<String, String> entry : actionMap.entrySet()) {
             String action = entry.getKey();
             String key = entry.getValue();
@@ -118,13 +116,13 @@ public class ControlMenuController {
             String settingsKey = processedKeyInput(settingsKeyField.getText());
             String mainMenuKey = processedKeyInput(mainMenuKeyField.getText());
             String translateKey = processedKeyInput(translateKeyField.getText());
-            String datKey = processedKeyInput(datKeyField.getText());
+            String dahKey = processedKeyInput(datKeyField.getText());
             String ditKey = processedKeyInput(ditKeyField.getText());
             String escKey = processedKeyInput(escKeyField.getText());
             String pauseKey = processedKeyInput(pauseKeyField.getText());
 
             // Update the user's action map with the new bindings
-            currentUser.setActionMap(restartAudioKey, checkTranslationKey, newAudioKey, settingsKey, mainMenuKey, translateKey, datKey, ditKey, escKey, pauseKey);
+            App.currentUser.setActionMap(restartAudioKey, checkTranslationKey, newAudioKey, settingsKey, mainMenuKey, translateKey, dahKey, ditKey, escKey, pauseKey);
 
             // Optionally, provide feedback to the user that the save was successful
             System.out.println("Key bindings saved successfully.");
@@ -141,7 +139,7 @@ public class ControlMenuController {
     }
 
     @FXML private void handleBackButton() throws IOException {
-        String previousView = currentUser.popLastView();
+        String previousView = App.currentUser.popLastView();
         App.setRoot(previousView);
     }
 
