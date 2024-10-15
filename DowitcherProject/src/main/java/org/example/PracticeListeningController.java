@@ -33,9 +33,10 @@ public class PracticeListeningController{
     Random random = new Random();
 
 
-
     private Boolean isPaused = true;
     private int pauseIndex;
+    private Thread audioThread;
+    private volatile boolean stopAudio = false;
 
     @FXML
     // Initializes HashMap and fills it with all practice messages
@@ -49,8 +50,6 @@ public class PracticeListeningController{
         newAudio();
     }
 
-
-
     @FXML
     // If audio is paused, plays audio and changes button to say pause
     // If audio is playing, pauses audio and changes button to say play
@@ -58,6 +57,7 @@ public class PracticeListeningController{
         char[] messageArray = cwAudio.toCharArray();
         if (isPaused){
             isPaused = false;
+            stopAudio = false;
             playAudio(pauseIndex,messageArray);
             playPauseAudioButton.setText("Pause");
         } else {
@@ -68,9 +68,11 @@ public class PracticeListeningController{
 
     //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
     private void playAudio(int index, char[] messageArray) throws InterruptedException {
-        Thread audioThread = new Thread(() -> {
+        stopAudioPlayback();
+
+        audioThread = new Thread(() -> {
             for (int i = index; i < messageArray.length; i++) {
-                if (isPaused) {
+                if (isPaused || stopAudio) {
                     pauseIndex = i;
                     break;
                 }
@@ -91,12 +93,25 @@ public class PracticeListeningController{
     }
 
     @FXML
-    // Starts audio from beginning
+    // Restarts the audio that is playing
     private void restartAudio() throws InterruptedException {
+        stopAudioPlayback();
+
         char[] messageArray = cwAudio.toCharArray();
         pauseIndex = 0;
-        isPaused = false;
-        playAudio(pauseIndex, messageArray);
+        isPaused = true;
+        stopAudio = false;
+        playPauseAudioButton.setText("Play");
+    }
+
+    @FXML
+    // Stops the current audio that is playing
+    private void stopAudioPlayback() throws InterruptedException {
+        if (audioThread != null && audioThread.isAlive()) {
+            stopAudio = true;
+            audioThread.join();
+            stopAudio = false;
+        }
     }
 
     @FXML
@@ -160,15 +175,22 @@ public class PracticeListeningController{
 
         cwMessage = allCWMessages.get(randomMessageNum);
         cwAudio = cwMessagesList.get(cwMessage);
+        userInputTextArea.clear();
 
         // For testing
         System.out.println(cwMessage + " " + cwAudio);
     }
 
     // Switches screen to controls screen
-    @FXML private void switchToSettingsView() throws IOException{App.setRoot("ControlMenuView");}
+    @FXML private void switchToSettingsView() throws IOException, InterruptedException {
+        stopAudioPlayback();
+        App.setRoot("ControlMenuView");
+    }
 
     // Switches view to main menu
-    @FXML private void switchToHomeScreenView() throws IOException{App.setRoot("HomeScreenView");}
+    @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {
+        stopAudioPlayback();
+        App.setRoot("HomeScreenView");
+    }
 
 }
