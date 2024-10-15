@@ -14,7 +14,7 @@ public class Sound {
     }
 
     private static void playDitOrDah(String file) {
-        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();  //find a mixer that can play the audio clip
+        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
         Clip audioClip = null;
         for (Mixer.Info info : mixerInfo) {
             Mixer mixer = AudioSystem.getMixer(info);
