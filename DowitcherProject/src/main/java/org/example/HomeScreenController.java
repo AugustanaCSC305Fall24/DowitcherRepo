@@ -19,20 +19,19 @@ public class HomeScreenController {
     @FXML private Button toTutorialViewButton;
     @FXML private Button exitProgramButton;
 
-    @FXML void handleLiveChatButton(ActionEvent event) {handleUnbuiltButton(toLiveChatViewButton);}
-    @FXML private void switchToPracticeListeningView() throws IOException {
-        App.setRoot("PracticeListeningView");
-    }
-    @FXML private void switchToPracticeTypingView() throws IOException {
-        App.setRoot("PracticeTypingView");
-    }
-    @FXML void handleToTalkButton(ActionEvent event) {handleUnbuiltButton(toTalkViewButton);}
-    @FXML void handleTutorialButton(ActionEvent event) {handleUnbuiltButton(toTutorialViewButton);}
+
+    // All full made buttons on home tab
+    @FXML private void switchToPracticeListeningView() throws IOException {App.setRoot("PracticeListeningView");}
+    @FXML private void switchToPracticeTypingView() throws IOException {App.setRoot("PracticeTypingView");}
+    @FXML private void switchToPracticeTalkingView() throws IOException {App.setRoot("PracticeTalkingView");}
     @FXML private void handleExitProgramButton() {Stage stage = (Stage) exitProgramButton.getScene().getWindow();stage.close();}
+
+    // Temp methods
+    @FXML void handleLiveChatButton(ActionEvent event) {handleUnbuiltButton(toLiveChatViewButton);}
+    @FXML void handleTutorialButton(ActionEvent event) {handleUnbuiltButton(toTutorialViewButton);}
     @FXML private void handleUnbuiltButton(Button object){
         object.setText("Not For This Sprint!");
     }
-
 
     //SettingsTab
     @FXML private Button switchToControlMenuButton;

@@ -23,7 +23,7 @@
                   <Button fx:id="toLiveChatViewButton" mnemonicParsing="false" onAction="#handleLiveChatButton" text="Live Chat" />
                   <Button fx:id="toListenViewButton" mnemonicParsing="false" onAction="#switchToPracticeListeningView" text="Practice Listening" />
                   <Button fx:id="toTypeViewButton" mnemonicParsing="false" onAction="#switchToPracticeTypingView" text="Practice Typing" />
-                  <Button fx:id="toTalkViewButton" mnemonicParsing="false" onAction="#handleToTalkButton" text="Practice Talking" />
+                  <Button fx:id="toTalkViewButton" mnemonicParsing="false" onAction="#switchToPracticeTalkingView" text="Practice Talking" />
                   <Button fx:id="toTutorialViewButton" mnemonicParsing="false" onAction="#handleTutorialButton" text="Tutorial" />
                   <Button fx:id="exitProgramButton" mnemonicParsing="false" onAction="#handleExitProgramButton" text="Exit" />
                </children>
