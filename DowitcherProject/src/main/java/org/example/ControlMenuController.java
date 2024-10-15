@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -19,13 +18,13 @@ public class ControlMenuController {
 
     //Keys
     @FXML private TextField checkTranslationKeyField;
-    @FXML private TextField datKeyField;
+    @FXML private TextField dahKeyField;
     @FXML private TextField ditKeyField;
     @FXML private TextField escKeyField;
     @FXML private TextField mainMenuKeyField;
     @FXML private TextField newAudioKeyField;
     @FXML private TextField pauseKeyField;
-    @FXML private TextField restartAudioKeyField;
+    @FXML private TextField playPauseAudioKeyField;
     @FXML private TextField settingsKeyField;
     @FXML private TextField translateKeyField;
 
@@ -44,8 +43,8 @@ public class ControlMenuController {
             String action = entry.getKey();
             String key = entry.getValue();
             switch (action) {
-                case "restartAudio":
-                    restartAudioKeyField.setText(key);
+                case "playPauseAudio":
+                    playPauseAudioKeyField.setText(key);
                     break;
                 case "checkTranslation":
                     checkTranslationKeyField.setText(key);
@@ -62,8 +61,8 @@ public class ControlMenuController {
                 case "translate":
                     translateKeyField.setText(key);
                     break;
-                case "datAction":
-                    datKeyField.setText(key);
+                case "dahAction":
+                    dahKeyField.setText(key);
                     break;
                 case "ditAction":
                     ditKeyField.setText(key);
@@ -110,13 +109,13 @@ public class ControlMenuController {
         checkForDuplicateKeys(); // Check for duplicate keys before proceeding with saving
         if (!checkForDuplicateKeys()) {
             // Retrieve the key bindings from each text field
-            String restartAudioKey = processedKeyInput(restartAudioKeyField.getText());
+            String restartAudioKey = processedKeyInput(playPauseAudioKeyField.getText());
             String checkTranslationKey = processedKeyInput(checkTranslationKeyField.getText());
             String newAudioKey = processedKeyInput(newAudioKeyField.getText());
             String settingsKey = processedKeyInput(settingsKeyField.getText());
             String mainMenuKey = processedKeyInput(mainMenuKeyField.getText());
             String translateKey = processedKeyInput(translateKeyField.getText());
-            String dahKey = processedKeyInput(datKeyField.getText());
+            String dahKey = processedKeyInput(dahKeyField.getText());
             String ditKey = processedKeyInput(ditKeyField.getText());
             String escKey = processedKeyInput(escKeyField.getText());
             String pauseKey = processedKeyInput(pauseKeyField.getText());

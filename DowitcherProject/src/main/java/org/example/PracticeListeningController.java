@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import java.io.IOException;
@@ -12,9 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import static org.example.Sound.playDitOrDah;
 
 
-public class PracticeListeningController{
+public class PracticeListeningController {
 
     // All FXML elements on screen that are interacted with
     @FXML private Button mainMenuButton;
@@ -38,6 +40,7 @@ public class PracticeListeningController{
     private Thread audioThread;
     private volatile boolean stopAudio = false;
 
+
     @FXML
     // Initializes HashMap and fills it with all practice messages
     // Then generates a starting message
@@ -47,7 +50,12 @@ public class PracticeListeningController{
         cwMessagesList.put("ALPHA", ".- .-.. .--. .... .-");
         cwMessagesList.put("BRAVO", "-... .-. .- ...- ---");
         cwMessagesList.put("PAPA", ".--. .- .--. .-.. ---");
+        cwMessagesList.put("HI", ".... ..");
+        cwMessagesList.put("OK", "--- -.-");
+        cwMessagesList.put("YES", "-.-- . ...");
+        cwMessagesList.put("NO", "-. ---");
         newAudio();
+
     }
 
     @FXML
@@ -89,7 +97,15 @@ public class PracticeListeningController{
                 }
             }
         });
-        audioThread.start();
+
+        App.currentUser.addView("PracticeListeningView");
+        App.getScene().setOnKeyPressed(event -> {
+            try {
+                handleKeyPress(event);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FXML
@@ -162,9 +178,6 @@ public class PracticeListeningController{
     // Sets cwMessage and cwAudio to a random new message and audio from
     // the HashMap containing all the messages and audios
     private void newAudio() {
-        pauseIndex = 0;
-        isPaused = true;
-        playPauseAudioButton.setText("Play");
         List<String> allCWMessages = new ArrayList<>(cwMessagesList.keySet());
         int randomMessageNum = random.nextInt(allCWMessages.size());
 
@@ -191,6 +204,40 @@ public class PracticeListeningController{
     @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {
         stopAudioPlayback();
         App.setRoot("HomeScreenView");
+    }
+
+    private void handleKeyPress(KeyEvent event) throws IOException, InterruptedException {
+        String pressedKey = event.getCode().toString(); // Get the pressed key as a string
+
+        // Check if the pressed key has a corresponding action in the map
+        String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
+        if (action != null) {
+            switch (action) {
+                case "playPauseAudio":
+                    playPauseAudio();
+                    System.out.println("Playing/Pausing audio...");
+                    break;
+                case "checkTranslation":
+                    checkTranslation();
+                    System.out.println("Checking translating...");
+                    break;
+                case "newAudio":
+                    newAudio();
+                    System.out.println("New audio...");
+                    break;
+                case "settings":
+                    switchToSettingsView();
+                    System.out.println("Switching to controls view.");
+                    break;
+                case "mainMenu":
+                    switchToHomeScreenView();
+                    System.out.println("Switching to main menu.");
+                    break;
+                default:
+                    System.out.println("No action assigned for this key.");
+                    break;
+            }
+        }
     }
 
 }
