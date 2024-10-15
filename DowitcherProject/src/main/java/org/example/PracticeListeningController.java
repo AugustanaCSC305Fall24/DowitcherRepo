@@ -55,6 +55,14 @@ public class PracticeListeningController {
         cwMessagesList.put("YES", "-.-- . ...");
         cwMessagesList.put("NO", "-. ---");
         newAudio();
+        App.currentUser.addView("PracticeListeningView");
+        App.getScene().setOnKeyPressed(event -> {
+            try {
+                handleKeyPress(event);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FXML
@@ -97,15 +105,6 @@ public class PracticeListeningController {
             }
         });
         audioThread.start();
-
-        App.currentUser.addView("PracticeListeningView");
-        App.getScene().setOnKeyPressed(event -> {
-            try {
-                handleKeyPress(event);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     @FXML
@@ -193,7 +192,6 @@ public class PracticeListeningController {
         cwMessage = allCWMessages.get(randomMessageNum);
         cwAudio = cwMessagesList.get(cwMessage);
         userInputTextArea.clear();
-
         // For testing
         System.out.println(cwMessage + " " + cwAudio);
     }
