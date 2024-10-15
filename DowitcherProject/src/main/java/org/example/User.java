@@ -20,15 +20,15 @@ public class User {
     // Constructor
     public User() {
         this.viewStack = new Stack<>();
-        this.cwSpeed = 1.0; // Default value
-        this.volume = 1.0; // Default value
-        this.staticAmount = 1.0; // Default value
+        this.cwSpeed = 3; // Default value
+        this.volume = 50.0; // Default value
+        this.staticAmount = 50.0; // Default value
         this.showCWLetters = true; // Default value
         this.showCWAcronyms = true; // Default value
         this.keyFirstActionMap = new HashMap<>();
         this.actionFirstActionMap = new HashMap<>();
         //Setting default keys for the action map
-        setActionMap("R", "T", "N", "S", "M", "L", "D1", "D2", "ESC", "P");
+        setActionMap("R", "T", "N", "S", "M", "L", "A", "S", "ESC", "P");
     }
 
     public void setActionMap(String restartAudioKeyField, String checkTranslationKeyField, String newAudioKeyField, String settingsKeyField,

@@ -20,8 +20,14 @@ public class HomeScreenController {
     @FXML private Button exitProgramButton;
 
     @FXML void handleLiveChatButton(ActionEvent event) {handleUnbuiltButton(toLiveChatViewButton);}
-    @FXML private void switchToPracticeListeningView() throws IOException {App.setRoot("PracticeListeningView");}
-    @FXML private void switchToPracticeTypingView() throws IOException {App.setRoot("PracticeTypingView");}
+    @FXML private void switchToPracticeListeningView() throws IOException {
+        App.setRoot("PracticeListeningView");
+        currentUser.addView("HomeScreenView");
+    }
+    @FXML private void switchToPracticeTypingView() throws IOException {
+        App.setRoot("PracticeTypingView");
+        currentUser.addView("HomeScreenView");
+    }
     @FXML void handleToTalkButton(ActionEvent event) {handleUnbuiltButton(toTalkViewButton);}
     @FXML void handleTutorialButton(ActionEvent event) {handleUnbuiltButton(toTutorialViewButton);}
     @FXML private void handleExitProgramButton() {Stage stage = (Stage) exitProgramButton.getScene().getWindow();stage.close();}
@@ -49,7 +55,10 @@ public class HomeScreenController {
         showCWAcronymsCheckBox.setSelected(currentUser.isShowCWAcronyms());
     }
 
-    @FXML void switchToControlMenuView() throws IOException {App.setRoot("ControlMenuView");}
+    @FXML void switchToControlMenuView() throws IOException {
+        App.setRoot("ControlMenuView");
+        currentUser.addView("HomeScreenView");
+    }
 
     @FXML void handleCWLettersCheckBox(ActionEvent event) {}
     @FXML void handleCWAcronymsCheckBox(ActionEvent event) {}
