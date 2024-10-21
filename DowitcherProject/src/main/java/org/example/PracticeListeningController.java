@@ -7,13 +7,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import static org.example.Sound.playDitOrDah;
+//import static org.example.Sound.playDitOrDah;
 
 
 public class PracticeListeningController {
@@ -92,9 +94,17 @@ public class PracticeListeningController {
                     break;
                 }
                 if (messageArray[i] == '-') {
-                    Sound.playDah();
+                    try {
+                        Sound.playDah();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (messageArray[i] == '.') {
-                    Sound.playDit();
+                    try {
+                        Sound.playDit();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (messageArray[i] == ' ') {
                     try {
                         Thread.sleep(500);
