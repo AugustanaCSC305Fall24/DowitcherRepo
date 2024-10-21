@@ -4,47 +4,39 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 
+
+
 public class Sound {
-    public static void playDit() {
-        playDitOrDah("/dit.wav");
+
+    private static int ditDuration = 100;
+    private static int ditFrequency = 800;
+    private static int dahDuration = 300;
+    private static int dahFrequency = 800;
+
+    public static void playDit() throws LineUnavailableException {
+        playTone(ditFrequency,ditDuration);
     }
 
-    public static void playDah() {
-        playDitOrDah("/dah.wav");
+    public static void playDah() throws LineUnavailableException {
+        playTone(dahFrequency,dahDuration);
     }
 
-    public static void playDitOrDah(String file) {
-        Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();  //find a mixer that can audioPlaying the audio clip
-        Clip audioClip = null;
-        for (Mixer.Info info : mixerInfo) {
-            Mixer mixer = AudioSystem.getMixer(info);
-            DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
+    public static void playTone(int frequency, int duration) throws LineUnavailableException {
+        AudioFormat audioFormat = new AudioFormat(44100,8,1,true,false);
+        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+        SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+        sourceDataLine.open(audioFormat);
+        sourceDataLine.start();
 
-            if (mixer.isLineSupported(dataInfo)) {
-                try {
-                    audioClip = (Clip) mixer.getLine(dataInfo);
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                }
-            }
+        byte[] data = new byte[duration * 44100 /1000];
+
+        for(int i = 0; i < data.length; i++){
+            double angle = i / (44100.0/frequency) * 2.0 * Math.PI;
+            data[i] = (byte) (Math.sin(angle) * 127 +128);
         }
-        try {
-            URL soundURL = Sound.class.getResource(file);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
-            audioClip.open(audioStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-            return;
-        }
-        audioClip.start();
-        do {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } while (audioClip.isActive());
-        audioClip.close();
+        sourceDataLine.write(data,0, data.length);
+        sourceDataLine.drain();
+        sourceDataLine.close();
     }
 
 }
