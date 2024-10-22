@@ -35,12 +35,10 @@ public class Sound {
         sourceDataLine.start();
 
         byte[] data = new byte[duration * 44100 /1000];
-        double volumeFactor = User.getVolume() / 100;
 
         for(int i = 0; i < data.length; i++){
             double angle = i / (44100.0/frequency) * 2.0 * Math.PI;
-            data[i] = (byte) ((Math.sin(angle) * 127 * volumeFactor)  +128);
-            //data[i] = (byte) (Math.sin(angle) * 127 +128);
+            data[i] = (byte) (Math.sin(angle) * 127 +128);
         }
         sourceDataLine.write(data,0, data.length);
         sourceDataLine.drain();
