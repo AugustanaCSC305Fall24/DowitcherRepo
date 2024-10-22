@@ -17,14 +17,12 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="12.0" layoutY="378.0" prefHeight="100.0" prefWidth="610.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="-10.0" layoutY="393.0" prefHeight="45.0" prefWidth="633.0" spacing="10.0">
          <children>
             <Button fx:id="playPauseAudioButton" mnemonicParsing="false" onAction="#playPauseAudio" text="Play" />
             <Button fx:id="restartAudioButton" mnemonicParsing="false" onAction="#restartAudio" text="Restart Audio" />
             <Button fx:id="checkTranslationButton" mnemonicParsing="false" onAction="#checkTranslation" text="Check Translation" />
             <Button fx:id="newAudioButton" mnemonicParsing="false" onAction="#newAudio" text="New Audio" />
-            <Button fx:id="goToSettingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSettingsView" prefHeight="26.0" prefWidth="69.0" text="Settings" />
-            <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#switchToHomeScreenView" prefHeight="26.0" prefWidth="80.0" text="Main Menu" />
          </children>
          <padding>
             <Insets left="25.0" right="25.0" />
@@ -70,6 +68,16 @@
             <Label prefHeight="17.0" prefWidth="119.0" text="Input Translation --&gt;" />
             <TextField fx:id="userInputTextField" prefHeight="26.0" prefWidth="339.0" />
          </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="-10.0" layoutY="438.0" prefHeight="45.0" prefWidth="633.0" spacing="10.0">
+         <children>
+            <Button fx:id="goToSettingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSettingsView" prefHeight="26.0" prefWidth="69.0" text="Settings" />
+            <Button fx:id="practiceMenuButton" mnemonicParsing="false" onAction="#handlePracticeMenuButton" text="Practice Menu" />
+            <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#switchToHomeScreenView" prefHeight="26.0" prefWidth="80.0" text="Main Menu" />
+         </children>
+         <padding>
+            <Insets left="25.0" right="25.0" />
+         </padding>
       </HBox>
    </children>
 </AnchorPane>

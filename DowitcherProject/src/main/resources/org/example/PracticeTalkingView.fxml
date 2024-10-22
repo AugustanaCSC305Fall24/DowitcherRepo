@@ -82,7 +82,7 @@
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="800.0" spacing="30.0">
                <children>
                   <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#handleMainMenuButton" text="Main Menu" />
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+                  <Button fx:id="practiceMenuButton" mnemonicParsing="false" onAction="#handlePracticeMenuButton" text="Practice Menu" />
                </children>
             </HBox>
          </children>

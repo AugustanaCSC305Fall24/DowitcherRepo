@@ -20,7 +20,7 @@ public class AccountCreationController {
     @FXML void handlePasswordTextfield(ActionEvent event) {}
     @FXML void handleSignUpButton(ActionEvent event) {}
     @FXML void handleUsernameTextfield(ActionEvent event) {}
-    
+
 
 
     //-----------------------------------------------------------------------------------------------------

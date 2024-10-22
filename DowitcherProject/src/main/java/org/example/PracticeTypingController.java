@@ -9,19 +9,16 @@ import java.io.IOException;
 
 public class PracticeTypingController {
 
-        @FXML
-        private TextArea morseCodeInput;
-
-        @FXML
-        private Button translateButton;
-
-        @FXML
-        private Button backButton;
-
-        @FXML
-        private TextArea englishOutput;
-
+    // Data
+        @FXML private TextArea morseCodeInput;
+        @FXML private Button translateButton;
+        @FXML private Button practiceMenuButton;
+        @FXML private TextArea englishOutput;
         private MorseCodeTranslator morseCodeTranslator;
+
+        //Handlers
+        @FXML private void handlePracticeMenuButton() throws IOException {App.setRoot("PracticeMenuView");}
+
 
     // Initialize the controller and translator
         @FXML
@@ -47,7 +44,7 @@ public class PracticeTypingController {
         }
 
     @FXML private void switchToHomeScreenView() throws IOException {App.setRoot("HomeScreenView");}
-    @FXML private void switchToSettingsView() throws IOException{App.setRoot("ControlMenuView");}
+    @FXML private void switchToSettingsView() throws IOException{App.setRoot("SettingsView");}
 
     private void handleKeyPress(KeyEvent event) throws IOException {
         String pressedKey = event.getCode().toString(); // Get the pressed key as a string
