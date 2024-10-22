@@ -3,7 +3,7 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -27,7 +27,8 @@ public class PracticeListeningController {
     @FXML private Button restartAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
-    @FXML private TextArea userInputTextArea;
+    @FXML private TextField userInputTextField;
+    @FXML private ScrollPane userInputScrollPane;
     @FXML private ScrollPane correctAnswerScrollPane;
 
 
@@ -144,45 +145,57 @@ public class PracticeListeningController {
     // Text is displayed as green is character is correct
     // or is set as red if character is incorrect
     private void checkTranslation() {
-        String userTranslation = userInputTextArea.getText();
-        TextFlow correctedTranslation = new TextFlow();
-        Text checkedLetter;
+        String userTranslation = userInputTextField.getText();
+        TextFlow checkedUserInput = new TextFlow();
+        TextFlow correctTranslation = new TextFlow();
+        Text checkedUserLetter;
+        Text checkedCorrectLetter;
 
         for (int i = 0; i < userTranslation.length(); i++) {
 
             // Prevents program from crashing if message put in by user
             // is longer than the correct message
+            checkedUserLetter = new Text(Character.toString(userTranslation.charAt(i)).toUpperCase());
             if (i >= cwMessage.length()) {
-                checkedLetter = new Text(" ");
-                checkedLetter.setStyle("-fx-fill: red;");
+                checkedUserLetter.setStyle("-fx-fill: red;");
+                checkedCorrectLetter = new Text("");
             } else {
-                checkedLetter = new Text(Character.toString(cwMessage.charAt(i)));
 
                 // Determines if the character is correct or incorrect
                 // and sets it to the appropriate color
-                if (userTranslation.charAt(i) == cwMessage.charAt(i)) {
-                    checkedLetter.setStyle("-fx-fill: green;");
+                if (Character.toUpperCase(userTranslation.charAt(i)) == Character.toUpperCase(cwMessage.charAt(i))) {
+                    checkedUserLetter.setStyle("-fx-fill: green;");
+                    checkedCorrectLetter = new Text(Character.toString(cwMessage.charAt(i)));
                 } else {
-                    checkedLetter.setStyle("-fx-fill: red;");
+                    checkedUserLetter.setStyle("-fx-fill: red;");
+                    checkedCorrectLetter = new Text("_");
                 }
             }
 
-            correctedTranslation.getChildren().addAll(checkedLetter);
+            checkedUserInput.getChildren().addAll(checkedUserLetter);
+            correctTranslation.getChildren().addAll(checkedCorrectLetter);
+
         }
 
         // Displays the remaining cwMessage as incorrect if user's input
         // is shorter than the correct message.
         if (cwMessage.length() > userTranslation.length()) {
             for (int i = userTranslation.length(); i < cwMessage.length(); i++) {
-                checkedLetter = new Text(Character.toString(cwMessage.charAt(i)));
-                checkedLetter.setStyle("-fx-fill: red;");
-                correctedTranslation.getChildren().addAll(checkedLetter);
+                checkedCorrectLetter = new Text("_");
+                correctTranslation.getChildren().addAll(checkedCorrectLetter);
             }
         }
 
-        correctAnswerScrollPane.setContent(correctedTranslation);
+        // Specific to PracticeListening
+        saveCheckedTranslations(checkedUserInput, correctTranslation);
     }
 
+    @FXML
+    private void saveCheckedTranslations(TextFlow userInput, TextFlow correctTranslation) {
+        userInputScrollPane.setContent(userInput);
+        correctAnswerScrollPane.setContent(correctTranslation);
+        userInputTextField.clear();
+    }
 
     @FXML
     // Sets cwMessage and cwAudio to a random new message and audio from
@@ -201,7 +214,8 @@ public class PracticeListeningController {
 
         cwMessage = allCWMessages.get(randomMessageNum);
         cwAudio = cwMessagesList.get(cwMessage);
-        userInputTextArea.clear();
+        userInputTextField.clear();
+
         // For testing
         System.out.println(cwMessage + " " + cwAudio);
     }
