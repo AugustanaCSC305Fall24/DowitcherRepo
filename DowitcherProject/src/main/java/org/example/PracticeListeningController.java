@@ -43,6 +43,8 @@ public class PracticeListeningController {
     private Thread audioThread;
     private volatile boolean stopAudio = false;
 
+    private final List<TextFlow> userInputsList = new ArrayList<>();
+    private final List<TextFlow> correctTranslationsList = new ArrayList<>();
 
     @FXML
     // Initializes HashMap and fills it with all practice messages
@@ -84,6 +86,7 @@ public class PracticeListeningController {
         }
     }
 
+    @FXML
     //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
     private void playAudio(int index, char[] messageArray) throws InterruptedException {
         stopAudioPlayback();
@@ -141,9 +144,9 @@ public class PracticeListeningController {
     }
 
     @FXML
-    // Checks the translation put in by the user
-    // Text is displayed as green is character is correct
+    // Checks the translation put in by the user and text is displayed as green is character is correct
     // or is set as red if character is incorrect
+    // Displays correct letters of the translation and _ for incorrect letter
     private void checkTranslation() {
         String userTranslation = userInputTextField.getText();
         TextFlow checkedUserInput = new TextFlow();
@@ -187,13 +190,41 @@ public class PracticeListeningController {
         }
 
         // Specific to PracticeListening
-        saveCheckedTranslations(checkedUserInput, correctTranslation);
+        updateCheckedTranslations(checkedUserInput, correctTranslation);
     }
 
     @FXML
-    private void saveCheckedTranslations(TextFlow userInput, TextFlow correctTranslation) {
-        userInputScrollPane.setContent(userInput);
-        correctAnswerScrollPane.setContent(correctTranslation);
+    // Adds lines to the userInputScrollPane and correctAnswerScrollPane while keeping previous lines
+    private void updateCheckedTranslations(TextFlow userInput, TextFlow correctTranslation) {
+        // Add new translations to the lists
+        userInputsList.add(userInput);
+        correctTranslationsList.add(correctTranslation);
+
+        // Clear previous content from ScrollPanes
+        userInputScrollPane.setContent(null);
+        correctAnswerScrollPane.setContent(null);
+
+        // Create a new TextFlow to hold all previous translations
+        TextFlow allUserInputs = new TextFlow();
+        TextFlow allCorrectTranslations = new TextFlow();
+
+        // Append all previous user inputs with line breaks
+        for (TextFlow input : userInputsList) {
+            allUserInputs.getChildren().add(input);
+            allUserInputs.getChildren().add(new Text("\n"));
+        }
+
+        // Append all previous correct translations with line breaks
+        for (TextFlow correct : correctTranslationsList) {
+            allCorrectTranslations.getChildren().add(correct);
+            allCorrectTranslations.getChildren().add(new Text("\n"));
+        }
+
+        // Set the updated content in the ScrollPanes
+        userInputScrollPane.setContent(allUserInputs);
+        correctAnswerScrollPane.setContent(allCorrectTranslations);
+
+        // Clear the input field
         userInputTextField.clear();
     }
 
@@ -212,12 +243,29 @@ public class PracticeListeningController {
             randomMessageNum = random.nextInt(allCWMessages.size());
         }
 
+        TextFlow userInputLineBreak = generateLineBreak();
+        TextFlow correctAnswersLineBreak = generateLineBreak();
+        updateCheckedTranslations(userInputLineBreak, correctAnswersLineBreak);
+
         cwMessage = allCWMessages.get(randomMessageNum);
         cwAudio = cwMessagesList.get(cwMessage);
         userInputTextField.clear();
 
         // For testing
         System.out.println(cwMessage + " " + cwAudio);
+    }
+
+    @FXML
+    // Generates a new line break for the ScrollPanes
+    private TextFlow generateLineBreak() {
+        TextFlow lineBreak = new TextFlow();
+        int lineBreakLength = 40;
+        for (int i = 0; i < lineBreakLength; i++) {
+            Text dash = new Text("-");
+            dash.setStyle("-fx-fill: black;");
+            lineBreak.getChildren().add(dash);
+        }
+        return lineBreak;
     }
 
     // Switches screen to controls screen
