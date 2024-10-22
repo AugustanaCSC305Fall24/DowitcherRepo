@@ -4,20 +4,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="430.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PracticeListeningController">
+<AnchorPane prefHeight="498.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PracticeListeningController">
    <children>
       <Label layoutX="207.0" layoutY="14.0" text="Practice Listening">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="12.0" layoutY="330.0" prefHeight="100.0" prefWidth="610.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="12.0" layoutY="378.0" prefHeight="100.0" prefWidth="610.0" spacing="10.0">
          <children>
             <Button fx:id="playPauseAudioButton" mnemonicParsing="false" onAction="#playPauseAudio" text="Play" />
             <Button fx:id="restartAudioButton" mnemonicParsing="false" onAction="#restartAudio" text="Restart Audio" />
@@ -34,12 +34,16 @@
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="275.0" spacing="10.0">
                <children>
-                  <Label text="Translate What You Hear -">
+                  <Label text="Your Translation -">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="userInputTextArea" prefHeight="200.0" />
+                  <ScrollPane fx:id="userInputScrollPane" prefHeight="200.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="275.0" spacing="10.0">
@@ -60,6 +64,12 @@
          <padding>
             <Insets left="15.0" right="15.0" />
          </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="27.0" layoutY="329.0" prefHeight="72.0" prefWidth="580.0" spacing="10.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="119.0" text="Input Translation --&gt;" />
+            <TextField fx:id="userInputTextField" prefHeight="26.0" prefWidth="339.0" />
+         </children>
       </HBox>
    </children>
 </AnchorPane>
