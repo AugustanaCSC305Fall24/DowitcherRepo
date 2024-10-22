@@ -13,7 +13,7 @@ public class User {
     // User Setting Data
     private Stack<String> viewStack; // Stack to hold last views
     private double cwSpeed; // Slider for CW speed
-    private double volume; // Slider for volume
+    private static double volume; // Slider for volume
     private double staticAmount; // Slider for static amount
     private boolean showCWLetters; // Boolean to show CW letters
     private boolean showCWAcronyms; // Boolean to show CW acronyms
@@ -49,7 +49,7 @@ public class User {
     public String getPassword(){return password;}
     public String getEmail(){return email;}
     public double getCwSpeed() {return cwSpeed;}
-    public double getVolume() {return volume;}
+    public static double getVolume() {return volume;}
     public double getStaticAmount() {return staticAmount;}
     public boolean getShowCWLetters() {return showCWLetters;}
     public boolean getShowCWAcronyms() {return showCWAcronyms;}
