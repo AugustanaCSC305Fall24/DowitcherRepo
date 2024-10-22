@@ -14,7 +14,8 @@ import java.util.HashMap;
 
 public class PracticeTalkingController {
 
-    @FXML private Button backButton;
+    //Data
+    @FXML private Button practiceMenuButton;
     @FXML private ScrollPane chatLogScrollPane;
     @FXML private VBox chatLogVBox;
     @FXML private Button dahButton;
@@ -26,24 +27,12 @@ public class PracticeTalkingController {
     @FXML private Button straightKeyButton;
     @FXML private TextField typingTextField;
 
-    private void initialize() {
-        App.currentUser.addView("PracticeTalkingView");
-    }
-
-    @FXML void handleBackButton(ActionEvent event) throws IOException {App.setRoot(App.currentUser.popLastView());}
-
-    @FXML void handleDahButton(ActionEvent event) {
-
-    }
-
-    @FXML void handleDitButton(ActionEvent event) {
-
-    }
-
+    //Handlers
+    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {App.setRoot("PracticeMenuView");}
+    @FXML void handleDahButton(ActionEvent event) {}
+    @FXML void handleDitButton(ActionEvent event) {}
     @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.setRoot("HomeScreenView");}
+    @FXML void handleStraightKeyButton(ActionEvent event) {}
 
-    @FXML void handleStraightKeyButton(ActionEvent event) {
-
-    }
 
 }

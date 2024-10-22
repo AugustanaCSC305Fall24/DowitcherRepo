@@ -78,9 +78,10 @@
       </AnchorPane>
       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="30.0">
          <children>
-            <Button fx:id="switchToHomeScreenButton" mnemonicParsing="false" onAction="#switchToHomeScreenView" text="Main Menu" />
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
+            <Button fx:id="switchToHomeScreenButton" mnemonicParsing="false" onAction="#switchToHomeScreenView" text="Main Menu" />
+            <Button fx:id="toSettingsButton" mnemonicParsing="false" onAction="#handleToSettingsButton" text="Settings" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
          </children>
       </HBox>
    </children>

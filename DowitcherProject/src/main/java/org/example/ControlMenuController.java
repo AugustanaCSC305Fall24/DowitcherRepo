@@ -12,9 +12,12 @@ import java.util.Map;
 public class ControlMenuController {
 
     //Buttons
-    @FXML private Button switchToHomeScreenButton;
     @FXML private Button saveButton;
+    @FXML private Button switchToHomeScreenButton;
+    @FXML private Button toSettingsButton;
     @FXML private Button backButton;
+    @FXML private void handleToSettingsButton() throws IOException {App.setRoot("SettingsView");}
+
 
     //Keys
     @FXML private TextField exitKeyField;

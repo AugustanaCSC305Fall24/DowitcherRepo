@@ -27,6 +27,7 @@ public class PracticeListeningController {
     @FXML private Button restartAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
+    @FXML private Button practiceMenuButton;
     @FXML private TextField userInputTextField;
     @FXML private ScrollPane userInputScrollPane;
     @FXML private ScrollPane correctAnswerScrollPane;
@@ -223,7 +224,7 @@ public class PracticeListeningController {
     // Switches screen to controls screen
     @FXML private void switchToSettingsView() throws IOException, InterruptedException {
         stopAudioPlayback();
-        App.setRoot("ControlMenuView");
+        App.setRoot("SettingsView");
     }
 
     // Switches view to main menu
@@ -265,5 +266,5 @@ public class PracticeListeningController {
             }
         }
     }
-
+    @FXML private void handlePracticeMenuButton() throws IOException {App.setRoot("PracticeMenuView");}
 }
