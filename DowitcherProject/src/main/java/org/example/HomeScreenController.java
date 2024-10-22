@@ -46,8 +46,8 @@ public class HomeScreenController {
         cwSpeedSlider.setValue(App.currentUser.getCwSpeed());
         volumeSlider.setValue(App.currentUser.getVolume());
         staticSlider.setValue(App.currentUser.getStaticAmount());
-        showCWLettersCheckBox.setSelected(App.currentUser.isShowCWLetters());
-        showCWAcronymsCheckBox.setSelected(App.currentUser.isShowCWAcronyms());
+        showCWLettersCheckBox.setSelected(App.currentUser.getShowCWLetters());
+        showCWAcronymsCheckBox.setSelected(App.currentUser.getShowCWAcronyms());
     }
 
     @FXML void switchToControlMenuView() throws IOException {
