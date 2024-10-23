@@ -20,12 +20,13 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("HomeScreenView"), 640, 480);
         stage.setScene(scene);
+        stage.setFullScreen(true);                          // Make the stage full screen
+        stage.setFullScreenExitHint("");                    // Hides the exit hint text
+        stage.setFullScreenExitKeyCombination(null);        // Disables the default escape key to exit full screen
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+    static void setRoot(String fxml) throws IOException {scene.setRoot(loadFXML(fxml));}
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
@@ -36,8 +37,6 @@ public class App extends Application {
         launch();
     }
 
-    public static Scene getScene(){
-        return scene;
-    }
+    public static Scene getScene(){return scene;}
 
 }
