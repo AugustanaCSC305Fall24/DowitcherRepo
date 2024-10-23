@@ -10,13 +10,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CwAlphabetController">
    <children>
       <HBox alignment="CENTER" layoutX="8.0" layoutY="355.0" prefHeight="50.0" prefWidth="585.0" spacing="50.0">
          <children>
-            <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings" />
-            <Button fx:id="mainMenuButton" mnemonicParsing="false" text="Main Menu" />
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings" />
+            <Button fx:id="practiceMenuButton" mnemonicParsing="false" onAction="#handlePracticeMenuButton" text="Practice Menu" />
+            <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#handleMainMenuButton" text="Main Menu" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="8.0" layoutY="313.0" prefHeight="50.0" prefWidth="585.0" spacing="50.0">

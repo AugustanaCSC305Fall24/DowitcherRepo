@@ -19,7 +19,7 @@ public class PracticeMenuController {
     @FXML private void handleToTypingButton() throws IOException {App.setRoot("PracticeTypingView");}
     @FXML private void handleToTalkingButton() throws IOException {App.setRoot("PracticeTalkingView");}
     @FXML private void handleToTuningButton() throws IOException {handleUnbuiltButton(toTuningButton);}                   // No view App.setRoot("PracticeTuningView")
-    @FXML private void handleToAlphebetButton() throws IOException {handleUnbuiltButton(toAlphebetButton);}               // No view App.setRoot("PracticeAlphebetView")
+    @FXML private void handleToAlphebetButton() throws IOException {App.setRoot("CwAlphabetView");}               // No view App.setRoot("PracticeAlphebetView")
     @FXML private void handleToMainMenuButton() throws IOException {App.setRoot("HomeScreenView");}
 
     private void handleUnbuiltButton(Button object){object.setText("Not built yet!");}
