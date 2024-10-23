@@ -3,17 +3,19 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import static org.example.Sound.playDitOrDah;
+//import static org.example.Sound.playDitOrDah;
 
 
 public class PracticeListeningController {
@@ -25,7 +27,9 @@ public class PracticeListeningController {
     @FXML private Button restartAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
-    @FXML private TextArea userInputTextArea;
+    @FXML private Button practiceMenuButton;
+    @FXML private TextField userInputTextField;
+    @FXML private ScrollPane userInputScrollPane;
     @FXML private ScrollPane correctAnswerScrollPane;
 
 
@@ -40,6 +44,8 @@ public class PracticeListeningController {
     private Thread audioThread;
     private volatile boolean stopAudio = false;
 
+    private final List<TextFlow> userInputsList = new ArrayList<>();
+    private final List<TextFlow> correctTranslationsList = new ArrayList<>();
 
     @FXML
     // Initializes HashMap and fills it with all practice messages
@@ -55,6 +61,14 @@ public class PracticeListeningController {
         cwMessagesList.put("YES", "-.-- . ...");
         cwMessagesList.put("NO", "-. ---");
         newAudio();
+        App.currentUser.addView("PracticeListeningView");
+        App.getScene().setOnKeyPressed(event -> {
+            try {
+                handleKeyPress(event);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FXML
@@ -73,6 +87,7 @@ public class PracticeListeningController {
         }
     }
 
+    @FXML
     //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
     private void playAudio(int index, char[] messageArray) throws InterruptedException {
         stopAudioPlayback();
@@ -84,9 +99,17 @@ public class PracticeListeningController {
                     break;
                 }
                 if (messageArray[i] == '-') {
-                    Sound.playDah();
+                    try {
+                        Sound.playDah();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (messageArray[i] == '.') {
-                    Sound.playDit();
+                    try {
+                        Sound.playDit();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (messageArray[i] == ' ') {
                     try {
                         Thread.sleep(500);
@@ -97,15 +120,6 @@ public class PracticeListeningController {
             }
         });
         audioThread.start();
-
-        App.currentUser.addView("PracticeListeningView");
-        App.getScene().setOnKeyPressed(event -> {
-            try {
-                handleKeyPress(event);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     @FXML
@@ -131,49 +145,89 @@ public class PracticeListeningController {
     }
 
     @FXML
-    // Checks the translation put in by the user
-    // Text is displayed as green is character is correct
+    // Checks the translation put in by the user and text is displayed as green is character is correct
     // or is set as red if character is incorrect
+    // Displays correct letters of the translation and _ for incorrect letter
     private void checkTranslation() {
-        String userTranslation = userInputTextArea.getText();
-        TextFlow correctedTranslation = new TextFlow();
-        Text checkedLetter;
+        String userTranslation = userInputTextField.getText();
+        TextFlow checkedUserInput = new TextFlow();
+        TextFlow correctTranslation = new TextFlow();
+        Text checkedUserLetter;
+        Text checkedCorrectLetter;
 
         for (int i = 0; i < userTranslation.length(); i++) {
 
             // Prevents program from crashing if message put in by user
             // is longer than the correct message
+            checkedUserLetter = new Text(Character.toString(userTranslation.charAt(i)).toUpperCase());
             if (i >= cwMessage.length()) {
-                checkedLetter = new Text(" ");
-                checkedLetter.setStyle("-fx-fill: red;");
+                checkedUserLetter.setStyle("-fx-fill: red;");
+                checkedCorrectLetter = new Text("");
             } else {
-                checkedLetter = new Text(Character.toString(cwMessage.charAt(i)));
 
                 // Determines if the character is correct or incorrect
                 // and sets it to the appropriate color
-                if (userTranslation.charAt(i) == cwMessage.charAt(i)) {
-                    checkedLetter.setStyle("-fx-fill: green;");
+                if (Character.toUpperCase(userTranslation.charAt(i)) == Character.toUpperCase(cwMessage.charAt(i))) {
+                    checkedUserLetter.setStyle("-fx-fill: green;");
+                    checkedCorrectLetter = new Text(Character.toString(cwMessage.charAt(i)));
                 } else {
-                    checkedLetter.setStyle("-fx-fill: red;");
+                    checkedUserLetter.setStyle("-fx-fill: red;");
+                    checkedCorrectLetter = new Text("_");
                 }
             }
 
-            correctedTranslation.getChildren().addAll(checkedLetter);
+            checkedUserInput.getChildren().addAll(checkedUserLetter);
+            correctTranslation.getChildren().addAll(checkedCorrectLetter);
+
         }
 
         // Displays the remaining cwMessage as incorrect if user's input
         // is shorter than the correct message.
         if (cwMessage.length() > userTranslation.length()) {
             for (int i = userTranslation.length(); i < cwMessage.length(); i++) {
-                checkedLetter = new Text(Character.toString(cwMessage.charAt(i)));
-                checkedLetter.setStyle("-fx-fill: red;");
-                correctedTranslation.getChildren().addAll(checkedLetter);
+                checkedCorrectLetter = new Text("_");
+                correctTranslation.getChildren().addAll(checkedCorrectLetter);
             }
         }
 
-        correctAnswerScrollPane.setContent(correctedTranslation);
+        // Specific to PracticeListening
+        updateCheckedTranslations(checkedUserInput, correctTranslation);
     }
 
+    @FXML
+    // Adds lines to the userInputScrollPane and correctAnswerScrollPane while keeping previous lines
+    private void updateCheckedTranslations(TextFlow userInput, TextFlow correctTranslation) {
+        // Add new translations to the lists
+        userInputsList.add(userInput);
+        correctTranslationsList.add(correctTranslation);
+
+        // Clear previous content from ScrollPanes
+        userInputScrollPane.setContent(null);
+        correctAnswerScrollPane.setContent(null);
+
+        // Create a new TextFlow to hold all previous translations
+        TextFlow allUserInputs = new TextFlow();
+        TextFlow allCorrectTranslations = new TextFlow();
+
+        // Append all previous user inputs with line breaks
+        for (TextFlow input : userInputsList) {
+            allUserInputs.getChildren().add(input);
+            allUserInputs.getChildren().add(new Text("\n"));
+        }
+
+        // Append all previous correct translations with line breaks
+        for (TextFlow correct : correctTranslationsList) {
+            allCorrectTranslations.getChildren().add(correct);
+            allCorrectTranslations.getChildren().add(new Text("\n"));
+        }
+
+        // Set the updated content in the ScrollPanes
+        userInputScrollPane.setContent(allUserInputs);
+        correctAnswerScrollPane.setContent(allCorrectTranslations);
+
+        // Clear the input field
+        userInputTextField.clear();
+    }
 
     @FXML
     // Sets cwMessage and cwAudio to a random new message and audio from
@@ -190,18 +244,35 @@ public class PracticeListeningController {
             randomMessageNum = random.nextInt(allCWMessages.size());
         }
 
+        TextFlow userInputLineBreak = generateLineBreak();
+        TextFlow correctAnswersLineBreak = generateLineBreak();
+        updateCheckedTranslations(userInputLineBreak, correctAnswersLineBreak);
+
         cwMessage = allCWMessages.get(randomMessageNum);
         cwAudio = cwMessagesList.get(cwMessage);
-        userInputTextArea.clear();
+        userInputTextField.clear();
 
         // For testing
         System.out.println(cwMessage + " " + cwAudio);
     }
 
+    @FXML
+    // Generates a new line break for the ScrollPanes
+    private TextFlow generateLineBreak() {
+        TextFlow lineBreak = new TextFlow();
+        int lineBreakLength = 40;
+        for (int i = 0; i < lineBreakLength; i++) {
+            Text dash = new Text("-");
+            dash.setStyle("-fx-fill: black;");
+            lineBreak.getChildren().add(dash);
+        }
+        return lineBreak;
+    }
+
     // Switches screen to controls screen
     @FXML private void switchToSettingsView() throws IOException, InterruptedException {
         stopAudioPlayback();
-        App.setRoot("ControlMenuView");
+        App.setRoot("SettingsView");
     }
 
     // Switches view to main menu
@@ -243,5 +314,5 @@ public class PracticeListeningController {
             }
         }
     }
-
+    @FXML private void handlePracticeMenuButton() throws IOException {App.setRoot("PracticeMenuView");}
 }

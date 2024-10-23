@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SettingsController">
+   <children>
+      <Text layoutX="257.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <VBox alignment="CENTER" layoutX="122.0" layoutY="46.0" prefHeight="350.0" prefWidth="355.0" spacing="10.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CW Speed" />
+            <Slider fx:id="cwSpeedSlider" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Volume" />
+            <Slider fx:id="volumeSlider" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Static Amount" />
+            <Slider fx:id="staticSlider" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
+            <CheckBox fx:id="showCWLettersCheckBox" mnemonicParsing="false" text="Show CW Letters" />
+            <CheckBox fx:id="showCWAcronymsCheckBox" mnemonicParsing="false" text="Show CW Acronyms" />
+            <HBox alignment="CENTER" prefHeight="33.0" prefWidth="355.0" spacing="15.0">
+               <children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
+                  <Button fx:id="toControlMenuButton" mnemonicParsing="false" onAction="#handleToControlMenuButton" text="Controls" />
+                  <Button fx:id="toMainMenuButton" mnemonicParsing="false" onAction="#handleToMainMenuButton" text="Main Menu" />
+                  <Button fx:id="toBackButton" mnemonicParsing="false" onAction="#handleToBackButton" text="Back" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
