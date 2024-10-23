@@ -14,6 +14,13 @@ public class PracticeTypingController {
         @FXML private Button translateButton;
         @FXML private Button practiceMenuButton;
         @FXML private TextArea englishOutput;
+        @FXML private Button paddleModeButton;
+        @FXML private Button straightKeyModeButton;
+
+        private boolean isPaddleMode = true;
+        private long keyPressStartTime = 0;
+        private long lastKeyPressTime = 0;
+        private StringBuilder currentMorseCode = new StringBuilder();
         private MorseCodeTranslator morseCodeTranslator;
 
         //Handlers
@@ -27,6 +34,11 @@ public class PracticeTypingController {
             App.currentUser.addView("PracticeTypingView");
             // Set the action for the translate button
             translateButton.setOnAction(event -> translateMorseCode());
+
+            //set up mode buttons
+            paddleModeButton.setOnAction(event -> setInputMode(true));   // Paddle mode
+            straightKeyModeButton.setOnAction(event -> setInputMode(false)); // Straight key mode
+
             App.getScene().setOnKeyPressed(event -> {
                 try {
                     handleKeyPress(event);
@@ -35,6 +47,37 @@ public class PracticeTypingController {
                 }
             });
         }
+
+    //Method to switch between input modes
+    private void setInputMode(boolean usePaddles) {
+        isPaddleMode = usePaddles;
+    }
+
+    //Handle paddle key presses (dot and dash using different keys)
+    private void handlePaddleKeyPress(KeyEvent event) {
+        String keyPressed = event.getCode().toString();
+        if (keyPressed.equals("a")) {
+            currentMorseCode.append(".");  // Dot
+        } else if (keyPressed.equals("d")) {
+            currentMorseCode.append("-");  // Dash
+        }
+        morseCodeInput.setText(currentMorseCode.toString());
+    }
+
+    //Handle straight key presses (timing-based input)
+    private void handleStraightKeyPress(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            keyPressStartTime = System.currentTimeMillis();  // Start timing
+        } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
+            long pressDuration = System.currentTimeMillis() - keyPressStartTime;
+            if (pressDuration < 200) {
+                currentMorseCode.append(".");  // Short press = dot
+            } else {
+                currentMorseCode.append("-");  // Long press = dash
+            }
+            morseCodeInput.setText(currentMorseCode.toString());
+        }
+    }
 
         // Method to handle the translation
         private void translateMorseCode() {
@@ -47,9 +90,14 @@ public class PracticeTypingController {
     @FXML private void switchToSettingsView() throws IOException{App.setRoot("SettingsView");}
 
     private void handleKeyPress(KeyEvent event) throws IOException {
-        String pressedKey = event.getCode().toString(); // Get the pressed key as a string
+        if (isPaddleMode) {
+            handlePaddleKeyPress(event);
+        } else {
+            handleStraightKeyPress(event);
+        }
 
         // Check if the pressed key has a corresponding action in the map
+        String pressedKey = event.getCode().toString();
         String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
         if (action != null) {
             switch (action) {
