@@ -68,4 +68,8 @@ public class MorseCodeTranslator {
 
         return translated.toString().trim();
     }
+
+    public static Map<String, String> getCwAlphabet() {
+        return new HashMap<>(morseCodeMap);
+    }
 }

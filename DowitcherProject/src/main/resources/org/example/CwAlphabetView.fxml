@@ -21,9 +21,9 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="8.0" layoutY="313.0" prefHeight="50.0" prefWidth="585.0" spacing="50.0">
          <children>
-            <Button fx:id="checkAnswerButton" mnemonicParsing="false" text="Check" />
-            <Button fx:id="skipNextButton" mnemonicParsing="false" text="Skip" />
-            <Button fx:id="restartButton" mnemonicParsing="false" text="Restart" />
+            <Button fx:id="checkAnswerButton" mnemonicParsing="false" onAction="#checkAnswer" text="Check" />
+            <Button fx:id="skipNextButton" mnemonicParsing="false" onAction="#handleSkipNextButton" text="Skip" />
+            <Button fx:id="restartButton" mnemonicParsing="false" onAction="#restartAlphabet" text="Restart" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="8.0" layoutY="71.0" prefHeight="235.0" prefWidth="585.0" spacing="15.0">
@@ -42,7 +42,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextFlow fx:id="currentLetterTextFlow" prefHeight="110.0" prefWidth="120.0" />
+                        <TextFlow fx:id="currentLetterTextFlow" prefHeight="93.0" prefWidth="120.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="10.0">
