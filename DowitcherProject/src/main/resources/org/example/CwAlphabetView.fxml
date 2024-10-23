@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CwAlphabetController">
+   <children>
+      <HBox alignment="CENTER" layoutX="8.0" layoutY="355.0" prefHeight="50.0" prefWidth="585.0" spacing="50.0">
+         <children>
+            <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings" />
+            <Button fx:id="mainMenuButton" mnemonicParsing="false" text="Main Menu" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="8.0" layoutY="313.0" prefHeight="50.0" prefWidth="585.0" spacing="50.0">
+         <children>
+            <Button fx:id="checkAnswerButton" mnemonicParsing="false" text="Check" />
+            <Button fx:id="skipNextButton" mnemonicParsing="false" text="Skip" />
+            <Button fx:id="restartButton" mnemonicParsing="false" text="Restart" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="8.0" layoutY="71.0" prefHeight="235.0" prefWidth="585.0" spacing="15.0">
+         <children>
+            <ScrollPane fx:id="previousTranslationsScrollPane" prefHeight="225.0" prefWidth="270.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="220.0" prefWidth="240.0" />
+              </content>
+            </ScrollPane>
+            <VBox prefHeight="225.0" prefWidth="270.0" spacing="10.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label text="Current Letter :">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextFlow fx:id="currentLetterTextFlow" prefHeight="110.0" prefWidth="120.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="85.0" prefWidth="98.0" text="Type the &#10;given letter in  --&gt;&#10;Morse Code" />
+                        <TextField fx:id="userInputTextField" prefHeight="50.0" prefWidth="132.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label alignment="CENTER" layoutX="183.0" layoutY="14.0" text="Alphabet Game">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
