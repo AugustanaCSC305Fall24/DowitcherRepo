@@ -2,45 +2,48 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.AccountCreationController">
+<VBox alignment="CENTER" prefHeight="371.0" prefWidth="447.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.AccountCreationController">
    <children>
-      <Text layoutX="219.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <VBox alignment="TOP_CENTER" layoutX="142.0" layoutY="91.0" prefHeight="200.0" prefWidth="155.0" spacing="20.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Username:" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Username" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Password:" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password " />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Email" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Email" />
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="155.0" spacing="20.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Username:" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Username" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Password:" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password " />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Email" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Email" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="155.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="createUsernameTextfield" onAction="#handleCreateUsernameTextfield" text="Create Username Here" />
+                  <TextField fx:id="createUsernameCheckTextfield" onAction="#handleCreateUsernameCheckTextfield" text="Confirm Username Here" />
+                  <TextField fx:id="createPasswordTextfield" onAction="#handleCreatePasswordTextfield" text="Create Password Here" />
+                  <TextField fx:id="createPasswordCheckTextfield" onAction="#handleCreatePasswordCheckTextfield" text="Confirm Password Here" />
+                  <TextField fx:id="emailTextfield" onAction="#handleEmailTextfield" text="Enter Email Here" />
+                  <TextField fx:id="emailCheckTextfield" onAction="#handleEmailCheckTextfield" text="Confirm Email Here" />
+               </children>
+            </VBox>
          </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="304.0" layoutY="91.0" prefHeight="200.0" prefWidth="155.0" spacing="10.0">
-         <children>
-            <TextField fx:id="createUsernameTextfield" onAction="#handleCreateUsernameTextfield" text="Create Username Here" />
-            <TextField fx:id="createUsernameCheckTextfield" onAction="#handleCreateUsernameCheckTextfield" text="Confirm Username Here" />
-            <TextField fx:id="createPasswordTextfield" onAction="#handleCreatePasswordTextfield" text="Create Password Here" />
-            <TextField fx:id="createPasswordCheckTextfield" onAction="#handleCreatePasswordCheckTextfield" text="Confirm Password Here" />
-            <TextField fx:id="emailTextfield" onAction="#handleEmailTextfield" text="Enter Email Here" />
-            <TextField fx:id="emailCheckTextfield" onAction="#handleEmailCheckTextfield" text="Confirm Email Here" />
-         </children>
-      </VBox>
-      <HBox alignment="CENTER" layoutX="145.0" layoutY="291.0" prefHeight="40.0" prefWidth="310.0" spacing="30.0">
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="310.0" spacing="30.0">
          <children>
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
             <Button fx:id="createAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleCreateAccountButton" text="Create Account" />
          </children>
       </HBox>
    </children>
-</AnchorPane>
+</VBox>
