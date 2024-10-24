@@ -182,6 +182,7 @@ public class CwAlphabetController {
         cwStack.clear();
         letterStack.clear();
         translationsContainer.getChildren().clear();
+        numCorrect = 0;
 
         generateRandomOrder();
         generateNewLetter();
