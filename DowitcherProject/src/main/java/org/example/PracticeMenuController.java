@@ -14,13 +14,13 @@ public class PracticeMenuController {
     @FXML private Button toAlphebetButton;
     @FXML private Button toMainMenuButton;
 
-    //Handlers
-    @FXML private void handleToListeningButton() throws IOException {App.setRoot("PracticeListeningView");}
-    @FXML private void handleToTypingButton() throws IOException {App.setRoot("PracticeTypingView");}
-    @FXML private void handleToTalkingButton() throws IOException {App.setRoot("PracticeTalkingView");}
+    //All view switching button presses
+    @FXML private void handleToListeningButton() throws IOException {App.practiceListeiningView();}
+    @FXML private void handleToTypingButton() throws IOException {App.practiceTypingView();}
+    @FXML private void handleToTalkingButton() throws IOException {App.practiceTalkingView();}
     @FXML private void handleToTuningButton() throws IOException {handleUnbuiltButton(toTuningButton);}                   // No view App.setRoot("PracticeTuningView")
-    @FXML private void handleToAlphebetButton() throws IOException {App.setRoot("CwAlphabetView");}               // No view App.setRoot("PracticeAlphebetView")
-    @FXML private void handleToMainMenuButton() throws IOException {App.setRoot("HomeScreenView");}
+    @FXML private void handleToAlphebetButton() throws IOException {App.cwAlphabetView();}
+    @FXML private void handleToMainMenuButton() throws IOException {App.homeScreenView();}
 
     private void handleUnbuiltButton(Button object){object.setText("Not built yet!");}
 

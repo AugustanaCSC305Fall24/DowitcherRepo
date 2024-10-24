@@ -44,7 +44,7 @@ public class User {
 
     // View Stack Methods
     public void addView(String view) {viewStack.push(view);}
-    public Parent popLastView() {if (!viewStack.isEmpty()){return viewStack.pop();} else{return "HomeScreenView";}}
+    public String popLastView() {if (!viewStack.isEmpty()){return viewStack.pop();} else{return "HomeScreenView";}}
 
     //User Data Get Methods
     public String getUsername(){return username;}
@@ -57,7 +57,7 @@ public class User {
     public boolean getShowCWAcronyms() {return showCWAcronyms;}
     public Map<String, String> getKeyFirstActionMap(){return this.keyFirstActionMap;}
     public Map<String, String> getActionFirstActionMap(){return actionFirstActionMap;}
-    public String getLastView() {if (!viewStack.isEmpty()) {return viewStack.peek();}return "HomeScreenView";}
+    public String getLastView() {if (!viewStack.isEmpty()) {return (String) viewStack.peek();}return "HomeScreenView";}
 
     //User Data Set Methods
     public void setUsername(String username){this.username = username;}

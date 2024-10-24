@@ -30,8 +30,12 @@ public class PracticeTalkingController {
 
     private boolean isPlaying = false;
 
+    //All view switching button presses
+    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {App.practiceMenuView();}
+    @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
+
+
     //Handlers
-    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {App.setRoot("PracticeMenuView");}
     @FXML void handleDahButton() {
         dahButton.setOnMousePressed(event -> {
             new Thread( () -> {
@@ -64,7 +68,6 @@ public class PracticeTalkingController {
 
         ditButton.setOnMouseReleased(event -> isPlaying = false);
     }
-    @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.setRoot("HomeScreenView");}
     @FXML void handleStraightKeyButton(ActionEvent event) {}
 
     private void straightTone(){

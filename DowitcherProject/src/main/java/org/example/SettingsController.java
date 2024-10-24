@@ -21,6 +21,10 @@ public class SettingsController {
     @FXML private Button toBackButton;
 
 
+    //All view switching button presses
+    @FXML void handleToControlMenuButton() throws IOException {App.currentUser.addView("SettingsView");App.controlMenuView();}
+    @FXML private void handleToMainMenuButton() throws IOException {App.homeScreenView();}
+    @FXML private void handleToBackButton() throws IOException {App.back();}
 
     //Handlers
     @FXML private void handleSaveButton(){
@@ -30,9 +34,6 @@ public class SettingsController {
         App.currentUser.setShowCWLetters(showCWLettersCheckBox.isSelected());
         App.currentUser.setShowCWAcronyms(showCWAcronymsCheckBox.isSelected());
     }
-    @FXML void handleToControlMenuButton() throws IOException {App.setRoot("ControlMenuView");App.currentUser.addView("SettingsView");}
-    @FXML private void handleToMainMenuButton() throws IOException {App.setRoot("HomeScreenView");}
-    @FXML private void handleToBackButton() throws IOException {App.setRoot(App.currentUser.popLastView());}
 
     @FXML public void initialize() {
         cwSpeedSlider.setValue(App.currentUser.getCwSpeed());

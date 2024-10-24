@@ -41,15 +41,16 @@ public class App extends Application {
     public static Scene getScene(){return scene;}
 
     //All switch view methods
-    public void back() throws IOException {scene.setRoot(currentUser.popLastView());}
-    public void controlMenuView() throws IOException {App.setRoot("ControlMenuView");}
-    public void homeScreenView() throws IOException {App.setRoot("HomeScreenView");}
-    public void loginView() throws IOException {App.setRoot("LoginView");}
-    public void practiceListeiningView() throws IOException {App.setRoot("PracticeListeiningView");}
-    public void practiceMenuView() throws IOException {App.setRoot("PracticeMenuView");}
-    public void practiceTalkingView() throws IOException {App.setRoot("PracticeTalkingView");}
-    public void practiceTypingView() throws IOException {App.setRoot("PracticeTypingView");}
-    public void settingsView() throws IOException {App.setRoot("SettingsView");}
-    public void signupView() throws IOException {App.setRoot("SignupView");}
+    public static void back() throws IOException {setRoot(currentUser.popLastView());}
+    public static void controlMenuView() throws IOException {App.setRoot("ControlMenuView");}
+    public static void cwAlphabetView() throws IOException {App.setRoot("CwAlphabetView");}
+    public static void homeScreenView() throws IOException {App.setRoot("HomeScreenView");}
+    public static void loginView() throws IOException {App.setRoot("LoginView");}
+    public static void practiceListeiningView() throws IOException {App.setRoot("PracticeListeiningView");}
+    public static void practiceMenuView() throws IOException {App.setRoot("PracticeMenuView");}
+    public static void practiceTalkingView() throws IOException {App.setRoot("PracticeTalkingView");}
+    public static void practiceTypingView() throws IOException {App.setRoot("PracticeTypingView");}
+    public static void settingsView() throws IOException {App.setRoot("SettingsView");}
+    public static void signupView() throws IOException {App.setRoot("SignupView");}
 
 }

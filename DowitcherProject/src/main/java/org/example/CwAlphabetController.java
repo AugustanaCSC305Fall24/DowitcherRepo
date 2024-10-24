@@ -36,6 +36,10 @@ public class CwAlphabetController {
     private int numCorrect;
     private VBox translationsContainer = new VBox();
 
+    //All view switching button presses
+    @FXML private void handleSettingsButton() throws IOException {App.settingsView();}
+    @FXML private void handlePracticeMenuButton() throws IOException {App.practiceMenuView();}
+    @FXML private void handleMainMenuButton() throws IOException {App.homeScreenView();}
 
     @FXML
     private void initialize() {
@@ -187,20 +191,4 @@ public class CwAlphabetController {
         generateRandomOrder();
         generateNewLetter();
     }
-
-    @FXML
-    private void handleSettingsButton() throws IOException {
-        App.setRoot("SettingsView");
-    }
-
-    @FXML
-    private void handlePracticeMenuButton() throws IOException {
-        App.setRoot("PracticeMenuView");
-    }
-
-    @FXML
-    private void handleMainMenuButton() throws IOException {
-        App.setRoot("HomeScreenView");
-    }
-
 }

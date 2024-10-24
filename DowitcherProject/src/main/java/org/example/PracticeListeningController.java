@@ -47,6 +47,11 @@ public class PracticeListeningController {
     private final List<TextFlow> userInputsList = new ArrayList<>();
     private final List<TextFlow> correctTranslationsList = new ArrayList<>();
 
+    //All view switching button presses
+    @FXML private void switchToSettingsView() throws IOException, InterruptedException {stopAudioPlayback();App.settingsView();}
+    @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {stopAudioPlayback();App.homeScreenView();}
+    @FXML private void handlePracticeMenuButton() throws IOException, InterruptedException {stopAudioPlayback();App.practiceMenuView();}
+
     @FXML
     // Initializes HashMap and fills it with all practice messages
     // Then generates a starting message
@@ -269,18 +274,6 @@ public class PracticeListeningController {
         return lineBreak;
     }
 
-    // Switches screen to controls screen
-    @FXML private void switchToSettingsView() throws IOException, InterruptedException {
-        stopAudioPlayback();
-        App.setRoot("SettingsView");
-    }
-
-    // Switches view to main menu
-    @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {
-        stopAudioPlayback();
-        App.setRoot("HomeScreenView");
-    }
-
     private void handleKeyPress(KeyEvent event) throws IOException, InterruptedException {
         String pressedKey = event.getCode().toString(); // Get the pressed key as a string
 
@@ -314,5 +307,4 @@ public class PracticeListeningController {
             }
         }
     }
-    @FXML private void handlePracticeMenuButton() throws IOException {App.setRoot("PracticeMenuView");}
 }

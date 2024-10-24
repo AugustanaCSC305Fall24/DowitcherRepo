@@ -50,7 +50,7 @@ public class AccountCreationController {
 
 
     //Bottom Buttons
-    @FXML private void handleBackButton() throws IOException {App.setRoot(App.currentUser.popLastView());}
+    @FXML private void handleBackButton() throws IOException {App.back();}
     @FXML private void handleCreateAccountButton(){
         if(!sameTextField()){
             App.currentUser = new User(createUsernameTextfield.getText(), createPasswordTextfield.getText(), emailTextfield.getText());

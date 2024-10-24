@@ -16,8 +16,11 @@ public class ControlMenuController {
     @FXML private Button switchToHomeScreenButton;
     @FXML private Button toSettingsButton;
     @FXML private Button backButton;
-    @FXML private void handleToSettingsButton() throws IOException {App.setRoot("SettingsView");}
 
+    //All view switching button presses
+    @FXML private void handleToSettingsButton() throws IOException {App.settingsView();}
+    @FXML private void switchToHomeScreenView() throws IOException {App.homeScreenView();}
+    @FXML private void handleBackButton() throws IOException {App.back();}
 
     //Keys
     @FXML private TextField exitKeyField;
@@ -75,8 +78,6 @@ public class ControlMenuController {
         }
     }
 
-    @FXML private void switchToHomeScreenView() throws IOException {App.setRoot("HomeScreenView");}
-
     private void addFocusListeners() { //Char gpt generated
         for (TextField field : keyBindings.values()) {
             field.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -129,11 +130,6 @@ public class ControlMenuController {
 
     private String processedKeyInput(String input){
         return String.valueOf(input.toUpperCase().charAt(0));
-    }
-
-    @FXML private void handleBackButton() throws IOException {
-        String previousView = App.currentUser.popLastView();
-        App.setRoot(previousView);
     }
 
     private boolean checkForDuplicateKeys() {
