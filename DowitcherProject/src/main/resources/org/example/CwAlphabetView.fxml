@@ -35,7 +35,7 @@
             </ScrollPane>
             <VBox prefHeight="225.0" prefWidth="270.0" spacing="10.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="20.0">
+                  <HBox alignment="CENTER" prefHeight="76.0" prefWidth="270.0" spacing="20.0">
                      <children>
                         <Label text="Current Letter :">
                            <font>
