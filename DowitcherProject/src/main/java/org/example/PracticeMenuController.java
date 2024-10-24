@@ -15,7 +15,7 @@ public class PracticeMenuController {
     @FXML private Button toMainMenuButton;
 
     //All view switching button presses
-    @FXML private void handleToListeningButton() throws IOException {App.practiceListeiningView();}
+    @FXML private void handleToListeningButton() throws IOException {App.practiceListeningView();}
     @FXML private void handleToTypingButton() throws IOException {App.practiceTypingView();}
     @FXML private void handleToTalkingButton() throws IOException {App.practiceTalkingView();}
     @FXML private void handleToTuningButton() throws IOException {handleUnbuiltButton(toTuningButton);}                   // No view App.setRoot("PracticeTuningView")
