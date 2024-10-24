@@ -9,20 +9,25 @@ import java.io.IOException;
 public class AccountCreationController {
 
     // Paths to user data files
-    private static final String USER_DATA_FILE = "users.ser";
+    private static final String USER_DATA_FILE = "userdata";
 
     // Login View
+    //Buttons
     @FXML private Button loginButton;
-    @FXML private TextField passwordTextfield;
     @FXML private Button signUpButton;
+    @FXML private Button exitButton;
+    @FXML private Button continueButton;
+
+    //TextFields
+    @FXML private TextField passwordTextfield;
     @FXML private TextField usernameTextfield;
 
-    @FXML void handlePasswordTextfield(ActionEvent event) {}
+    //Button Handlers
     @FXML private void handleSignUpButton() throws IOException {App.signupView();}
-    @FXML void handleUsernameTextfield(ActionEvent event) {}
-    @FXML void handleExitButton() {}
+    @FXML private void handleExitButton() {App.exitProgram();}
+    @FXML private void handleContinueAsGuestButton() throws IOException {App.homeScreenView();}
 
-    @FXML void handleLoginButton(ActionEvent event) {
+    @FXML private void handleLoginButton(ActionEvent event) {
         if (validLogin()) {
             try {
                 User loginUser = UserSerialization.deserializeUser(USER_DATA_FILE); // Load user data from file
@@ -38,6 +43,7 @@ public class AccountCreationController {
         }
     }
 
+    // Helper Method for Login Button
     private boolean validLogin() {
         try {
             // Deserialize the user object from file to check credentials
@@ -80,7 +86,7 @@ public class AccountCreationController {
     @FXML private void handleEmailCheckTextfield() { handleTextFieldSameCheck(emailTextfield, emailCheckTextfield); }
 
     // Bottom Buttons
-    @FXML private void handleBackButton() throws IOException { App.back(); }
+    @FXML private void handleBackButton() throws IOException { App.setRoot("LoginView"); }
 
     @FXML private void handleCreateAccountButton() {
         if (!sameTextField()) {

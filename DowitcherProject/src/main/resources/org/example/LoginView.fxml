@@ -18,19 +18,21 @@
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="242.0" spacing="30.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
-            <TextField fx:id="usernameTextfield" onAction="#handleUsernameTextfield" text="Your Username Here" />
+            <TextField fx:id="usernameTextfield" text="Your Username Here" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="242.0" spacing="30.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-            <TextField fx:id="passwordTextfield" onAction="#handlePasswordTextfield" text="Your Password Here" />
+            <TextField fx:id="passwordTextfield" text="Your Password Here" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="242.0" spacing="30.0">
          <children>
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButton" text="Login" />
             <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#handleSignUpButton" text="Sign Up" />
+            <Button fx:id="continueAsGuest" mnemonicParsing="false" onAction="#handleContinueAsGuestButton" text="Continue As Guest" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
          </children>
       </HBox>
    </children>

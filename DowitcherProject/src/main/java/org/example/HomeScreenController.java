@@ -21,8 +21,9 @@ public class HomeScreenController {
     @FXML private void handleToPracticeMenuButton(ActionEvent actionEvent) throws IOException {App.practiceMenuView();}
     @FXML private void handleToTutorialButton(ActionEvent event) {handleUnbuiltButton(toTutorialViewButton);}
     @FXML private void handleToSettingsButton(ActionEvent actionEvent) throws IOException {App.settingsView();}
-    @FXML private void handleExitProgramButton() {Stage stage = (Stage) exitProgramButton.getScene().getWindow();stage.close();}
+    @FXML private void handleExitProgramButton() {App.exitProgram();}
 
     private void handleUnbuiltButton(Button object){object.setText("Not For This Sprint!");}
 
+    @FXML private void initialize() {App.currentUser.addView("HomeScreenView");}
 }

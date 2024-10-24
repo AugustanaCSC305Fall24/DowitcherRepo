@@ -1,6 +1,8 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +20,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("HomeScreenView"), 640, 480);
+        scene = new Scene(loadFXML("LoginView"), 640, 480);
         stage.setScene(scene);
         stage.setFullScreen(true);                          // Make the stage full screen
         stage.setFullScreenExitHint("");                    // Hides the exit hint text
@@ -51,5 +53,5 @@ public class App extends Application {
     public static void practiceTypingView() throws IOException {App.setRoot("PracticeTypingView");}
     public static void settingsView() throws IOException {App.setRoot("SettingsView");}
     public static void signupView() throws IOException {App.setRoot("SignupView");}
-
+    public static void exitProgram() {Platform.exit();}
 }
