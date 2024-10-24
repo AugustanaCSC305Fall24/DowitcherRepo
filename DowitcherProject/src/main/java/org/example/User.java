@@ -1,5 +1,7 @@
 package org.example;
 
+import javafx.scene.Parent;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -42,7 +44,7 @@ public class User {
 
     // View Stack Methods
     public void addView(String view) {viewStack.push(view);}
-    public String popLastView() {if (!viewStack.isEmpty()){return viewStack.pop();} else{return "HomeScreenView";}}
+    public Parent popLastView() {if (!viewStack.isEmpty()){return viewStack.pop();} else{return "HomeScreenView";}}
 
     //User Data Get Methods
     public String getUsername(){return username;}

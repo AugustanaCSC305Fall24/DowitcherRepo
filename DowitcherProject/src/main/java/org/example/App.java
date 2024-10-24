@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,5 +39,17 @@ public class App extends Application {
     }
 
     public static Scene getScene(){return scene;}
+
+    //All switch view methods
+    public void back() throws IOException {scene.setRoot(currentUser.popLastView());}
+    public void controlMenuView() throws IOException {App.setRoot("ControlMenuView");}
+    public void homeScreenView() throws IOException {App.setRoot("HomeScreenView");}
+    public void loginView() throws IOException {App.setRoot("LoginView");}
+    public void practiceListeiningView() throws IOException {App.setRoot("PracticeListeiningView");}
+    public void practiceMenuView() throws IOException {App.setRoot("PracticeMenuView");}
+    public void practiceTalkingView() throws IOException {App.setRoot("PracticeTalkingView");}
+    public void practiceTypingView() throws IOException {App.setRoot("PracticeTypingView");}
+    public void settingsView() throws IOException {App.setRoot("SettingsView");}
+    public void signupView() throws IOException {App.setRoot("SignupView");}
 
 }
