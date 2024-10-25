@@ -86,7 +86,7 @@ public class AccountCreationController {
     @FXML private void handleEmailCheckTextfield() { handleTextFieldSameCheck(emailTextfield, emailCheckTextfield); }
 
     // Bottom Buttons
-    @FXML private void handleBackButton() throws IOException { App.setRoot("LoginView"); }
+    @FXML private void handleBackButton() throws IOException { App.loginView(); }
 
     @FXML private void handleCreateAccountButton() {
         if (!sameTextField()) {
