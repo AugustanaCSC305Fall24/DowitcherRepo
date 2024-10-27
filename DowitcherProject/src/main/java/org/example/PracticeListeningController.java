@@ -46,6 +46,7 @@ public class PracticeListeningController {
 
     private final List<TextFlow> userInputsList = new ArrayList<>();
     private final List<TextFlow> correctTranslationsList = new ArrayList<>();
+    private final String textSize = "16";
 
     //All view switching button presses
     @FXML private void switchToSettingsView() throws IOException, InterruptedException {stopAudioPlayback();App.settingsView();}
@@ -156,7 +157,7 @@ public class PracticeListeningController {
     private void checkTranslation() {
         String userTranslation = userInputTextField.getText();
 
-        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, cwMessage));
+        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, cwMessage, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
         TextFlow correctTranslation = (TextFlow) checkedList.get(1);
 
