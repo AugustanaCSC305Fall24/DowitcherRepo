@@ -5,9 +5,9 @@ import javax.sound.sampled.*;
 public class Sound {
 
     private static int ditDuration = 100;
-    private static int ditFrequency = 800;
-    private static int dahDuration = 250;
-    private static int dahFrequency = 800;
+    private static int ditFrequency = 600;
+    private static int dahDuration = 300;
+    private static int dahFrequency = 600;
 
     public static void playDit() throws LineUnavailableException {
         playTone(ditFrequency,ditDuration);
@@ -39,6 +39,10 @@ public class Sound {
         sourceDataLine.write(data,0, data.length);
         sourceDataLine.drain();
         sourceDataLine.close();
+    }
+
+    public static void playStraitTone(){
+
     }
 
 }
