@@ -49,33 +49,44 @@ public class ControlMenuController {
             switch (action) {
                 case "exitProgram":
                     exitKeyField.setText(key);
+                    System.out.println(key);
                     break;
                 case "settingsKey":
                     settingsKeyField.setText(key);
+                    System.out.println(key);
                     break;
                 case "dahKey":
                     dahKeyField.setText(key);
+                    System.out.println(key);
                     break;
                 case "ditKey":
                     ditKeyField.setText(key);
+                    System.out.println(key);
                     break;
                 case "frequencyUpKey":
                     frequencyUpTextField.setText(key);
+                    System.out.println(key);
                     break;
                 case "frequencyDownKey":
                     frequencyDownTextField.setText(key);
+                    System.out.println(key);
                     break;
                 case "filterUpKey":
                     filterUpTextField.setText(key);
+                    System.out.println(key);
                     break;
                 case "filterDownKey":
                     filterDownTextField.setText(key);
+                    System.out.println(key);
                     break;
                 default:
                     // Handle any unexpected actions if needed
                     break;
             }
         }
+        System.out.println("setActionTextField Method Ended.");
+        System.out.println("actionMap Replica: " + actionMap.toString());
+        System.out.println("actionMap App Class: " + App.currentUser.getActionFirstActionMap().toString());
     }
 
     private void addFocusListeners() { //Char gpt generated

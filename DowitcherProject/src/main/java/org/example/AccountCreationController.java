@@ -25,7 +25,7 @@ public class AccountCreationController {
     //Button Handlers
     @FXML private void handleSignUpButton() throws IOException {App.signupView();}
     @FXML private void handleExitButton() {App.exitProgram();}
-    @FXML private void handleContinueAsGuestButton() throws IOException {App.homeScreenView();}
+    @FXML private void handleContinueAsGuestButton() throws IOException {App.currentUser = new User("Guest", "Guest",  "Guest") ;App.homeScreenView();}
 
     @FXML private void handleLoginButton(ActionEvent event) {
         if (validLogin()) {
