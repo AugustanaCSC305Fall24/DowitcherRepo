@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -72,53 +73,15 @@ public class CwAlphabetController {
     @FXML
     private void checkAnswer() {
         String userTranslation = userInputTextField.getText();
-        TextFlow checkedUserInput = new TextFlow();
-        TextFlow correctTranslation = new TextFlow();
-        Text checkedUserLetter;
-        Text checkedCorrectLetter;
-        int numIncorrect = 0;
 
-        for (int i = 0; i < userTranslation.length(); i++) {
+        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW));
+        TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
+        TextFlow correctTranslation = (TextFlow) checkedList.get(1);
+        correctAnswer = (boolean) checkedList.get(2);
 
-            // Prevents program from crashing if message put in by user
-            // is longer than the correct message
-            checkedUserLetter = new Text(Character.toString(userTranslation.charAt(i)).toUpperCase());
-            if (i >= currentCW.length()) {
-                checkedUserLetter.setStyle("-fx-fill: red;");
-                checkedCorrectLetter = new Text("");
-            } else {
-
-                // Determines if the character is correct or incorrect
-                // and sets it to the appropriate color
-                if (Character.toUpperCase(userTranslation.charAt(i)) == Character.toUpperCase(currentCW.charAt(i))) {
-                    checkedUserLetter.setStyle("-fx-fill: green;");
-                    checkedCorrectLetter = new Text(Character.toString(currentCW.charAt(i)));
-                } else {
-                    checkedUserLetter.setStyle("-fx-fill: red;");
-                    checkedCorrectLetter = new Text("_");
-                    numIncorrect++;
-                }
-            }
-
-            checkedUserInput.setStyle("-fx-font-size: 20px;");
-            checkedCorrectLetter.setStyle("-fx-font-size: 20px;");
-
-            checkedUserInput.getChildren().addAll(checkedUserLetter);
-            correctTranslation.getChildren().addAll(checkedCorrectLetter);
-
+        if (correctAnswer) {
+            skipNextButton.setText("Next");
         }
-
-        // Displays the remaining cwMessage as incorrect if user's input
-        // is shorter than the correct message.
-        if (currentCW.length() > userTranslation.length()) {
-            for (int i = userTranslation.length(); i < currentCW.length(); i++) {
-                checkedCorrectLetter = new Text("_");
-                checkedCorrectLetter.setStyle("-fx-font-size: 20px;");
-                correctTranslation.getChildren().addAll(checkedCorrectLetter);
-                numIncorrect++;
-            }
-        }
-
 
         Text letter = new Text(currentLetter);
         letter.setStyle("-fx-font-size: 25px;");
@@ -136,11 +99,6 @@ public class CwAlphabetController {
         // Ensure the scroll pane scrolls to the bottom after adding new content
         previousTranslationsScrollPane.layout();
         previousTranslationsScrollPane.setVvalue(1.0);
-
-        if (numIncorrect == 0) {
-            skipNextButton.setText("Next");
-            correctAnswer = true;
-        }
 
         userInputTextField.clear();
     }

@@ -155,45 +155,10 @@ public class PracticeListeningController {
     // Displays correct letters of the translation and _ for incorrect letter
     private void checkTranslation() {
         String userTranslation = userInputTextField.getText();
-        TextFlow checkedUserInput = new TextFlow();
-        TextFlow correctTranslation = new TextFlow();
-        Text checkedUserLetter;
-        Text checkedCorrectLetter;
 
-        for (int i = 0; i < userTranslation.length(); i++) {
-
-            // Prevents program from crashing if message put in by user
-            // is longer than the correct message
-            checkedUserLetter = new Text(Character.toString(userTranslation.charAt(i)).toUpperCase());
-            if (i >= cwMessage.length()) {
-                checkedUserLetter.setStyle("-fx-fill: red;");
-                checkedCorrectLetter = new Text("");
-            } else {
-
-                // Determines if the character is correct or incorrect
-                // and sets it to the appropriate color
-                if (Character.toUpperCase(userTranslation.charAt(i)) == Character.toUpperCase(cwMessage.charAt(i))) {
-                    checkedUserLetter.setStyle("-fx-fill: green;");
-                    checkedCorrectLetter = new Text(Character.toString(cwMessage.charAt(i)));
-                } else {
-                    checkedUserLetter.setStyle("-fx-fill: red;");
-                    checkedCorrectLetter = new Text("_");
-                }
-            }
-
-            checkedUserInput.getChildren().addAll(checkedUserLetter);
-            correctTranslation.getChildren().addAll(checkedCorrectLetter);
-
-        }
-
-        // Displays the remaining cwMessage as incorrect if user's input
-        // is shorter than the correct message.
-        if (cwMessage.length() > userTranslation.length()) {
-            for (int i = userTranslation.length(); i < cwMessage.length(); i++) {
-                checkedCorrectLetter = new Text("_");
-                correctTranslation.getChildren().addAll(checkedCorrectLetter);
-            }
-        }
+        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, cwMessage));
+        TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
+        TextFlow correctTranslation = (TextFlow) checkedList.get(1);
 
         // Specific to PracticeListening
         updateCheckedTranslations(checkedUserInput, correctTranslation);
