@@ -1,10 +1,12 @@
 package org.example;
 
+import okio.*;
 import okhttp3.*;
 import com.google.gson.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class GenerativeAIChat {
     private static final String API_KEY = System.getenv("AIzaSyAJDvLBGMSynARLQMCN3xCn3SfVmuWD7hw");
