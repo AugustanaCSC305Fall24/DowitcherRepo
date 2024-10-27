@@ -28,7 +28,7 @@ public class SettingsController {
 
     //Handlers
     @FXML private void handleSaveButton(){
-        App.currentUser.setCwSpeed(cwSpeedSlider.getValue());
+        App.currentUser.setCwSpeed((long) (cwSpeedSlider.getValue() * 100));
         App.currentUser.setVolume(volumeSlider.getValue());
         App.currentUser.setStaticAmount(staticSlider.getValue());
         App.currentUser.setShowCWLetters(showCWLettersCheckBox.isSelected());
