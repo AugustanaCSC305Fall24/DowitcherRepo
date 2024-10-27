@@ -118,7 +118,7 @@ public class PracticeListeningController {
                     }
                 } else if (messageArray[i] == ' ') {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(User.getCwSpeed());
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
