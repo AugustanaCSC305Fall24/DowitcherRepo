@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GenerativeAIChat {
-    private static final String API_KEY = System.getenv("GEMINI_API_KEY");
+    private static final String API_KEY = System.getenv("AIzaSyAJDvLBGMSynARLQMCN3xCn3SfVmuWD7hw");
     private static final String BASE_URL = "https://api.generativeai.google.com/v1/models/gemini-1.5-flash:chat";
 
     private static final OkHttpClient client = new OkHttpClient();
