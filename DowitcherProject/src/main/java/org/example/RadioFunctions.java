@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RadioFunctions {
 
-    public static List<Object> checkTranslation(String userTranslation, String currentCW) {
+    public static List<Object> checkTranslation(String userTranslation, String currentCW, String textSize) {
         TextFlow checkedUserInput = new TextFlow();
         TextFlow correctTranslation = new TextFlow();
         Text checkedUserLetter;
@@ -37,8 +37,8 @@ public class RadioFunctions {
                 }
             }
 
-            checkedUserInput.setStyle("-fx-font-size: 20px;");
-            checkedCorrectLetter.setStyle("-fx-font-size: 20px;");
+            checkedUserInput.setStyle("-fx-font-size: " + textSize + "px;");
+            checkedCorrectLetter.setStyle("-fx-font-size: " + textSize + "px;");
 
             checkedUserInput.getChildren().addAll(checkedUserLetter);
             correctTranslation.getChildren().addAll(checkedCorrectLetter);
@@ -50,7 +50,7 @@ public class RadioFunctions {
         if (currentCW.length() > userTranslation.length()) {
             for (int i = userTranslation.length(); i < currentCW.length(); i++) {
                 checkedCorrectLetter = new Text("_");
-                checkedCorrectLetter.setStyle("-fx-font-size: 20px;");
+                checkedCorrectLetter.setStyle("-fx-font-size: " + textSize + "px;");
                 correctTranslation.getChildren().addAll(checkedCorrectLetter);
                 numIncorrect++;
             }
@@ -61,7 +61,7 @@ public class RadioFunctions {
             isTrue = false;
         }
 
-        List<Object> returnList = new ArrayList<Object>();
+        List<Object> returnList = new ArrayList<>();
         returnList.add(checkedUserInput);
         returnList.add(correctTranslation);
         returnList.add(isTrue);

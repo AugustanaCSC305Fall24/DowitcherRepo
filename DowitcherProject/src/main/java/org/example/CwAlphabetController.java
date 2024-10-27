@@ -36,6 +36,7 @@ public class CwAlphabetController {
     private boolean correctAnswer = false;
     private int numCorrect;
     private VBox translationsContainer = new VBox();
+    private final String textSize = "20";
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {App.settingsView();}
@@ -74,7 +75,7 @@ public class CwAlphabetController {
     private void checkAnswer() {
         String userTranslation = userInputTextField.getText();
 
-        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW));
+        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
         TextFlow correctTranslation = (TextFlow) checkedList.get(1);
         correctAnswer = (boolean) checkedList.get(2);

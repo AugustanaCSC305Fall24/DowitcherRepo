@@ -1,7 +1,5 @@
 package org.example;
 
-import javafx.scene.Parent;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -14,7 +12,7 @@ public class User {
 
     // User Setting Data
     private Stack<String> viewStack; // Stack to hold last views
-    private double cwSpeed; // Slider for CW speed
+    private static long cwSpeed; // Slider for CW speed
     private static double volume; // Slider for volume
     private double staticAmount; // Slider for static amount
     private boolean showCWLetters; // Boolean to show CW letters
@@ -28,7 +26,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.viewStack = new Stack<>();
-        this.cwSpeed = 3; // Default value
+        this.cwSpeed = 300; // Default value
         this.volume = 50.0; // Default value
         this.staticAmount = 50.0; // Default value
         this.showCWLetters = true; // Default value
@@ -50,7 +48,7 @@ public class User {
     public String getUsername(){return username;}
     public String getPassword(){return password;}
     public String getEmail(){return email;}
-    public double getCwSpeed() {return cwSpeed;}
+    public static long getCwSpeed() {return cwSpeed;}
     public static double getVolume() {return volume;}
     public double getStaticAmount() {return staticAmount;}
     public boolean getShowCWLetters() {return showCWLetters;}
@@ -64,7 +62,10 @@ public class User {
     public void setPassword(String password){this.password = password;}
     public void setEmail(String email) {this.email = email;}
     public void setViewStack(Stack<String> lastView) {this.viewStack = lastView;}
-    public void setCwSpeed(double cwSpeed) {this.cwSpeed = cwSpeed;}
+    public void setCwSpeed(long cwSpeed) {
+        this.cwSpeed = cwSpeed;
+        System.out.println(cwSpeed);
+    }
     public void setVolume(double volume) {this.volume = volume;}
     public void setStaticAmount(double staticAmount) {this.staticAmount = staticAmount;}
     public void setShowCWLetters(boolean showCWLetters) {this.showCWLetters = showCWLetters;}
