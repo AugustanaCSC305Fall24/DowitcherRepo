@@ -7,7 +7,6 @@ module org.example {
     // Adding OkHttp and Gson dependencies
     requires okhttp3;
     requires com.google.gson;
-    requires okio;
 
     opens org.example to javafx.fxml;
     exports org.example;
