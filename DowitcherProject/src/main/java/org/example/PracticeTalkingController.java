@@ -2,11 +2,7 @@ package org.example;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -17,7 +13,7 @@ public class PracticeTalkingController {
 
     //Data
     @FXML private Button practiceMenuButton;
-    @FXML private ScrollPane chatLogScrollPane;
+    @FXML private TextArea chatLogTextArea;
     @FXML private VBox chatLogVBox;
     @FXML private Button dahButton;
     @FXML private Button ditButton;
@@ -30,10 +26,19 @@ public class PracticeTalkingController {
 
     private boolean isPlaying = false;
 
+    // Chatbot instance
+    private GenerativeAIChat chatBot;
+
     //All view switching button presses
     @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {App.practiceMenuView();}
     @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
 
+    @FXML
+    public void initialize() {
+        // Initialize GenerativeAIChat with the text field and a placeholder TextArea or handler for output
+        chatBot = new GenerativeAIChat(typingTextField, chatLogTextArea); // Adjust output component as necessary
+        chatBot.startChatSession();
+    }
 
     //Handlers
     @FXML void handleDahButton() {

@@ -5,26 +5,41 @@ import com.google.gson.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 public class GenerativeAIChat {
-    private static final String API_KEY = System.getenv("AIzaSyAJDvLBGMSynARLQMCN3xCn3SfVmuWD7hw");
-    private static final String BASE_URL = "https://api.generativeai.google.com/v1/models/gemini-1.5-flash:chat";
+    private static final String API_KEY = "AIzaSyAJDvLBGMSynARLQMCN3xCn3SfVmuWD7hw";
+    private static final String BASE_URL = "https://aistudio.google.com/app/u/1/prompts/15Af2n_6eaBV46ECgzuxt5y8_-qs7unWZ";
+    private static final String PROJECT_NUMBER = "495075050720";
 
-    private static final OkHttpClient client = new OkHttpClient();
-    private static final Gson gson = new Gson();
+    private final OkHttpClient client = new OkHttpClient();
+    private final Gson gson = new Gson();
 
-    public static void main(String[] args) {
+    // Fields for JavaFX components
+    private TextField inputField;
+    private TextArea outputArea;
+
+    // Constructor to pass JavaFX components
+    public GenerativeAIChat(TextField inputField, TextArea outputArea) {
+        this.inputField = inputField;
+        this.outputArea = outputArea;
+    }
+
+    // Method to start a chat session with user input
+    public void startChatSession() {
+        String inputMessage = inputField.getText();
         try {
-            String inputMessage = "INSERT_INPUT_HERE";
-            String response = startChatSession(inputMessage);
-            System.out.println("Response: " + response);
+            String response = fetchChatResponse(inputMessage);
+            outputArea.setText(response); // Display the response in the TextArea
         } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private static String startChatSession(String input) throws IOException {
-        // Request body setup
+    // Private helper method to handle API call
+    private String fetchChatResponse(String input) throws IOException {
         Map<String, Object> generationConfig = new HashMap<>();
         generationConfig.put("temperature", 1);
         generationConfig.put("topP", 0.95);
@@ -34,21 +49,20 @@ public class GenerativeAIChat {
 
         Map<String, Object> message = new HashMap<>();
         message.put("role", "user");
-        message.put("parts", new String[] { input });
+        message.put("parts", new String[]{input});
 
         Map<String, Object> historyMessage = new HashMap<>();
         historyMessage.put("role", "model");
-        historyMessage.put("parts", new String[] {
+        historyMessage.put("parts", new String[]{
                 "Okay, I'm ready to start making contacts. Let's see what parks we can find! \n\n**CQ POTA DE [YOUR CALL SIGN]**"
         });
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("generationConfig", generationConfig);
-        requestBody.put("history", new Object[] { message, historyMessage });
+        requestBody.put("history", new Object[]{message, historyMessage});
 
         String jsonBody = gson.toJson(requestBody);
 
-        // Creating the request
         Request request = new Request.Builder()
                 .url(BASE_URL)
                 .post(RequestBody.create(jsonBody, MediaType.parse("application/json")))
