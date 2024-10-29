@@ -138,7 +138,8 @@ public class CwAlphabetController {
         currentLetterTextFlow.getChildren().add(currentLetterText);
     }
 
-    
+
+    @FXML
     private void restartAlphabet() {
         cwStack.clear();
         letterStack.clear();
