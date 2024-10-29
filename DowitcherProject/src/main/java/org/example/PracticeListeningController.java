@@ -93,7 +93,6 @@ public class PracticeListeningController {
         }
     }
 
-    @FXML
     //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
     private void playAudio(int index, char[] messageArray) throws InterruptedException {
         stopAudioPlayback();
@@ -140,7 +139,6 @@ public class PracticeListeningController {
         playPauseAudioButton.setText("Play");
     }
 
-    @FXML
     // Stops the current audio that is playing
     private void stopAudioPlayback() throws InterruptedException {
         if (audioThread != null && audioThread.isAlive()) {

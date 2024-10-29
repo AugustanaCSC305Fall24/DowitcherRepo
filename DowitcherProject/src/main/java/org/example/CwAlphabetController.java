@@ -52,7 +52,7 @@ public class CwAlphabetController {
         restartAlphabet();
     }
 
-    @FXML
+
     private void generateRandomOrder() {
         List<Map.Entry<String, String>> cwAlphabetList = new ArrayList<>(MorseCodeTranslator.getCwAlphabet().entrySet());
 
@@ -104,8 +104,6 @@ public class CwAlphabetController {
         userInputTextField.clear();
     }
 
-
-
     @FXML
     private void handleSkipNextButton() {
         if (correctAnswer) {
@@ -140,7 +138,7 @@ public class CwAlphabetController {
         currentLetterTextFlow.getChildren().add(currentLetterText);
     }
 
-    @FXML
+    
     private void restartAlphabet() {
         cwStack.clear();
         letterStack.clear();
