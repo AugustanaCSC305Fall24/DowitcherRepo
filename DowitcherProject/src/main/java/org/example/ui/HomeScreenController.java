@@ -1,9 +1,9 @@
-package org.example;
+package org.example.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import org.example.App;
 
 
 import java.io.IOException;
@@ -18,7 +18,8 @@ public class HomeScreenController {
 
     //All view switching button presses
     @FXML private void handleToLiveChatButton(ActionEvent event) {handleUnbuiltButton(toLiveChatViewButton);}
-    @FXML private void handleToPracticeMenuButton(ActionEvent actionEvent) throws IOException {App.practiceMenuView();}
+    @FXML private void handleToPracticeMenuButton(ActionEvent actionEvent) throws IOException {
+        App.practiceMenuView();}
     @FXML private void handleToTutorialButton(ActionEvent event) {handleUnbuiltButton(toTutorialViewButton);}
     @FXML private void handleToSettingsButton(ActionEvent actionEvent) throws IOException {App.settingsView();}
     @FXML private void handleExitProgramButton() {App.exitProgram();}

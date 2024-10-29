@@ -1,13 +1,15 @@
-package org.example;
+package org.example.ui.practice;
 
+import org.example.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import org.example.App;
+import org.example.data.GenerativeAIChat;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class PracticeTalkingController {
 
@@ -30,7 +32,8 @@ public class PracticeTalkingController {
     private GenerativeAIChat chatBot;
 
     //All view switching button presses
-    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {App.practiceMenuView();}
+    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {
+        App.practiceMenuView();}
     @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
 
     @FXML

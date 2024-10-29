@@ -1,9 +1,13 @@
-package org.example;
+package org.example.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import org.example.App;
+import org.example.data.User;
+import org.example.data.UserSerialization;
+
 import java.io.IOException;
 
 public class AccountCreationController {
@@ -23,7 +27,8 @@ public class AccountCreationController {
     @FXML private TextField usernameTextfield;
 
     //Button Handlers
-    @FXML private void handleSignUpButton() throws IOException {App.signupView();}
+    @FXML private void handleSignUpButton() throws IOException {
+        App.signupView();}
     @FXML private void handleExitButton() {App.exitProgram();}
     @FXML private void handleContinueAsGuestButton() throws IOException {App.currentUser = new User("Guest", "Guest",  "Guest") ;App.homeScreenView();}
 

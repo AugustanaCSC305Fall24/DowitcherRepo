@@ -1,9 +1,10 @@
-package org.example;
+package org.example.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
+import org.example.App;
 
 import java.io.IOException;
 
@@ -22,7 +23,8 @@ public class SettingsController {
 
 
     //All view switching button presses
-    @FXML void handleToControlMenuButton() throws IOException {App.currentUser.addView("SettingsView");App.controlMenuView();}
+    @FXML void handleToControlMenuButton() throws IOException {
+        App.currentUser.addView("SettingsView");App.controlMenuView();}
     @FXML private void handleToMainMenuButton() throws IOException {App.homeScreenView();}
     @FXML private void handleToBackButton() throws IOException {App.back();}
 

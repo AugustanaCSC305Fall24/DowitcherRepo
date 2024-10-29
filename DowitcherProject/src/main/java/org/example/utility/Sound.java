@@ -1,4 +1,6 @@
-package org.example;
+package org.example.utility;
+
+import org.example.data.User;
 
 import javax.sound.sampled.*;
 

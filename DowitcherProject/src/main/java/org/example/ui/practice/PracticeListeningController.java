@@ -1,5 +1,8 @@
-package org.example;
+package org.example.ui.practice;
 
+import org.example.App;
+import org.example.utility.RadioFunctions;
+import org.example.utility.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.example.data.User;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
@@ -14,9 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
-//import static org.example.Sound.playDitOrDah;
-
 
 public class PracticeListeningController {
 
@@ -49,7 +50,8 @@ public class PracticeListeningController {
     private final String textSize = "16";
 
     //All view switching button presses
-    @FXML private void switchToSettingsView() throws IOException, InterruptedException {stopAudioPlayback();App.settingsView();}
+    @FXML private void switchToSettingsView() throws IOException, InterruptedException {stopAudioPlayback();
+        App.settingsView();}
     @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {stopAudioPlayback();App.homeScreenView();}
     @FXML private void handlePracticeMenuButton() throws IOException, InterruptedException {stopAudioPlayback();App.practiceMenuView();}
 

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PracticeTypingController">
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeTypingController">
    <children>
       <Label alignment="CENTER" prefHeight="31.0" prefWidth="261.0" text="Practice Typing">
          <font>

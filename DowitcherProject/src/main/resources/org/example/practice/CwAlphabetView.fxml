@@ -11,7 +11,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CwAlphabetController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.CwAlphabetController">
    <children>
       <Label alignment="CENTER" text="Alphabet Game">
          <font>

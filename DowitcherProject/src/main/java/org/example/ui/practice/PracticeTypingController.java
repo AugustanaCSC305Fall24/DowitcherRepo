@@ -1,9 +1,11 @@
-package org.example;
+package org.example.ui.practice;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import org.example.App;
+import org.example.utility.MorseCodeTranslator;
 
 import java.io.IOException;
 
@@ -24,7 +26,8 @@ public class PracticeTypingController {
         private MorseCodeTranslator morseCodeTranslator;
 
         //All view switching button presses
-        @FXML private void handlePracticeMenuButton() throws IOException {App.practiceMenuView();}
+        @FXML private void handlePracticeMenuButton() throws IOException {
+            App.practiceMenuView();}
     @FXML private void switchToHomeScreenView() throws IOException {App.homeScreenView();}
     @FXML private void switchToSettingsView() throws IOException{App.settingsView();}
 

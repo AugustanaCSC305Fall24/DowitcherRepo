@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<VBox alignment="CENTER" prefHeight="440.0" prefWidth="497.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SettingsController">
+<VBox alignment="CENTER" prefHeight="440.0" prefWidth="497.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.SettingsController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
          <font>

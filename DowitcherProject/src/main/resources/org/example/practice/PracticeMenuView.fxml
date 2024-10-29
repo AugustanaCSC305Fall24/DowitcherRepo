@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<VBox alignment="CENTER" prefHeight="373.0" prefWidth="432.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PracticeMenuController">
+<VBox alignment="CENTER" prefHeight="373.0" prefWidth="432.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeMenuController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Practice Menu">
          <font>

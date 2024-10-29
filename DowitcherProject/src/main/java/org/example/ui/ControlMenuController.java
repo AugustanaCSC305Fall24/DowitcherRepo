@@ -1,9 +1,10 @@
-package org.example;
+package org.example.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import org.example.App;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +19,8 @@ public class ControlMenuController {
     @FXML private Button backButton;
 
     //All view switching button presses
-    @FXML private void handleToSettingsButton() throws IOException {App.settingsView();}
+    @FXML private void handleToSettingsButton() throws IOException {
+        App.settingsView();}
     @FXML private void switchToHomeScreenView() throws IOException {App.homeScreenView();}
     @FXML private void handleBackButton() throws IOException {App.back();}
 

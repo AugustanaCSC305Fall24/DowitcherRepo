@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="540.0" prefWidth="800.0" style="-fx-background-color: #CCFFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PracticeTalkingController">
+<BorderPane prefHeight="540.0" prefWidth="800.0" style="-fx-background-color: #CCFFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeTalkingController">
     <top>
         <HBox BorderPane.alignment="CENTER">
             <BorderPane.margin>

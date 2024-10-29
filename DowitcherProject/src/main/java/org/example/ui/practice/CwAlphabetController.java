@@ -1,7 +1,6 @@
-package org.example;
+package org.example.ui.practice;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -10,6 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.example.App;
+import org.example.utility.RadioFunctions;
+import org.example.utility.MorseCodeTranslator;
 
 import java.io.IOException;
 import java.util.*;
@@ -39,7 +41,8 @@ public class CwAlphabetController {
     private final String textSize = "20";
 
     //All view switching button presses
-    @FXML private void handleSettingsButton() throws IOException {App.settingsView();}
+    @FXML private void handleSettingsButton() throws IOException {
+        App.settingsView();}
     @FXML private void handlePracticeMenuButton() throws IOException {App.practiceMenuView();}
     @FXML private void handleMainMenuButton() throws IOException {App.homeScreenView();}
 

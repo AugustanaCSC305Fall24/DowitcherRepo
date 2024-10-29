@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<VBox alignment="CENTER" prefHeight="371.0" prefWidth="447.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.AccountCreationController">
+<VBox alignment="CENTER" prefHeight="371.0" prefWidth="447.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.AccountCreationController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
          <font>

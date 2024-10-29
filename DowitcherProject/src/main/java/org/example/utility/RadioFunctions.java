@@ -1,4 +1,4 @@
-package org.example;
+package org.example.utility;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;

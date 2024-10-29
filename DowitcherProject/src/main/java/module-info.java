@@ -10,4 +10,12 @@ module org.example {
 
     opens org.example to javafx.fxml;
     exports org.example;
+    exports org.example.ui;
+    opens org.example.ui to javafx.fxml;
+    exports org.example.data;
+    opens org.example.data to javafx.fxml;
+    exports org.example.utility;
+    opens org.example.utility to javafx.fxml;
+    exports org.example.ui.practice;
+    opens org.example.ui.practice to javafx.fxml;
 }
