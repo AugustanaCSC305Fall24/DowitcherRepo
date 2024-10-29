@@ -83,6 +83,7 @@ public class PracticeTalkingController {
         while (isPlaying){
             Sound.playDit();
             Thread.sleep(50);
+            typingTextField.setText(typingTextField.getText() + ".");
         }
     }
 
@@ -90,6 +91,7 @@ public class PracticeTalkingController {
         while (isPlaying){
             Sound.playDah();
             Thread.sleep(50);
+            typingTextField.setText(typingTextField.getText() + "-");
         }
     }
 
