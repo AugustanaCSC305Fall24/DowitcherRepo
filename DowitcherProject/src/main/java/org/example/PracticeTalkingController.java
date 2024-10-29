@@ -77,14 +77,14 @@ public class PracticeTalkingController {
     private void playDitHold() throws LineUnavailableException, InterruptedException {
         while (isPlaying){
             Sound.playDit();
-            Thread.sleep(120);
+            Thread.sleep(50);
         }
     }
 
     private void playDahHold() throws LineUnavailableException, InterruptedException {
         while (isPlaying){
             Sound.playDah();
-            Thread.sleep(120);
+            Thread.sleep(50);
         }
     }
 
