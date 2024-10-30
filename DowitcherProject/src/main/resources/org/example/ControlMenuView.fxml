@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -17,62 +16,42 @@
       </Text>
       <HBox alignment="CENTER" prefHeight="250.0" prefWidth="600.0">
          <children>
-            <ScrollPane prefHeight="283.0" prefWidth="387.0">
-               <content>
-                  <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="237.0" spacing="10.0">
-                     <children>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Program" />
-                              <TextField fx:id="exitKeyField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
-                              <TextField fx:id="settingsKeyField" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dah (Long)" />
-                              <TextField fx:id="dahKeyField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dit (Short)" />
-                              <TextField fx:id="ditKeyField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency Up" />
-                              <TextField fx:id="frequencyUpTextField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency Down" />
-                              <TextField fx:id="frequencyDownTextField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Up" />
-                              <TextField fx:id="filterUpTextField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Down" />
-                              <TextField fx:id="filterDownTextField" onKeyPressed="#handleKeyPress" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-            </ScrollPane>
+            <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="99.0" spacing="19.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Program" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dah (Long)" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dit (Short)" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency Up" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency Down" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Up" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Down" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="83.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="exitKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" />
+                  <TextField fx:id="settingsKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" />
+                  <TextField fx:id="dahKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" />
+                  <TextField fx:id="ditKeyField" editable="false" prefWidth="50.0" />
+                  <TextField fx:id="frequencyUpTextField" editable="false" prefWidth="50.0" />
+                  <TextField fx:id="frequencyDownTextField" editable="false" prefWidth="50.0" />
+                  <TextField fx:id="filterUpTextField" editable="false" prefWidth="50.0" />
+                  <TextField fx:id="filterDownTextField" editable="false" prefWidth="50.0" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="195.0" spacing="10.0">
+               <children>
+                  <Button fx:id="changeExitKeyButton" mnemonicParsing="false" onAction="#handleChangeExitKeyButton" text="Change Exit Key" />
+                  <Button fx:id="changeSettingsKeyButton" mnemonicParsing="false" onAction="#handleChangeSettingsKeyButton" text="Change Settings Key" />
+                  <Button fx:id="changeDahKeyButton" mnemonicParsing="false" onAction="#handleChangeDahKeyButton" text="Change Dah Key" />
+                  <Button fx:id="changeDitKeyButton" mnemonicParsing="false" onAction="#handleChangeDitKeyButton" text="Change DitKey" />
+                  <Button fx:id="changeFrequencyUpKeyButton" mnemonicParsing="false" onAction="#handleChangeFrequencyUpKeyButton" text="Change Frequency Up Key" />
+                  <Button fx:id="changeFrequencyDownKeyButton" mnemonicParsing="false" onAction="#handleChangeFrequencyDownKeyButton" text="Change Frequency Down Key" />
+                  <Button fx:id="changeFilterUpKeyChangeButton" mnemonicParsing="false" onAction="#handleChangeFilterUpKeyChangeButton" text="Change Filter Up Key" />
+                  <Button fx:id="changeFilterDownKeyChangeButton" mnemonicParsing="false" onAction="#handleChangeFilterDownKeyChangeButton" text="Change Filter Down Key" />
+               </children>
+            </VBox>
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="30.0">
