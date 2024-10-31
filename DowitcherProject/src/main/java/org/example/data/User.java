@@ -34,7 +34,7 @@ public class User {
         this.keyFirstActionMap = new HashMap<>();
         this.actionFirstActionMap = new HashMap<>();
         //Setting default keys for the action map
-        setActionMap("ESC", "TAB", "D", "A", "RIGHT_ARROW", "LEFT_ARROW", "UP_ARROW", "DOWN_ARROW");
+        setActionMap("ESCAPE", "TAB", "D", "A", "RIGHT", "LEFT", "UP", "DOWN");
     }
     public User(){
         this("Default", "Default", "Default");
@@ -97,14 +97,14 @@ public class User {
                                          String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
     ) {
         // Map keyboard keys to actions
-        keyFirstActionMap.put("exitProgram", exitProgram);                      // Exit Program
-        keyFirstActionMap.put("settingsKey", settingsKey);                      // Settings
-        keyFirstActionMap.put("dahKey", dahKey);                                // Dah action
-        keyFirstActionMap.put("ditKey", ditKey);                                // Dit action
-        keyFirstActionMap.put("frequencyUpKey", frequencyUpKey);                // Frequency Up
-        keyFirstActionMap.put("frequencyDownKey", frequencyDownKey);            // Frequency Down
-        keyFirstActionMap.put("filterUpKey", filterUpKey);                      // Filter Up
-        keyFirstActionMap.put("filterDownKey", filterDownKey);                  // Filter Down
+        actionFirstActionMap.put("exitProgram", exitProgram);                      // Exit Program
+        actionFirstActionMap.put("settingsKey", settingsKey);                      // Settings
+        actionFirstActionMap.put("dahKey", dahKey);                                // Dah action
+        actionFirstActionMap.put("ditKey", ditKey);                                // Dit action
+        actionFirstActionMap.put("frequencyUpKey", frequencyUpKey);                // Frequency Up
+        actionFirstActionMap.put("frequencyDownKey", frequencyDownKey);            // Frequency Down
+        actionFirstActionMap.put("filterUpKey", filterUpKey);                      // Filter Up
+        actionFirstActionMap.put("filterDownKey", filterDownKey);                  // Filter Down
     }
 
 }

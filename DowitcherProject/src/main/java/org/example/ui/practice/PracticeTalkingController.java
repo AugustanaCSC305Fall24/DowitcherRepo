@@ -38,9 +38,15 @@ public class PracticeTalkingController {
 
     @FXML
     public void initialize() {
+
         // Initialize GenerativeAIChat with the text field and a placeholder TextArea or handler for output
         chatBot = new GenerativeAIChat(typingTextField, chatLogTextArea); // Adjust output component as necessary
+//       new Thread(() -> {
+//           try {Thread.sleep(10000);} catch(InterruptedException ex) {}
+//           chatBot.startChatSession();
+//       }).start();
         chatBot.startChatSession();
+
     }
 
     //Handlers
