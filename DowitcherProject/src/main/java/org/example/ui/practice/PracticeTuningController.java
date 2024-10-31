@@ -1,32 +1,30 @@
 package org.example.ui.practice;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import org.example.App;
 //import javafx.scene.media.AudioClip;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 
 public class PracticeTuningController {
 
-    @FXML
-    private Slider frequencySlider;
-    @FXML
-    private Slider filterWidthSlider;
-    @FXML
-    private Label frequencyLabel;
-    @FXML
-    private Label filterLabel;
-    @FXML
-    private Label targetFrequencyLabel;
-    @FXML
-    private Label feedbackLabel;
-    @FXML
-    private Button transmitButton;
-    @FXML
-    private Button resetButton;
+    @FXML private Slider frequencySlider;
+    @FXML private Slider filterWidthSlider;
+    @FXML private Label frequencyLabel;
+    @FXML private Label filterLabel;
+    @FXML private Label targetFrequencyLabel;
+    @FXML private Label feedbackLabel;
+    @FXML private Button transmitButton;
+    @FXML private Button resetButton;
+    @FXML private Button PracticeMenuButton;
+    @FXML private Button MainMenuButton;
+
 
     private static final double MIN_FREQUENCY = 7.000; // MHz
     private static final double MAX_FREQUENCY = 7.067; // MHz
@@ -36,6 +34,11 @@ public class PracticeTuningController {
     // private AudioClip audioClip;
     private final Random random = new Random();
 
+
+    //All view switching button presses
+    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {
+        App.practiceMenuView();}
+    @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
 
     @FXML
     public void initialize() {
