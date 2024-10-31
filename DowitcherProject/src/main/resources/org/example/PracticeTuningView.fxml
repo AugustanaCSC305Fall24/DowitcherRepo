@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeTuningController">
+<Label text="HAM Radio Simulator" />
+
+<!-- Frequency Tuner Slider -->
+<Label text="Tuning Frequency (MHz)" />
+<Slider fx:id="frequencySlider" min="7.000" max="7.067" value="7.000" />
+<Label fx:id="frequencyLabel" text="7.000 MHz" />
+
+<!-- Filter Width Slider -->
+<Label text="Filter Width (KHz)" />
+<Slider fx:id="filterWidthSlider" min="0.5" max="5.0" value="1.0" />
+<Label fx:id="filterLabel" text="Filter Width: 0.5 KHz" />
+
+<!-- Buttons -->
+<Button fx:id="transmitButton" text="Transmit" onAction="#onTransmit" />
+<Button fx:id="resetButton" text="Reset" onAction="#onReset" />
+
+<!-- Feedback Label -->
+<Label fx:id="feedbackLabel" text="" style="-fx-text-fill: green;" />
+
+<!-- Target Frequency Display -->
+<Label fx:id="targetFrequencyLabel" text="Target Frequency: 7.000 MHz" />
+</VBox>

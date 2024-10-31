@@ -50,6 +50,7 @@ public class App extends Application {
     public static void practiceListeningView() throws IOException {App.setRoot("PracticeListeningView");}
     public static void practiceMenuView() throws IOException {App.setRoot("PracticeMenuView");}
     public static void practiceTalkingView() throws IOException {App.setRoot("PracticeTalkingView");}
+    public static void practiceTuningView() throws IOException {App.setRoot("PracticeTuningView");}
     public static void practiceTypingView() throws IOException {App.setRoot("PracticeTypingView");}
     public static void settingsView() throws IOException {App.setRoot("SettingsView");}
     public static void signupView() throws IOException {App.setRoot("SignupView");}
