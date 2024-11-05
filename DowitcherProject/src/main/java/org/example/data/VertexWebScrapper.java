@@ -12,7 +12,13 @@ import java.nio.charset.StandardCharsets;
 
 public class VertexWebScrapper {
 
-    private static final String API_URL = "https://us-central1-aiplatform.googleapis.com/v1/projects/1014730854479/locations/us-central1/endpoints/2951881956834410496:predict";
+    // Google OAuth Information
+    // Client ID Below
+    // 1014730854479-q01sh3maokh0jod60rs9oi7ebl1v51ug.apps.googleusercontent.com
+    // Client Secret Below
+    // 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
+
+    private static final String API_URL = "https://us-central1-aiplatform.googleapis.com/v1/projects/1014730854479/locations/us-central1/endpoints/2951881956834410496";
     private final Gson gson;
 
     public VertexWebScrapper() {
@@ -30,8 +36,8 @@ public class VertexWebScrapper {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            // Replace 'YOUR_ACCESS_TOKEN' with the token retrieved via 'gcloud auth application-default print-access-token'
-            connection.setRequestProperty("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+            // Replace 'YOUR_ACCESS_TOKEN' with the token retrieved via 'gcloud auth application-default print-access-token' ya29.a0AeDClZBTKr3PAr71_NhvSwkNk2YUrMSuwSXQY48cuqSVIEVn3F9hBIkTDtP3CJ2jKYVxCnx2_bK6494RrptAbjv7diBfnTawRipt4-t3O4h1Yl1jRFyNhiShhbrCxpSGoX3vSMB0OvJxDu8eB5yuC0L2YHYiVPRqxgS56Gi4-Pyxh9vSkbuWX2TNVUfhuwfbozeKOPVvQAQrukq-nByXBW4RunolBnmtaITms1hfHXph0WHIUTpwtNOaqhK-aQxli_RJjno2fiLV0SpL42S9saG3rSs_dstxQOEhK1v6LeR_O-Vjvm3KPXkl04MXUAQ9l-3GYB1dyqoe05ydsjr9k7Fe2KOA_OKHiNSdrbrnQHk7Pf2LjhMPQAc00Gr6bh0ftC6bTlRIJ1t0EHa0fl4dX_BZv7GzHbdfnTn5aCgYKAVgSARESFQHGX2Mi6OVKQjdR28v5agSYSaREJg0427
+            connection.setRequestProperty("Authorization", "Bearer ya29.a0AeDClZBTKr3PAr71_NhvSwkNk2YUrMSuwSXQY48cuqSVIEVn3F9hBIkTDtP3CJ2jKYVxCnx2_bK6494RrptAbjv7diBfnTawRipt4-t3O4h1Yl1jRFyNhiShhbrCxpSGoX3vSMB0OvJxDu8eB5yuC0L2YHYiVPRqxgS56Gi4-Pyxh9vSkbuWX2TNVUfhuwfbozeKOPVvQAQrukq-nByXBW4RunolBnmtaITms1hfHXph0WHIUTpwtNOaqhK-aQxli_RJjno2fiLV0SpL42S9saG3rSs_dstxQOEhK1v6LeR_O-Vjvm3KPXkl04MXUAQ9l-3GYB1dyqoe05ydsjr9k7Fe2KOA_OKHiNSdrbrnQHk7Pf2LjhMPQAc00Gr6bh0ftC6bTlRIJ1t0EHa0fl4dX_BZv7GzHbdfnTn5aCgYKAVgSARESFQHGX2Mi6OVKQjdR28v5agSYSaREJg0427");
             connection.setDoOutput(true);
 
             // Send the JSON request body
