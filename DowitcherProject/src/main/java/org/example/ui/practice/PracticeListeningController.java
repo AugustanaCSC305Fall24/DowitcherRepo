@@ -60,14 +60,7 @@ public class PracticeListeningController {
     // Then generates a starting message
     private void initialize() {
         cwMessagesList = new HashMap<>();
-        cwMessagesList.put("SOS", "... --- ...");
-        cwMessagesList.put("ALPHA", ".- .-.. .--. .... .-");
-        cwMessagesList.put("BRAVO", "-... .-. .- ...- ---");
-        cwMessagesList.put("PAPA", ".--. .- .--. .-.. ---");
-        cwMessagesList.put("HI", ".... ..");
-        cwMessagesList.put("OK", "--- -.-");
-        cwMessagesList.put("YES", "-.-- . ...");
-        cwMessagesList.put("NO", "-. ---");
+        addMessages();
         newAudio();
         App.currentUser.addView("PracticeListeningView");
         App.getScene().setOnKeyPressed(event -> {
@@ -77,6 +70,29 @@ public class PracticeListeningController {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    // Adds messages into cwMessageList
+    private void addMessages() {
+        cwMessagesList.put("CQ", "-.-. --.-");
+        cwMessagesList.put("DE", "-.. .");
+        cwMessagesList.put("QTH", "--.- - ....");
+        cwMessagesList.put("RST", ".-. ... -");
+        cwMessagesList.put("QSL", "--.- ... .-..");
+        cwMessagesList.put("QRZ?", "--.- .-. --..");
+        cwMessagesList.put("QRL?", "--.- .-. .-..");
+        cwMessagesList.put("73", "--... ...--");
+        cwMessagesList.put("88", "---.. ---..");
+        cwMessagesList.put("QSB", "--.- ... -...");
+        cwMessagesList.put("QRP", "--.- .-. .--.");
+        cwMessagesList.put("QSY", "--.- ... -.--");
+        cwMessagesList.put("QSO", "--.- ... ---");
+        cwMessagesList.put("QRM", "--.- .-. --");
+        cwMessagesList.put("QRN", "--.- .-. -.");
+        cwMessagesList.put("QRX", "--.- .-. -..-");
+        cwMessagesList.put("QRV", "--.- .-. ...-");
+        cwMessagesList.put("QRO", "--.- .-. ---");
+        cwMessagesList.put("SK", "... -.-");
     }
 
     @FXML
