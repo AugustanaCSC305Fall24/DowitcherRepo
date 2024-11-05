@@ -113,7 +113,8 @@ public class PracticeTuningController {
         return 1.0 + (frequencyDifference * 15); // Increase pitch more significantly with distance
     }
 
-    private int getFrequencyForSound() {
+    @FXML
+    public int getFrequencyForSound() {
         double sliderValue = frequencySlider.getValue();
 
         if (isMatched){
@@ -147,12 +148,14 @@ public class PracticeTuningController {
                 for (char character : message.toCharArray()) {
                     if (character == '-') {
                         try {
+                            frequency = getFrequencyForSound();
                             Sound.playDah(frequency);
                         } catch (LineUnavailableException e) {
                             throw new RuntimeException(e);
                         }
                     } else if (character == '.') {
                         try {
+                            frequency = getFrequencyForSound();
                             Sound.playDit(frequency);
                         } catch (LineUnavailableException e) {
                             throw new RuntimeException(e);
@@ -163,6 +166,11 @@ public class PracticeTuningController {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
+                    }
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
