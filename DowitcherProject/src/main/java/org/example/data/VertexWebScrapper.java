@@ -2,7 +2,6 @@ package org.example.data;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,12 +10,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class GeminiWebScraper {
+public class VertexWebScrapper {
 
-    private static final String API_URL = "https://example.com/gemini-chat-api"; // Replace with actual API endpoint
+    private static final String API_URL = "https://us-central1-aiplatform.googleapis.com/v1/projects/1014730854479/locations/us-central1/endpoints/2951881956834410496:predict";
     private final Gson gson;
 
-    public GeminiWebScraper() {
+    public VertexWebScrapper() {
         this.gson = new Gson();
     }
 
@@ -31,6 +30,8 @@ public class GeminiWebScraper {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
+            // Replace 'YOUR_ACCESS_TOKEN' with the token retrieved via 'gcloud auth application-default print-access-token'
+            connection.setRequestProperty("Authorization", "Bearer YOUR_ACCESS_TOKEN");
             connection.setDoOutput(true);
 
             // Send the JSON request body
