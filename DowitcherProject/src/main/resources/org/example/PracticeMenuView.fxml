@@ -5,7 +5,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <VBox alignment="CENTER" prefHeight="373.0" prefWidth="432.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeMenuController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Practice Menu">
@@ -19,6 +18,7 @@
       <Button fx:id="toTalkViewButton" mnemonicParsing="false" onAction="#handleToTalkingButton" text="Talking" />
       <Button fx:id="toTuningButton" mnemonicParsing="false" onAction="#handleToTuningButton" text="Tuning" />
       <Button fx:id="toAlphebetButton" mnemonicParsing="false" onAction="#handleToAlphebetButton" text="CW Alphebet" />
+      <Button fx:id="aiTestButton" mnemonicParsing="false" onAction="#handleAITestButton" text="AI Test" />
       <Button fx:id="toMainMenuButton" mnemonicParsing="false" onAction="#handleToMainMenuButton" text="Main Menu" />
    </children>
 </VBox>

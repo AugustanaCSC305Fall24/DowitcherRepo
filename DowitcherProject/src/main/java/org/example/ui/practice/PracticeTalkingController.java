@@ -1,19 +1,19 @@
 package org.example.ui.practice;
 
-import org.example.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.example.App;
-//import org.example.data.GenerativeAIChat;
+import org.example.data.VertexWebScrapper;
+import org.example.utility.Sound;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 
 public class PracticeTalkingController {
 
-    //Data
+    // Data
     @FXML private Button practiceMenuButton;
     @FXML private TextArea chatLogTextArea;
     @FXML private VBox chatLogVBox;
@@ -25,40 +25,61 @@ public class PracticeTalkingController {
     @FXML private Label roomTitleLabel;
     @FXML private Button straightKeyButton;
     @FXML private TextField typingTextField;
+    @FXML private Button sendButton;  // Add a Send button for sending typed messages
 
     private boolean isPlaying = false;
 
     // Chatbot instance
-//    private GenerativeAIChat chatBot;
+    private VertexWebScrapper chatBot;
 
-    //All view switching button presses
-    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {
-        App.practiceMenuView();}
-    @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
-
+    // Initialize the controller
     @FXML
     public void initialize() {
-//
-//        // Initialize GenerativeAIChat with the text field and a placeholder TextArea or handler for output
-//        chatBot = new GenerativeAIChat(typingTextField, chatLogTextArea); // Adjust output component as necessary
-////       new Thread(() -> {
-////           try {Thread.sleep(10000);} catch(InterruptedException ex) {}
-////           chatBot.startChatSession();
-////       }).start();
-//        chatBot.startChatSession();
-
+        // Instantiate the GeminiWebScraper for chatbot communication
+        chatBot = new VertexWebScrapper();
     }
 
-    //Handlers
-    @FXML void handleDahButton() {
+    // All view-switching button presses
+    @FXML
+    void handlePracticeMenuButton(ActionEvent event) throws IOException {
+        App.practiceMenuView();
+    }
+
+    @FXML
+    void handleMainMenuButton(ActionEvent event) throws IOException {
+        App.homeScreenView();
+    }
+
+    // Handle the send button click to communicate with the AI
+    @FXML
+    void handleSendButton(ActionEvent event) {
+        String userMessage = typingTextField.getText().trim();
+        if (!userMessage.isEmpty()) {
+            // Display user's message in the chat log
+            chatLogTextArea.appendText("You: " + userMessage + "\n");
+
+            // Get AI response via GeminiWebScraper
+            new Thread(() -> {
+                String botResponse = chatBot.getChatBotResponse(userMessage);
+
+                // Update chat log with bot's response (on JavaFX Application Thread)
+                javafx.application.Platform.runLater(() -> {
+                    chatLogTextArea.appendText("Bot: " + botResponse + "\n");
+                    typingTextField.clear();
+                });
+            }).start();
+        }
+    }
+
+    // Morse code handling methods
+    @FXML
+    void handleDahButton() {
         dahButton.setOnMousePressed(event -> {
-            new Thread( () -> {
+            new Thread(() -> {
                 isPlaying = true;
                 try {
                     playDahHold();
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (LineUnavailableException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }).start();
@@ -66,15 +87,15 @@ public class PracticeTalkingController {
 
         dahButton.setOnMouseReleased(event -> isPlaying = false);
     }
-    @FXML void handleDitButton() {
+
+    @FXML
+    void handleDitButton() {
         ditButton.setOnMousePressed(event -> {
             isPlaying = true;
-            new Thread( () -> {
+            new Thread(() -> {
                 try {
                     playDitHold();
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (LineUnavailableException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }).start();
@@ -82,14 +103,14 @@ public class PracticeTalkingController {
 
         ditButton.setOnMouseReleased(event -> isPlaying = false);
     }
-    @FXML void handleStraightKeyButton(ActionEvent event) {}
 
-    private void straightTone(){
+    // Straight key button handler
+    @FXML
+    void handleStraightKeyButton(ActionEvent event) {}
 
-    }
-
+    // Morse code playback methods
     private void playDitHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying){
+        while (isPlaying) {
             Sound.playDit();
             Thread.sleep(50);
             typingTextField.setText(typingTextField.getText() + ".");
@@ -97,13 +118,10 @@ public class PracticeTalkingController {
     }
 
     private void playDahHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying){
+        while (isPlaying) {
             Sound.playDah();
             Thread.sleep(50);
             typingTextField.setText(typingTextField.getText() + "-");
         }
     }
-
-
-
 }
