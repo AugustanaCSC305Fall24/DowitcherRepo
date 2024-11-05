@@ -19,11 +19,13 @@ public class PracticeTypingController {
         @FXML private Button paddleModeButton;
         @FXML private Button straightKeyModeButton;
 
-        private boolean isPaddleMode = true;
+        private volatile boolean isPaddleMode = true;
         private long keyPressStartTime = 0;
         private long lastKeyPressTime = 0;
         private StringBuilder currentMorseCode = new StringBuilder();
         private MorseCodeTranslator morseCodeTranslator;
+
+        private Thread typingModeThread;
 
         //All view switching button presses
         @FXML private void handlePracticeMenuButton() throws IOException {
@@ -32,25 +34,74 @@ public class PracticeTypingController {
     @FXML private void switchToSettingsView() throws IOException{App.settingsView();}
 
     // Initialize the controller and translator
-        @FXML
-        public void initialize() {
-            morseCodeTranslator = new MorseCodeTranslator();
-            App.currentUser.addView("PracticeTypingView");
-            // Set the action for the translate button
-            translateButton.setOnAction(event -> translateMorseCode());
+    @FXML
+    public void initialize() {
+        morseCodeTranslator = new MorseCodeTranslator();
+        App.currentUser.addView("PracticeTypingView");
 
-            //set up mode buttons
-            paddleModeButton.setOnAction(event -> setInputMode(true));   // Paddle mode
-            straightKeyModeButton.setOnAction(event -> setInputMode(false)); // Straight key mode
+        App.getScene().setOnKeyPressed(event -> {
+            try {
+                handleKeyPress(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
-            App.getScene().setOnKeyPressed(event -> {
-                try {
-                    handleKeyPress(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+    @FXML
+    private void handlePaddleMode() {
+
+        isPaddleMode = true;
+        handleTyping("Paddle");
+    }
+
+    @FXML
+    private void handleStraightKeyMode() {
+
+        isPaddleMode = false;
+        handleTyping("Straight");
+    }
+
+    @FXML
+    private void handleTyping(String mode) {
+        System.out.println("handleTyping called with mode: " + mode);  // Debug print
+
+        // Stop the existing thread if it's running
+        if (typingModeThread != null && typingModeThread.isAlive()) {
+            typingModeThread.interrupt();
         }
+
+        // Create a new thread based on the mode
+        if (mode.equals("Paddle")) {
+            typingModeThread = new Thread(this::runPaddleMode);
+        } else if (mode.equals("Straight")) {
+            typingModeThread = new Thread(this::runStraightKeyMode);
+        }
+
+        typingModeThread.start();
+    }
+
+    private void runPaddleMode() {
+        try {
+            while (isPaddleMode) { // Only runs when isPaddleMode is true
+                System.out.println("0");
+                Thread.sleep(500); // Delay to prevent excessive CPU usage
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Paddle mode interrupted.");
+        }
+    }
+
+    private void runStraightKeyMode() {
+        try {
+            while (!isPaddleMode) { // Only runs when isPaddleMode is false
+                System.out.println("1");
+                Thread.sleep(500); // Delay to prevent excessive CPU usage
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Straight key mode interrupted.");
+        }
+    }
 
     //Method to switch between input modes
     private void setInputMode(boolean usePaddles) {
@@ -83,12 +134,13 @@ public class PracticeTypingController {
         }
     }
 
-        // Method to handle the translation
-        private void translateMorseCode() {
-            String morseCode = morseCodeInput.getText();
-            String translatedText = MorseCodeTranslator.translateMorseCode(morseCode);
-            englishOutput.setText(translatedText);
-        }
+    // Method to handle the translation
+    @FXML
+    private void translateMorseCode() {
+        String morseCode = morseCodeInput.getText();
+        String translatedText = MorseCodeTranslator.translateMorseCode(morseCode);
+        englishOutput.setText(translatedText);
+    }
 
     private void handleKeyPress(KeyEvent event) throws IOException {
         if (isPaddleMode) {
