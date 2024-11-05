@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.example.App;
-import org.example.data.GenerativeAIChat;
+//import org.example.data.GenerativeAIChat;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class PracticeTalkingController {
     private boolean isPlaying = false;
 
     // Chatbot instance
-    private GenerativeAIChat chatBot;
+//    private GenerativeAIChat chatBot;
 
     //All view switching button presses
     @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {
@@ -38,14 +38,14 @@ public class PracticeTalkingController {
 
     @FXML
     public void initialize() {
-
-        // Initialize GenerativeAIChat with the text field and a placeholder TextArea or handler for output
-        chatBot = new GenerativeAIChat(typingTextField, chatLogTextArea); // Adjust output component as necessary
-//       new Thread(() -> {
-//           try {Thread.sleep(10000);} catch(InterruptedException ex) {}
-//           chatBot.startChatSession();
-//       }).start();
-        chatBot.startChatSession();
+//
+//        // Initialize GenerativeAIChat with the text field and a placeholder TextArea or handler for output
+//        chatBot = new GenerativeAIChat(typingTextField, chatLogTextArea); // Adjust output component as necessary
+////       new Thread(() -> {
+////           try {Thread.sleep(10000);} catch(InterruptedException ex) {}
+////           chatBot.startChatSession();
+////       }).start();
+//        chatBot.startChatSession();
 
     }
 
