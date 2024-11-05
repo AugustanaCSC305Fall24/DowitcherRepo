@@ -6,59 +6,76 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import org.example.App;
+import org.example.data.User;
+import org.example.utility.Sound;
 //import javafx.scene.media.AudioClip;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 
 public class PracticeTuningController {
 
-    @FXML private Slider frequencySlider;
-    @FXML private Slider filterWidthSlider;
-    @FXML private Label frequencyLabel;
-    @FXML private Label filterLabel;
-    @FXML private Label targetFrequencyLabel;
-    @FXML private Label feedbackLabel;
-    @FXML private Button transmitButton;
-    @FXML private Button resetButton;
-    @FXML private Button PracticeMenuButton;
-    @FXML private Button MainMenuButton;
+    @FXML
+    private Slider frequencySlider;
+    @FXML
+    private Slider filterWidthSlider;
+    @FXML
+    private Label frequencyLabel;
+    @FXML
+    private Label filterLabel;
+    @FXML
+    private Label targetFrequencyLabel;
+    @FXML
+    private Label feedbackLabel;
+    @FXML
+    private Button transmitButton;
+    @FXML
+    private Button resetButton;
+    @FXML
+    private Button PracticeMenuButton;
+    @FXML
+    private Button MainMenuButton;
 
 
     private static final double MIN_FREQUENCY = 7.000; // MHz
     private static final double MAX_FREQUENCY = 7.067; // MHz
-    //private static final String SOUND_FILE = "path/to/sound/file.wav"; // Path to your sound file
 
     private double targetFrequency; // Randomly set each reset
-    // private AudioClip audioClip;
     private final Random random = new Random();
 
+    private String testSound = "... --- ...";
+    private boolean isMatched;
+    private boolean isPlaying = true;
 
     //All view switching button presses
-    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException {
-        App.practiceMenuView();}
-    @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
+    @FXML
+    void handlePracticeMenuButton(ActionEvent event) throws IOException {
+        isPlaying = false;
+        App.practiceMenuView();
+    }
+
+    @FXML
+    void handleMainMenuButton(ActionEvent event) throws IOException {
+        isPlaying = false;
+        App.homeScreenView();
+    }
 
     @FXML
     public void initialize() {
-        // Load the audio file
-        //URL resource = getClass().getResource(SOUND_FILE);
-        //if (resource != null) {
-           // audioClip = new AudioClip(resource.toString());
-       // }
-
-
-        // Bind sliders to update labels in real-time
-        frequencySlider.valueProperty().addListener((obs, oldVal, newVal) ->
-                frequencyLabel.setText(String.format("%.3f MHz", newVal.doubleValue())));
-
-        filterWidthSlider.valueProperty().addListener((obs, oldVal, newVal) ->
-                filterLabel.setText(String.format("Filter Width: %.1f KHz", newVal.doubleValue())));
-
-        // Set initial random frequency
         setRandomTargetFrequency();
+        frequencySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            frequencyLabel.setText(String.format("%.3f MHz", newVal.doubleValue()));
+            checkFrequencyMatch();
+        });
+        filterWidthSlider.valueProperty().addListener((obs, oldVal, newVal) ->
+                filterLabel.setText(String.format("Filter Width: %.1f KHz", newVal.doubleValue()))
+        );
+
+        playSound(testSound);
     }
+
 
     @FXML
     private void onTransmit() {
@@ -68,17 +85,15 @@ public class PracticeTuningController {
         if (isWithinFilterWidth(tunedFrequency, targetFrequency, filterWidth)) {
             feedbackLabel.setText("Good job!");
             feedbackLabel.setStyle("-fx-text-fill: green;");
-            //playSound(1.0); // Normal pitch if within filter range
         } else {
             feedbackLabel.setText("Try again");
             feedbackLabel.setStyle("-fx-text-fill: red;");
-            //double pitch = calculatePitch(tunedFrequency, targetFrequency);
-            //playSound(pitch); // Adjust pitch based on frequency difference
         }
     }
 
     @FXML
     private void onReset() {
+        isMatched = false;
         setRandomTargetFrequency();
         feedbackLabel.setText("");
     }
@@ -98,11 +113,62 @@ public class PracticeTuningController {
         return 1.0 + (frequencyDifference * 15); // Increase pitch more significantly with distance
     }
 
-    //private void playSound(double pitch) {
-        //if (audioClip != null) {
-            //audioClip.setRate(pitch); // Adjust pitch by modifying playback rate
-            //audioClip.play();}}
+    private int getFrequencyForSound() {
+        double sliderValue = frequencySlider.getValue();
+
+        if (isMatched){
+            return 600;
+        }
+        double maxDeviation = Math.max(targetFrequency - MIN_FREQUENCY, MAX_FREQUENCY - targetFrequency);
+        double deviation = (sliderValue - targetFrequency) / maxDeviation;
+        int frequency = (int) (600 + deviation * 600);
+
+        return Math.max(200,Math.min(frequency,1200));
+    }
+
+    private void checkFrequencyMatch() {
+        double sliderValue = frequencySlider.getValue();
+        isMatched = isWithinFilterWidth(sliderValue, targetFrequency, filterWidthSlider.getValue());
+
+        if (isMatched) {
+            feedbackLabel.setText("Matched!");
+            feedbackLabel.setStyle("-fx-text-fill: green;");
+        } else {
+            feedbackLabel.setText("Not Matched");
+            feedbackLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
 
 
+    private void playSound(String message) {
+        Thread audioThread = new Thread(() -> {
+            while (isPlaying) {
+                int frequency = getFrequencyForSound();
+                for (char character : message.toCharArray()) {
+                    if (character == '-') {
+                        try {
+                            Sound.playDah(frequency);
+                        } catch (LineUnavailableException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (character == '.') {
+                        try {
+                            Sound.playDit(frequency);
+                        } catch (LineUnavailableException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (character == ' ') {
+                        try {
+                            Thread.sleep(User.getCwSpeed());
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }
+        });
+        audioThread.setDaemon(true);
+        audioThread.start();
+    }
 }
 

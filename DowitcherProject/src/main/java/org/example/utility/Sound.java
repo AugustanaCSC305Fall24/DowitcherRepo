@@ -15,8 +15,16 @@ public class Sound {
         playTone(ditFrequency,ditDuration);
     }
 
+    public static void playDit(int frequency) throws LineUnavailableException {
+        playTone(frequency,ditDuration);
+    }
+
     public static void playDah() throws LineUnavailableException {
         playTone(dahFrequency,dahDuration);
+    }
+
+    public static void playDah(int frequency) throws LineUnavailableException {
+        playTone(frequency,dahDuration);
     }
 
     public static void playTone(int frequency, int duration) throws LineUnavailableException {
