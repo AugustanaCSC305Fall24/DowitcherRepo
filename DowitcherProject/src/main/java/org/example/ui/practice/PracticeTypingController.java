@@ -2,12 +2,17 @@ package org.example.ui.practice;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.example.App;
 import org.example.utility.MorseCodeTranslator;
+import org.example.utility.Sound;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
+
 
 public class PracticeTypingController {
 
@@ -18,6 +23,7 @@ public class PracticeTypingController {
         @FXML private TextArea englishOutput;
         @FXML private Button paddleModeButton;
         @FXML private Button straightKeyModeButton;
+        @FXML private Label currentModeLabel;
 
         private volatile boolean isPaddleMode = true;
         private long keyPressStartTime = 0;
@@ -26,6 +32,8 @@ public class PracticeTypingController {
         private MorseCodeTranslator morseCodeTranslator;
 
         private Thread typingModeThread;
+        private KeyCode currentKey;
+        public boolean isPlaying = true;
 
         //All view switching button presses
         @FXML private void handlePracticeMenuButton() throws IOException {
@@ -48,8 +56,15 @@ public class PracticeTypingController {
         });
     }
 
+
+
+
+
     @FXML
     private void handlePaddleMode() {
+        paddleModeButton.setDisable(true);
+        straightKeyModeButton.setDisable(false);
+        currentModeLabel.setText("Current Mode - Paddle");
 
         isPaddleMode = true;
         handleTyping("Paddle");
@@ -57,6 +72,9 @@ public class PracticeTypingController {
 
     @FXML
     private void handleStraightKeyMode() {
+        paddleModeButton.setDisable(false);
+        straightKeyModeButton.setDisable(true);
+        currentModeLabel.setText("Current Mode - Straight Key");
 
         isPaddleMode = false;
         handleTyping("Straight");
@@ -81,27 +99,81 @@ public class PracticeTypingController {
         typingModeThread.start();
     }
 
+
+
     private void runPaddleMode() {
         try {
-            while (isPaddleMode) { // Only runs when isPaddleMode is true
-                System.out.println("0");
-                Thread.sleep(500); // Delay to prevent excessive CPU usage
+            App.getScene().setOnKeyPressed(event -> handlePaddleKeyPressed(event.getCode()));
+            App.getScene().setOnKeyReleased(event -> handlePaddleKeyReleased(event.getCode()));
+
+            while (isPaddleMode) {
+                if (isPlaying) {
+                    // Example action: call playDitHold or playDahHold as needed
+                    if (currentKey == KeyCode.D) {  // Assume D is the dit key
+                        playDitHold();
+                    } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
+                        playDahHold();
+                    } else if (currentKey == KeyCode.S) {
+                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ') {
+                            morseCodeInput.setText(morseCodeInput.getText() + " ");
+                        }
+                    } else if (currentKey == KeyCode.W) {
+                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                            morseCodeInput.setText(morseCodeInput.getText() + "/");
+                        }
+                    }
+                }
+
+                Thread.sleep(50); // Adjust delay as needed
             }
         } catch (InterruptedException e) {
             System.out.println("Paddle mode interrupted.");
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void runStraightKeyMode() {
-        try {
-            while (!isPaddleMode) { // Only runs when isPaddleMode is false
-                System.out.println("1");
-                Thread.sleep(500); // Delay to prevent excessive CPU usage
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Straight key mode interrupted.");
+    private void handlePaddleKeyPressed(KeyCode code) {
+        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
+            isPlaying = true;
+            currentKey = code;
         }
     }
+
+    private void handlePaddleKeyReleased(KeyCode code) {
+        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
+            isPlaying = false;
+            currentKey = null;
+        }
+    }
+
+    private void playDitHold() throws LineUnavailableException, InterruptedException {
+        while (isPlaying && currentKey == KeyCode.D){
+            Sound.playDit();
+            Thread.sleep(50);
+            morseCodeInput.setText(morseCodeInput.getText() + ".");
+        }
+    }
+
+    private void playDahHold() throws LineUnavailableException, InterruptedException {
+        while (isPlaying&& currentKey == KeyCode.A){
+            Sound.playDah();
+            Thread.sleep(50);
+            morseCodeInput.setText(morseCodeInput.getText() + "-");
+        }
+    }
+
+
+
+    private void runStraightKeyMode() {
+        while (!isPaddleMode) { // Only runs when isPaddleMode is false
+
+        }
+    }
+
+
+
+
 
     //Method to switch between input modes
     private void setInputMode(boolean usePaddles) {
@@ -140,6 +212,7 @@ public class PracticeTypingController {
         String morseCode = morseCodeInput.getText();
         String translatedText = MorseCodeTranslator.translateMorseCode(morseCode);
         englishOutput.setText(translatedText);
+        morseCodeInput.clear();
     }
 
     private void handleKeyPress(KeyEvent event) throws IOException {
