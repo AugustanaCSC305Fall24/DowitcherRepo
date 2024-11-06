@@ -54,7 +54,7 @@
                   <Label prefHeight="17.0" prefWidth="134.0" text="Space for Letters  -&gt;  S" />
                   <Label prefHeight="17.0" prefWidth="133.0" text="Space for Words -&gt;  W" />
                   <Label text="Straight Key -" />
-                  <Label prefHeight="17.0" prefWidth="131.0" text="Space Bar" />
+                  <Label prefHeight="17.0" prefWidth="131.0" text="Straight Key - L" />
                </children>
             </VBox>
          </children>

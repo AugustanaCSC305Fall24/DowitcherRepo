@@ -34,6 +34,9 @@ public class PracticeTypingController {
         private Thread typingModeThread;
         private KeyCode currentKey;
         public boolean isPlaying = true;
+        private boolean isStraightKeyPressed = false;
+        private long lastReleaseTime = -1;
+
 
         //All view switching button presses
         @FXML private void handlePracticeMenuButton() throws IOException {
@@ -55,8 +58,6 @@ public class PracticeTypingController {
             }
         });
     }
-
-
 
 
 
@@ -99,12 +100,10 @@ public class PracticeTypingController {
         typingModeThread.start();
     }
 
-
-
     private void runPaddleMode() {
         try {
-            App.getScene().setOnKeyPressed(event -> handlePaddleKeyPressed(event.getCode()));
-            App.getScene().setOnKeyReleased(event -> handlePaddleKeyReleased(event.getCode()));
+            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
+            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
 
             while (isPaddleMode) {
                 if (isPlaying) {
@@ -127,23 +126,9 @@ public class PracticeTypingController {
                 Thread.sleep(50); // Adjust delay as needed
             }
         } catch (InterruptedException e) {
-            System.out.println("Paddle mode interrupted.");
+//            System.out.println("Paddle mode interrupted.");
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void handlePaddleKeyPressed(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
-            isPlaying = true;
-            currentKey = code;
-        }
-    }
-
-    private void handlePaddleKeyReleased(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
-            isPlaying = false;
-            currentKey = null;
         }
     }
 
@@ -163,15 +148,69 @@ public class PracticeTypingController {
         }
     }
 
-
-
     private void runStraightKeyMode() {
-        while (!isPaddleMode) { // Only runs when isPaddleMode is false
+        while (!isPaddleMode) {// Only runs when isPaddleMode is false
+            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
+            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
 
+            if (isStraightKeyPressed) { // Implement this method to detect space bar press
+                long pressStartTime = System.nanoTime();
+
+                if (lastReleaseTime != -1) {
+                    long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
+                    System.out.println("Time between presses: " + timeBetweenPresses + " ms");
+                    if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
+                        morseCodeInput.setText(morseCodeInput.getText() + " ");
+                    } else if (timeBetweenPresses > 225) {
+                        morseCodeInput.setText(morseCodeInput.getText() + "/");
+                    }
+                }
+
+                // Wait until the space bar is released
+                while (isStraightKeyPressed) {
+                    // Optional: you could add a short sleep to avoid CPU overuse
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
+                long pressDuration = (System.nanoTime() - pressStartTime) / 1_000_000;
+
+                System.out.println("Straight key held for: " + pressDuration + " ms");
+                if (pressDuration <= 150) {
+                    morseCodeInput.setText(morseCodeInput.getText() + ".");
+                } else {
+                    morseCodeInput.setText(morseCodeInput.getText() + "-");
+                }
+
+                lastReleaseTime = System.nanoTime();
+            }
         }
     }
 
+    private void handleKeyPressed(KeyCode code) {
+        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
+            isPlaying = true;
+            currentKey = code;
+        }
 
+        if (code == KeyCode.L) {
+            isStraightKeyPressed = true;
+        }
+    }
+
+    private void handleKeyReleased(KeyCode code) {
+        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
+            isPlaying = false;
+            currentKey = null;
+        }
+
+        if (code == KeyCode.L) {
+            isStraightKeyPressed = false;
+        }
+    }
 
 
 
