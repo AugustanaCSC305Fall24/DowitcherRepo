@@ -12,26 +12,25 @@ import java.io.IOException;
 
 public class AiTestController {
 
-    @FXML
-    private TextField UserTextFielld;
+    @FXML private TextField UserTextField;
+    @FXML private TextArea conversationTextArea;
+    @FXML private Button homeButton;
+    @FXML private Button sendButton;
+    @FXML private Button exitButton;
 
-    @FXML
-    private TextArea conversationTextArea;
-
-    @FXML
-    private Button homeButton;
-
-    @FXML
-    private Button sendButton;
-
-    @FXML
-    void handleHomeButton(ActionEvent event) throws IOException {
-        App.homeScreenView();
+    @FXML public void initialize() {
+        conversationTextArea.setText(" ");
+        UserTextField.setText(" ");
     }
+
+    @FXML void handleHomeButton(ActionEvent event) throws IOException {App.homeScreenView();}
+    @FXML void handleExitButton(ActionEvent event) throws IOException {App.exitProgram();}
+
+
 
     @FXML
     void handleSendButton(ActionEvent event) {
-        String msg = UserTextFielld.getText();
+        String msg = UserTextField.getText();
         String convo = conversationTextArea.getText();
         VertexWebScrapper newBot = new VertexWebScrapper();
         String botMsg = newBot.getChatBotResponse(msg);

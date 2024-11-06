@@ -48,9 +48,7 @@ public class ControlMenuController {
     @FXML private Button changeFrequencyUpKeyButton;
     @FXML private Button changeSettingsKeyButton;
 
-
     private final Map<String, TextField> keyBindings = new HashMap<>(); //Chat GPT Generated
-    private TextField activeTextField = null; //Chat gpt made
 
     @FXML public void initialize() {
         setActionTextField();
@@ -157,37 +155,14 @@ public class ControlMenuController {
     }
 
     // All Handler Methods for the change key buttons
-    @FXML void handleChangeDahKeyButton(ActionEvent event) {
-        handleChangeKeyButton(dahKeyField);
-    }
-
-    @FXML void handleChangeDitKeyButton(ActionEvent event) {
-        handleChangeKeyButton(ditKeyField);
-    }
-
-    @FXML void handleChangeExitKeyButton(ActionEvent event) {
-        handleChangeKeyButton(exitKeyField);
-    }
-
-    @FXML void handleChangeFilterDownKeyChangeButton(ActionEvent event) {
-        handleChangeKeyButton(filterDownTextField);
-    }
-
-    @FXML void handleChangeFilterUpKeyChangeButton(ActionEvent event) {
-        handleChangeKeyButton(filterUpTextField);
-    }
-
-    @FXML void handleChangeFrequencyDownKeyButton(ActionEvent event) {
-        handleChangeKeyButton(frequencyDownTextField);
-    }
-
-    @FXML void handleChangeFrequencyUpKeyButton(ActionEvent event) {
-        handleChangeKeyButton(frequencyUpTextField);
-    }
-
-    @FXML void handleChangeSettingsKeyButton(ActionEvent event) {
-        handleChangeKeyButton(settingsKeyField);
-    }
+    @FXML void handleChangeDahKeyButton(ActionEvent event) {handleChangeKeyButton(dahKeyField);}
+    @FXML void handleChangeDitKeyButton(ActionEvent event) {handleChangeKeyButton(ditKeyField);}
+    @FXML void handleChangeExitKeyButton(ActionEvent event) {handleChangeKeyButton(exitKeyField);}
+    @FXML void handleChangeFilterDownKeyChangeButton(ActionEvent event) {handleChangeKeyButton(filterDownTextField);}
+    @FXML void handleChangeFilterUpKeyChangeButton(ActionEvent event) {handleChangeKeyButton(filterUpTextField);}
+    @FXML void handleChangeFrequencyDownKeyButton(ActionEvent event) {handleChangeKeyButton(frequencyDownTextField);}
+    @FXML void handleChangeFrequencyUpKeyButton(ActionEvent event) {handleChangeKeyButton(frequencyUpTextField);}
+    @FXML void handleChangeSettingsKeyButton(ActionEvent event) {handleChangeKeyButton(settingsKeyField);}
 
     private void handleChangeKeyButton(TextField targetTextField) {
         try {

@@ -1,7 +1,7 @@
 package org.example.data;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import org.example.App;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,41 +12,29 @@ import java.nio.charset.StandardCharsets;
 
 public class VertexWebScrapper {
 
-    // Google OAuth Information
-    // Client ID Below
-    // 1014730854479-q01sh3maokh0jod60rs9oi7ebl1v51ug.apps.googleusercontent.com
-    // Client Secret Below
-    // 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
+    // Use the API URL for your specific endpoint
+    private static final String API_URL = "https://us-central1-aiplatform.googleapis.com/v1/projects/dowitchercwbot/locations/us-central1/endpoints/2951881956834410496:predict";
 
-    private static final String API_URL = "https://us-central1-aiplatform.googleapis.com/v1/projects/1014730854479/locations/us-central1/endpoints/2951881956834410496";
-    private final Gson gson;
+    // Use the API Key directly in the request
+    private static final String API_KEY = "AIzaSyAPvZIak-euYn7sZnkOFpMDZs39YgqQu5k";  // Example API Key
 
-    public VertexWebScrapper() {
-        this.gson = new Gson();
-    }
-
-    public String getChatBotResponse(String userMessage) {
-        ChatRequest request = new ChatRequest(userMessage);
-        String requestBody = gson.toJson(request);
+    public static String getChatBotResponse(String userMessage) {
 
         try {
-            // Set up the connection to the API
-            URL url = new URL(API_URL);
+            URL url = new URL(API_URL + "?key=" + API_KEY);  // Append the API key to the URL
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            // Replace 'YOUR_ACCESS_TOKEN' with the token retrieved via 'gcloud auth application-default print-access-token' ya29.a0AeDClZBTKr3PAr71_NhvSwkNk2YUrMSuwSXQY48cuqSVIEVn3F9hBIkTDtP3CJ2jKYVxCnx2_bK6494RrptAbjv7diBfnTawRipt4-t3O4h1Yl1jRFyNhiShhbrCxpSGoX3vSMB0OvJxDu8eB5yuC0L2YHYiVPRqxgS56Gi4-Pyxh9vSkbuWX2TNVUfhuwfbozeKOPVvQAQrukq-nByXBW4RunolBnmtaITms1hfHXph0WHIUTpwtNOaqhK-aQxli_RJjno2fiLV0SpL42S9saG3rSs_dstxQOEhK1v6LeR_O-Vjvm3KPXkl04MXUAQ9l-3GYB1dyqoe05ydsjr9k7Fe2KOA_OKHiNSdrbrnQHk7Pf2LjhMPQAc00Gr6bh0ftC6bTlRIJ1t0EHa0fl4dX_BZv7GzHbdfnTn5aCgYKAVgSARESFQHGX2Mi6OVKQjdR28v5agSYSaREJg0427
-            connection.setRequestProperty("Authorization", "Bearer ya29.a0AeDClZBTKr3PAr71_NhvSwkNk2YUrMSuwSXQY48cuqSVIEVn3F9hBIkTDtP3CJ2jKYVxCnx2_bK6494RrptAbjv7diBfnTawRipt4-t3O4h1Yl1jRFyNhiShhbrCxpSGoX3vSMB0OvJxDu8eB5yuC0L2YHYiVPRqxgS56Gi4-Pyxh9vSkbuWX2TNVUfhuwfbozeKOPVvQAQrukq-nByXBW4RunolBnmtaITms1hfHXph0WHIUTpwtNOaqhK-aQxli_RJjno2fiLV0SpL42S9saG3rSs_dstxQOEhK1v6LeR_O-Vjvm3KPXkl04MXUAQ9l-3GYB1dyqoe05ydsjr9k7Fe2KOA_OKHiNSdrbrnQHk7Pf2LjhMPQAc00Gr6bh0ftC6bTlRIJ1t0EHa0fl4dX_BZv7GzHbdfnTn5aCgYKAVgSARESFQHGX2Mi6OVKQjdR28v5agSYSaREJg0427");
             connection.setDoOutput(true);
 
-            // Send the JSON request body
+            // Send the request body with user message
+            String requestBody = String.format("{\"instances\":[{\"userMessage\":\"%s\"}]}", userMessage);
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = requestBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
-            // Read the response
+            // Read the response and return
             StringBuilder response = new StringBuilder();
             try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
                 String responseLine;
@@ -54,20 +42,10 @@ public class VertexWebScrapper {
                     response.append(responseLine.trim());
                 }
             }
+            return response.toString();
 
-            // Deserialize the JSON response
-            ChatResponse chatResponse = gson.fromJson(response.toString(), ChatResponse.class);
-
-            // Return the bot's response message if available
-            return chatResponse != null && chatResponse.getBotMessage() != null
-                    ? chatResponse.getBotMessage()
-                    : "No response from chatbot.";
-
-        } catch (JsonSyntaxException e) {
-            System.out.println("Error parsing response: " + e.getMessage());
-            return "Error: Invalid JSON format from chatbot response.";
         } catch (IOException e) {
-            System.out.println("Error sending request: " + e.getMessage());
+            e.printStackTrace();
             return "Error: Could not retrieve chatbot response.";
         }
     }
