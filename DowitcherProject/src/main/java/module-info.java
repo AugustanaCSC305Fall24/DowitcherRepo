@@ -4,6 +4,7 @@ module org.example {
     requires java.desktop;
     requires jdk.compiler;
     requires com.google.gson;
+    opens org.example.data to com.google.gson;
 //    requires org.jsoup;
 
 //    requires google.cloud.aiplatform;
