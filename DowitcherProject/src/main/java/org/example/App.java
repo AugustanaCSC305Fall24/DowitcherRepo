@@ -6,9 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.data.GoogleAuthUtil;
 import org.example.data.User;
-
 import java.io.IOException;
+import com.google.gson.JsonObject;
 
 /**
  * JavaFX App
@@ -17,9 +18,13 @@ public class App extends Application {
 
     private static Scene scene;
     public static User currentUser;
+    private static String accessToken;
 
     @Override
     public void start(Stage stage) throws IOException {
+        // No need for OAuth, just directly using API Key (No token fetch needed)
+        initializeAuth();
+
         scene = new Scene(loadFXML("LoginView"), 640, 480);
         stage.setScene(scene);
         stage.setFullScreen(true);                          // Make the stage full screen
@@ -41,7 +46,21 @@ public class App extends Application {
 
     public static Scene getScene(){return scene;}
 
-    //All switch view methods
+
+    // Google Auth Methods
+    private static void initializeAuth() {
+        // No need for token or service account; we directly use API Key now
+        String apiEndpoint = "https://www.googleapis.com/discovery/v1/apis";  // Example endpoint to verify API Key
+        try {
+            // Example: Fetching API data with API Key
+            JsonObject response = GoogleAuthUtil.fetchJsonFromApi(apiEndpoint);
+            System.out.println("API Response: " + response.toString());
+        } catch (Exception e) {
+            System.err.println("Failed to fetch data from Google API: " + e.getMessage());
+        }
+    }
+
+    // All switch view methods
     public static void back() throws IOException {setRoot(currentUser.popLastView());}
     public static void controlMenuView() throws IOException {App.setRoot("ControlMenuView");}
     public static void cwAlphabetView() throws IOException {App.setRoot("CwAlphabetView");}
@@ -55,4 +74,5 @@ public class App extends Application {
     public static void settingsView() throws IOException {App.setRoot("SettingsView");}
     public static void signupView() throws IOException {App.setRoot("SignupView");}
     public static void exitProgram() {Platform.exit();}
+    public static void testAiView() throws IOException {App.setRoot("AiTestView");}
 }
