@@ -114,7 +114,7 @@ public class PracticeTypingController {
                     } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
                         playDahHold();
                     } else if (currentKey == KeyCode.S) {
-                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ') {
+                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
                             morseCodeInput.setText(morseCodeInput.getText() + " ");
                         }
                     } else if (currentKey == KeyCode.W) {
