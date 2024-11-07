@@ -74,6 +74,16 @@ public class PracticeTuningController {
         );
 
         playSound(testSound);
+        while (isPlaying){
+            double volume = getStaticVolume();
+            Sound.staticSound(volume);
+        }
+    }
+
+    private double getStaticVolume() {
+        double sliderValue =  filterWidthSlider.getValue();
+        double volume = 1.0 - (sliderValue /5.0);
+        return volume ;
     }
 
 
@@ -106,11 +116,6 @@ public class PracticeTuningController {
     private boolean isWithinFilterWidth(double tunedFrequency, double targetFrequency, double filterWidth) {
         double filterRange = filterWidth / 1000; // Convert KHz to MHz
         return Math.abs(tunedFrequency - targetFrequency) <= filterRange;
-    }
-
-    private double calculatePitch(double tunedFrequency, double targetFrequency) {
-        double frequencyDifference = Math.abs(tunedFrequency - targetFrequency);
-        return 1.0 + (frequencyDifference * 15); // Increase pitch more significantly with distance
     }
 
     @FXML
