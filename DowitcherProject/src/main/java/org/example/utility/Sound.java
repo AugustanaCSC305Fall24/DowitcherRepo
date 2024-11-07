@@ -1,5 +1,6 @@
 package org.example.utility;
 
+import javafx.scene.chart.PieChart;
 import org.example.data.User;
 
 import javax.sound.sampled.*;
@@ -81,36 +82,37 @@ public class Sound {
         AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
         SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-
         sourceDataLine.open(format);
+
+        // Adjust volume once when the sound starts
+        adjustVolumeOfStatic(sourceDataLine, sliderVolume);
+
         sourceDataLine.start();
-        adjustVolumeOfStatic(sliderVolume);
 
         byte[] data = new byte[1024];
-        while(isPlaying) {
+        while (isPlaying) {
             for (int i = 0; i < data.length; i++) {
-                data[i] = (byte) (Math.random() * 256 - 128);
+                data[i] = (byte) (Math.random() * 256 - 128); // generate static noise
             }
-
             sourceDataLine.write(data, 0, data.length);
         }
+
         sourceDataLine.drain();
         sourceDataLine.close();
     }
 
 
-public static void adjustVolumeOfStatic( double sliderVolume) throws LineUnavailableException {
-    AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
-    DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
-    SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+    public static void adjustVolumeOfStatic(double sliderVolume) throws LineUnavailableException {
+        AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
+        DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+        SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
 
-    sourceDataLine.open(format);
-    FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
-    float range = volumeControl.getMaximum() - volumeControl.getMinimum();
-    float gain = (int) ((range * (sliderVolume / 100.0f)) + volumeControl.getMinimum());
-    volumeControl.setValue(gain);
-
-}
+        
+        FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+        float range = volumeControl.getMaximum() - volumeControl.getMinimum();
+        float gain = (float) ((range * (sliderVolume / 100.0f)) + volumeControl.getMinimum());
+        volumeControl.setValue(gain);
+    }
 
 
 }
