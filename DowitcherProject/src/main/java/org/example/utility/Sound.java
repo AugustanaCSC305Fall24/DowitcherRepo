@@ -77,5 +77,46 @@ public class Sound {
         sourceDataLine.close();
     }
 
+    public static void staticSound(double sliderVolume) {
+        Thread thread = new Thread(() -> {
+            try {
+                AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
+                DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+                SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+
+                sourceDataLine.open(format);
+                sourceDataLine.start();
+
+                adjustVolumeOfStatic(sourceDataLine, sliderVolume);
+
+                byte[] data = new byte[1024];
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = (byte) (Math.random() * 256 - 128);
+                }
+
+                sourceDataLine.write(data, 0, data.length);
+
+                sourceDataLine.drain();
+                sourceDataLine.close();
+
+            } catch (LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    public static void adjustVolumeOfStatic(SourceDataLine sourceDataLine, double sliderVolume){
+        try{
+            FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+            float range = volumeControl.getMaximum() - volumeControl.getMinimum();
+            float gain = (int) ((range * (sliderVolume / 100.0f)) + volumeControl.getMinimum());
+            volumeControl.setValue(gain);
+        } catch (IllegalArgumentException e){
+            System.out.print(e);
+        }
+    }
+
 
 }
