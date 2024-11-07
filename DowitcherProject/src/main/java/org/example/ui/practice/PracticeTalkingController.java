@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.example.App;
-import org.example.data.VertexWebScrapper;
+//import org.example.data.VertexWebScrapper;
 import org.example.utility.Sound;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -30,13 +30,13 @@ public class PracticeTalkingController {
     private boolean isPlaying = false;
 
     // Chatbot instance
-    private VertexWebScrapper chatBot;
+//    private VertexWebScrapper chatBot;
 
     // Initialize the controller
     @FXML
     public void initialize() {
         // Instantiate the GeminiWebScraper for chatbot communication
-        chatBot = new VertexWebScrapper();
+//        chatBot = new VertexWebScrapper();
     }
 
     // All view-switching button presses
@@ -60,11 +60,11 @@ public class PracticeTalkingController {
 
             // Get AI response via GeminiWebScraper
             new Thread(() -> {
-                String botResponse = chatBot.getChatBotResponse(userMessage);
+                //String botResponse = chatBot.getChatBotResponse(userMessage);
 
                 // Update chat log with bot's response (on JavaFX Application Thread)
                 javafx.application.Platform.runLater(() -> {
-                    chatLogTextArea.appendText("Bot: " + botResponse + "\n");
+                    //chatLogTextArea.appendText("Bot: " + botResponse + "\n");
                     typingTextField.clear();
                 });
             }).start();
