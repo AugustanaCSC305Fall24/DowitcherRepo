@@ -71,22 +71,17 @@ public class PracticeTuningController {
             frequencyLabel.setText(String.format("%.3f MHz", newVal.doubleValue()));
             checkFrequencyMatch();
         });
-        filterWidthSlider.valueProperty().addListener((obs, oldVal, newVal) ->
-                filterLabel.setText(String.format("Filter Width: %.1f KHz", newVal.doubleValue()))
-        );
-
         filterWidthSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            filterLabel.setText(String.format("Filter Width: %.1f KHz", newVal.doubleValue()));
             try {
                 Sound.adjustVolumeOfStatic(getStaticVolume());
             } catch (LineUnavailableException e) {
                 throw new RuntimeException(e);
             }
-
         });
         playSound(testSound);
         double initialVolume = getStaticVolume();
         playStatic(initialVolume);
-
     }
 
 
@@ -190,7 +185,9 @@ public class PracticeTuningController {
     private void playStatic(double volume){
         Thread audioThread = new Thread(() -> {
             try {
-                Sound.staticSound(volume, isPlaying);
+                while (isPlaying) {
+                    Sound.staticSound(volume, isPlaying);
+                }
             } catch (LineUnavailableException e) {
                 throw new RuntimeException(e);
             }
