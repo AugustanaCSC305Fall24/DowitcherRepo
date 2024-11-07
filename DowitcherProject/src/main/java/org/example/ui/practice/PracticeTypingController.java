@@ -158,11 +158,15 @@ public class PracticeTypingController {
 
                 if (lastReleaseTime != -1) {
                     long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
-                    System.out.println("Time between presses: " + timeBetweenPresses + " ms");
+                    //System.out.println("Time between presses: " + timeBetweenPresses + " ms");
                     if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
-                        morseCodeInput.setText(morseCodeInput.getText() + " ");
+                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                            morseCodeInput.setText(morseCodeInput.getText() + " ");
+                        }
                     } else if (timeBetweenPresses > 225) {
-                        morseCodeInput.setText(morseCodeInput.getText() + "/");
+                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                            morseCodeInput.setText(morseCodeInput.getText() + "/");
+                        }
                     }
                 }
 
@@ -178,7 +182,7 @@ public class PracticeTypingController {
 
                 long pressDuration = (System.nanoTime() - pressStartTime) / 1_000_000;
 
-                System.out.println("Straight key held for: " + pressDuration + " ms");
+                //System.out.println("Straight key held for: " + pressDuration + " ms");
                 if (pressDuration <= 150) {
                     morseCodeInput.setText(morseCodeInput.getText() + ".");
                 } else {
