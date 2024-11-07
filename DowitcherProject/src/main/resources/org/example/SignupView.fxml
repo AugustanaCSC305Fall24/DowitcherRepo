@@ -8,6 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 
+<?import javafx.scene.control.Label?>
 <VBox alignment="CENTER" prefHeight="371.0" prefWidth="447.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.AccountCreationController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account">
@@ -29,12 +30,12 @@
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="155.0" spacing="10.0">
                <children>
-                  <TextField fx:id="createUsernameTextfield" onAction="#handleCreateUsernameTextfield" text="Create Username Here" />
-                  <TextField fx:id="createUsernameCheckTextfield" onAction="#handleCreateUsernameCheckTextfield" text="Confirm Username Here" />
-                  <TextField fx:id="createPasswordTextfield" onAction="#handleCreatePasswordTextfield" text="Create Password Here" />
-                  <TextField fx:id="createPasswordCheckTextfield" onAction="#handleCreatePasswordCheckTextfield" text="Confirm Password Here" />
-                  <TextField fx:id="emailTextfield" onAction="#handleEmailTextfield" text="Enter Email Here" />
-                  <TextField fx:id="emailCheckTextfield" onAction="#handleEmailCheckTextfield" text="Confirm Email Here" />
+                  <TextField fx:id="createUsernameTextfield" onAction="#handleCreateUsernameTextfield" text="" />
+                  <TextField fx:id="createUsernameCheckTextfield" onAction="#handleCreateUsernameCheckTextfield" text="" />
+                  <TextField fx:id="createPasswordTextfield" onAction="#handleCreatePasswordTextfield" text="" />
+                  <TextField fx:id="createPasswordCheckTextfield" onAction="#handleCreatePasswordCheckTextfield" text="" />
+                  <TextField fx:id="emailTextfield" onAction="#handleEmailTextfield" text="" />
+                  <TextField fx:id="emailCheckTextfield" onAction="#handleEmailCheckTextfield" text="" />
                </children>
             </VBox>
          </children>
@@ -46,4 +47,5 @@
          </children>
       </HBox>
    </children>
+      <Label fx:id="messageLabel" text=""/>
 </VBox>

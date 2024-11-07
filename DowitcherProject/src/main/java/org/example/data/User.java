@@ -1,10 +1,14 @@
 package org.example.data;
 
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     // User Identity Data
     private String username;
     private String password;

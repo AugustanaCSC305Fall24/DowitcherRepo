@@ -3,6 +3,7 @@ package org.example.ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.App;
 import org.example.data.User;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class AccountCreationController {
 
     // Paths to user data files
-    private static final String USER_DATA_FILE = "userdata";
+    private static final String USER_DATA_FILE = "userdata.Json";
 
     // Login View
     //Buttons
@@ -78,6 +79,8 @@ public class AccountCreationController {
     @FXML private TextField emailCheckTextfield;
     @FXML private Button backButton;
     @FXML private Button createAccountButton;
+    @FXML private Label messageLabel; // This will show messages like "Fields do not match" or "Account created successfully"
+
 
     private String sameTextColor = "-fx-background-color: red;";
     private String defaultColor = "";
@@ -95,21 +98,27 @@ public class AccountCreationController {
 
     @FXML private void handleCreateAccountButton() {
         if (!sameTextField()) {
-            // Create a new user object based on input fields
-            User newUser = new User(createUsernameTextfield.getText(), createPasswordTextfield.getText(), emailTextfield.getText());
-
-            // Serialize the new user object to the file
             try {
+                if (UserSerialization.userExists(createUsernameTextfield.getText(), USER_DATA_FILE)) {
+                    messageLabel.setText("Username already taken");
+                    return;
+                }
+
+                User newUser = new User(createUsernameTextfield.getText(), createPasswordTextfield.getText(), emailTextfield.getText());
                 UserSerialization.serializeUser(newUser, USER_DATA_FILE);
-                System.out.println("Account created successfully!");
-                App.currentUser = newUser; // Set the current user
+                messageLabel.setText("Account created successfully!");
+                messageLabel.setStyle("-fx-text-fill: green;");
+                App.currentUser = newUser;
+                App.homeScreenView();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            sameTextField();
+            messageLabel.setText("Fields  not match.");
+            messageLabel.setStyle("-fx-text-fill: red;");
         }
     }
+
 
     // Helper Methods for TextField Handlers
     private void handleTextFieldSameCheck(TextField f1, TextField f2) {
@@ -120,6 +129,10 @@ public class AccountCreationController {
             setTextFieldNormal(f1, f2);
             createAccountButton.setDisable(false);
         }
+    }
+
+    public void setMessageLabel(Label messageLabel) {
+        this.messageLabel = messageLabel;
     }
 
     private void setTextFieldNormal(TextField f1, TextField f2) {
