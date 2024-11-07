@@ -189,11 +189,11 @@ public class PracticeTuningController {
     }
     private void playStatic(double volume){
         Thread audioThread = new Thread(() -> {
-            try {
-                Sound.staticSound(volume, isPlaying);
-            } catch (LineUnavailableException e) {
-                throw new RuntimeException(e);
-            }
+                try {
+                    Sound.staticSound(volume, isPlaying);
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                }
         });
         audioThread.setDaemon(true);
         audioThread.start();
