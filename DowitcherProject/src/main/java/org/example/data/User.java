@@ -31,7 +31,7 @@ public class User implements Serializable {
         this.email = email;
         this.viewStack = new Stack<>();
         this.cwSpeed = 300; // Default value
-        this.volume = 50.0; // Default value
+        this.volume = 100.0; // Default value
         this.staticAmount = 50.0; // Default value
         this.showCWLetters = true; // Default value
         this.showCWAcronyms = true; // Default value
