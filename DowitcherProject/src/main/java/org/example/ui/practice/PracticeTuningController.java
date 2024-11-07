@@ -11,6 +11,7 @@ import org.example.utility.Sound;
 //import javafx.scene.media.AudioClip;
 
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -49,6 +50,7 @@ public class PracticeTuningController {
     private boolean isMatched;
     private boolean isPlaying = true;
 
+
     //All view switching button presses
     @FXML
     void handlePracticeMenuButton(ActionEvent event) throws IOException {
@@ -73,16 +75,20 @@ public class PracticeTuningController {
                 filterLabel.setText(String.format("Filter Width: %.1f KHz", newVal.doubleValue()))
         );
 
+        filterWidthSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+               Sound.adjustVolumeOfStatic(getStaticVolume());
+           } catch (LineUnavailableException e) {
+               throw new RuntimeException(e);
+          }
+
+        });
         playSound(testSound);
-        playStatic();
+        double initialVolume = getStaticVolume();
+        playStatic(initialVolume);
 
     }
 
-    private double getStaticVolume() {
-        double sliderValue =  filterWidthSlider.getValue();
-        double volume = 1.0 - (sliderValue /5.0);
-        return volume ;
-    }
 
 
     @FXML
@@ -181,20 +187,22 @@ public class PracticeTuningController {
         audioThread.setDaemon(true);
         audioThread.start();
     }
-    private void playStatic(){
+    private void playStatic(double volume){
         Thread audioThread = new Thread(() -> {
-            while (isPlaying){
-
-                double volume = getStaticVolume();
-                try {
-                    Sound.staticSound(volume);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
-                }
+            try {
+                Sound.staticSound(volume, isPlaying);
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
             }
         });
         audioThread.setDaemon(true);
         audioThread.start();
     }
+
+    private double getStaticVolume() {
+        double sliderValue =  filterWidthSlider.getValue();
+        return 1.0 - (sliderValue /5.0);
+    }
+
 }
 
