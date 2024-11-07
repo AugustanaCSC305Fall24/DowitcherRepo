@@ -74,10 +74,8 @@ public class PracticeTuningController {
         );
 
         playSound(testSound);
-        while (isPlaying){
-            double volume = getStaticVolume();
-            Sound.staticSound(volume);
-        }
+        playStatic();
+
     }
 
     private double getStaticVolume() {
@@ -177,6 +175,21 @@ public class PracticeTuningController {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
+                }
+            }
+        });
+        audioThread.setDaemon(true);
+        audioThread.start();
+    }
+    private void playStatic(){
+        Thread audioThread = new Thread(() -> {
+            while (isPlaying){
+
+                double volume = getStaticVolume();
+                try {
+                    Sound.staticSound(volume);
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
