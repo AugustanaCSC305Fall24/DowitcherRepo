@@ -97,6 +97,7 @@ public class PracticeTypingController {
             typingModeThread = new Thread(this::runStraightKeyMode);
         }
 
+        lastReleaseTime = -1;
         typingModeThread.start();
     }
 
@@ -112,13 +113,21 @@ public class PracticeTypingController {
                         playDitHold();
                     } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
                         playDahHold();
-                    } else if (currentKey == KeyCode.S) {
-                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
-                            morseCodeInput.setText(morseCodeInput.getText() + " ");
-                        }
-                    } else if (currentKey == KeyCode.W) {
-                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
-                            morseCodeInput.setText(morseCodeInput.getText() + "/");
+                    }
+
+                    long pressStartTime = System.nanoTime();
+
+                    if (lastReleaseTime != -1) {
+                        long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
+                        System.out.println("Time between presses: " + timeBetweenPresses + " ms");
+                        if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
+                            if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                                morseCodeInput.setText(morseCodeInput.getText() + " ");
+                            }
+                        } else if (timeBetweenPresses > 225) {
+                            if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                                morseCodeInput.setText(morseCodeInput.getText() + "/");
+                            }
                         }
                     }
                 }
@@ -158,7 +167,7 @@ public class PracticeTypingController {
 
                 if (lastReleaseTime != -1) {
                     long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
-                    //System.out.println("Time between presses: " + timeBetweenPresses + " ms");
+                    System.out.println("Time between presses: " + timeBetweenPresses + " ms");
                     if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
                         if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
                             morseCodeInput.setText(morseCodeInput.getText() + " ");
@@ -188,8 +197,6 @@ public class PracticeTypingController {
                 } else {
                     morseCodeInput.setText(morseCodeInput.getText() + "-");
                 }
-
-                lastReleaseTime = System.nanoTime();
             }
         }
     }
@@ -214,6 +221,8 @@ public class PracticeTypingController {
         if (code == KeyCode.L) {
             isStraightKeyPressed = false;
         }
+
+        lastReleaseTime = System.nanoTime();
     }
 
 

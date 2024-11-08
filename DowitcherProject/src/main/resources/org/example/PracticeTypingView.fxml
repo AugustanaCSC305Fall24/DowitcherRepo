@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeTypingController">
+<VBox alignment="CENTER" prefHeight="363.0" prefWidth="644.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeTypingController">
    <children>
       <Label alignment="CENTER" prefHeight="31.0" prefWidth="261.0" text="Practice Typing">
          <font>
@@ -51,8 +51,6 @@
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="59.0" text="Paddle  -" />
                   <Label prefHeight="17.0" prefWidth="130.0" text="Dit  -&gt;  D" />
                   <Label prefHeight="17.0" prefWidth="133.0" text="Dah  -&gt;  A" />
-                  <Label prefHeight="17.0" prefWidth="134.0" text="Space for Letters  -&gt;  S" />
-                  <Label prefHeight="17.0" prefWidth="133.0" text="Space for Words -&gt;  W" />
                   <Label text="Straight Key -" />
                   <Label prefHeight="17.0" prefWidth="131.0" text="Straight Key - L" />
                </children>
