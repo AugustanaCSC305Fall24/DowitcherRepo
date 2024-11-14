@@ -7,6 +7,7 @@ public class MorseCodeTranslator {
 
     // Map to store Morse code translations
     private static final Map<String, String> morseCodeMap = new HashMap<>();
+    private static final Map<String, String> cwMessagesMap = new HashMap<>();
 
     // Initialize Morse code map
     static {
@@ -46,6 +47,26 @@ public class MorseCodeTranslator {
         morseCodeMap.put("--...", "7");
         morseCodeMap.put("---..", "8");
         morseCodeMap.put("----.", "9");
+
+        cwMessagesMap.put("CQ", "-.-. --.-");
+        cwMessagesMap.put("DE", "-.. .");
+        cwMessagesMap.put("QTH", "--.- - ....");
+        cwMessagesMap.put("RST", ".-. ... -");
+        cwMessagesMap.put("QSL", "--.- ... .-..");
+        cwMessagesMap.put("QRZ?", "--.- .-. --..");
+        cwMessagesMap.put("QRL?", "--.- .-. .-..");
+        cwMessagesMap.put("73", "--... ...--");
+        cwMessagesMap.put("88", "---.. ---..");
+        cwMessagesMap.put("QSB", "--.- ... -...");
+        cwMessagesMap.put("QRP", "--.- .-. .--.");
+        cwMessagesMap.put("QSY", "--.- ... -.--");
+        cwMessagesMap.put("QSO", "--.- ... ---");
+        cwMessagesMap.put("QRM", "--.- .-. --");
+        cwMessagesMap.put("QRN", "--.- .-. -.");
+        cwMessagesMap.put("QRX", "--.- .-. -..-");
+        cwMessagesMap.put("QRV", "--.- .-. ...-");
+        cwMessagesMap.put("QRO", "--.- .-. ---");
+        cwMessagesMap.put("SK", "... -.-");
     }
 
     // Translate Morse code to English
@@ -71,5 +92,8 @@ public class MorseCodeTranslator {
 
     public static Map<String, String> getCwAlphabet() {
         return new HashMap<>(morseCodeMap);
+    }
+    public static Map<String, String> getCwMessagesMap() {
+        return new HashMap<>(cwMessagesMap);
     }
 }
