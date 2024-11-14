@@ -1,12 +1,29 @@
 package org.example.utility;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.example.App;
+import org.example.ui.practice.PracticeTypingController;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RadioFunctions {
+
+    private Thread typingModeThread;
+    private KeyCode currentKey;
+    public boolean isPlaying = true;
+    private boolean isStraightKeyPressed = false;
+    private long lastReleaseTime = -1;
+    private volatile boolean isPaddleMode = true;
+    private PracticeTypingController practiceTypingController;
+    private String currentTypingOutputController;
+
+    public RadioFunctions(PracticeTypingController controller) {
+        this.practiceTypingController = controller;
+    }
 
     public static List<Object> checkTranslation(String userTranslation, String currentCW, String textSize) {
         TextFlow checkedUserInput = new TextFlow();
@@ -68,6 +85,152 @@ public class RadioFunctions {
 
         return returnList;
 
+    }
+
+    public void handleTyping(String mode, String currentController) {
+        System.out.println("handleTyping called with mode: " + mode );  // Debug print
+        System.out.println("Output Controller: " + currentController );// Debug print
+        currentTypingOutputController = currentController;
+
+        // Stop the existing thread if it's running
+        if (typingModeThread != null && typingModeThread.isAlive()) {
+            typingModeThread.interrupt();
+        }
+
+        // Create a new thread based on the mode
+        if (mode.equals("Paddle")) {
+            isPaddleMode = true;
+            typingModeThread = new Thread(this::runPaddleMode);
+        } else if (mode.equals("Straight")) {
+            isPaddleMode = false;
+            typingModeThread = new Thread(this::runStraightKeyMode);
+        }
+
+        lastReleaseTime = -1;
+        typingModeThread.start();
+    }
+
+    private void runPaddleMode() {
+        try {
+            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
+            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
+
+            while (isPaddleMode) {
+                if (isPlaying) {
+                    long pressStartTime = System.nanoTime();
+
+                    if (lastReleaseTime != -1) {
+                        long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
+                        System.out.println("Time between presses: " + timeBetweenPresses + " ms");
+                        if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
+                            addCw(" ");
+                        } else if (timeBetweenPresses > 225) {
+                            addCw("/");
+                        }
+                    }
+
+                    if (currentKey == KeyCode.D) {  // Assume D is the dit key
+                        playDitHold();
+                    } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
+                        playDahHold();
+                    }
+                }
+
+                Thread.sleep(50); // Adjust delay as needed
+            }
+        } catch (InterruptedException e) {
+//            System.out.println("Paddle mode interrupted.");
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void playDitHold() throws LineUnavailableException, InterruptedException {
+        while (isPlaying && currentKey == KeyCode.D){
+            Sound.playDit();
+            Thread.sleep(50);
+            addCw(".");
+        }
+        lastReleaseTime = System.nanoTime();
+    }
+
+    private void playDahHold() throws LineUnavailableException, InterruptedException {
+        while (isPlaying&& currentKey == KeyCode.A){
+            Sound.playDah();
+            Thread.sleep(50);
+            addCw("-");
+        }
+        lastReleaseTime = System.nanoTime();
+    }
+
+    private void runStraightKeyMode() {
+        while (!isPaddleMode) {// Only runs when isPaddleMode is false
+            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
+            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
+
+            if (isStraightKeyPressed) { // Implement this method to detect space bar press
+                long pressStartTime = System.nanoTime();
+
+                if (lastReleaseTime != -1) {
+                    long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
+                    System.out.println("Time between presses: " + timeBetweenPresses + " ms");
+                    if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
+                        addCw(" ");
+                    } else if (timeBetweenPresses > 225) {
+                        addCw("/");
+                    }
+                }
+
+                // Wait until the space bar is released
+                while (isStraightKeyPressed) {
+                    // Optional: you could add a short sleep to avoid CPU overuse
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
+                long pressDuration = (System.nanoTime() - pressStartTime) / 1_000_000;
+
+                //System.out.println("Straight key held for: " + pressDuration + " ms");
+                if (pressDuration <= 150) {
+                    addCw(".");
+                } else {
+                    addCw("-");
+                }
+            }
+        }
+    }
+
+    private void addCw(String cwChar) {
+        if (currentTypingOutputController.equals("PracticeTyping")) {
+            practiceTypingController.addCwToInput(cwChar);
+        }
+    }
+
+    private void handleKeyPressed(KeyCode code) {
+        if (code == KeyCode.D || code == KeyCode.A) {
+            isPlaying = true;
+            currentKey = code;
+        }
+
+        if (code == KeyCode.L) {
+            isStraightKeyPressed = true;
+        }
+    }
+
+    private void handleKeyReleased(KeyCode code) {
+        if (code == KeyCode.D || code == KeyCode.A) {
+            isPlaying = false;
+            currentKey = null;
+        }
+
+        if (code == KeyCode.L) {
+            isStraightKeyPressed = false;
+        }
+
+        lastReleaseTime = System.nanoTime();
     }
 
 

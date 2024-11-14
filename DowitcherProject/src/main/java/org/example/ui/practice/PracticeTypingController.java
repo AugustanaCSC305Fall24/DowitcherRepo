@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.example.App;
 import org.example.utility.MorseCodeTranslator;
+import org.example.utility.RadioFunctions;
 import org.example.utility.Sound;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -31,12 +32,7 @@ public class PracticeTypingController {
         private StringBuilder currentMorseCode = new StringBuilder();
         private MorseCodeTranslator morseCodeTranslator;
 
-        private Thread typingModeThread;
-        private KeyCode currentKey;
-        public boolean isPlaying = true;
-        private boolean isStraightKeyPressed = false;
-        private long lastReleaseTime = -1;
-
+        @FXML private RadioFunctions radioFunctions;
 
         //All view switching button presses
         @FXML private void handlePracticeMenuButton() throws IOException {
@@ -48,6 +44,7 @@ public class PracticeTypingController {
     @FXML
     public void initialize() {
         morseCodeTranslator = new MorseCodeTranslator();
+        radioFunctions = new RadioFunctions(this);
         App.currentUser.addView("PracticeTypingView");
 
         App.getScene().setOnKeyPressed(event -> {
@@ -59,8 +56,6 @@ public class PracticeTypingController {
         });
     }
 
-
-
     @FXML
     private void handlePaddleMode() {
         paddleModeButton.setDisable(true);
@@ -68,7 +63,7 @@ public class PracticeTypingController {
         currentModeLabel.setText("Current Mode - Paddle");
 
         isPaddleMode = true;
-        handleTyping("Paddle");
+        radioFunctions.handleTyping("Paddle", "PracticeTyping");
     }
 
     @FXML
@@ -78,155 +73,27 @@ public class PracticeTypingController {
         currentModeLabel.setText("Current Mode - Straight Key");
 
         isPaddleMode = false;
-        handleTyping("Straight");
+        radioFunctions.handleTyping("Straight", "PracticeTyping");
+        morseCodeInput.setText(morseCodeInput.getText() + ".");
     }
 
-    @FXML
-    private void handleTyping(String mode) {
-        System.out.println("handleTyping called with mode: " + mode);  // Debug print
-
-        // Stop the existing thread if it's running
-        if (typingModeThread != null && typingModeThread.isAlive()) {
-            typingModeThread.interrupt();
-        }
-
-        // Create a new thread based on the mode
-        if (mode.equals("Paddle")) {
-            typingModeThread = new Thread(this::runPaddleMode);
-        } else if (mode.equals("Straight")) {
-            typingModeThread = new Thread(this::runStraightKeyMode);
-        }
-
-        lastReleaseTime = -1;
-        typingModeThread.start();
-    }
-
-    private void runPaddleMode() {
-        try {
-            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
-            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
-
-            while (isPaddleMode) {
-                if (isPlaying) {
-                    long pressStartTime = System.nanoTime();
-
-                    if (lastReleaseTime != -1) {
-                        long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
-                        System.out.println("Time between presses: " + timeBetweenPresses + " ms");
-                        if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
-                            if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
-                                morseCodeInput.setText(morseCodeInput.getText() + " ");
-                            }
-                        } else if (timeBetweenPresses > 225) {
-                            if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
-                                morseCodeInput.setText(morseCodeInput.getText() + "/");
-                            }
-                        }
-                    }
-
-                    if (currentKey == KeyCode.D) {  // Assume D is the dit key
-                        playDitHold();
-                    } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
-                        playDahHold();
-                    }
-                }
-
-                Thread.sleep(50); // Adjust delay as needed
+    public void addCwToInput(String cwChar) {
+        if (cwChar.equals("/")) {
+            if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                morseCodeInput.setText(morseCodeInput.getText() + "/");
             }
-        } catch (InterruptedException e) {
-//            System.out.println("Paddle mode interrupted.");
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void playDitHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying && currentKey == KeyCode.D){
-            Sound.playDit();
-            Thread.sleep(50);
-            morseCodeInput.setText(morseCodeInput.getText() + ".");
-        }
-        lastReleaseTime = System.nanoTime();
-    }
-
-    private void playDahHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying&& currentKey == KeyCode.A){
-            Sound.playDah();
-            Thread.sleep(50);
-            morseCodeInput.setText(morseCodeInput.getText() + "-");
-        }
-        lastReleaseTime = System.nanoTime();
-    }
-
-    private void runStraightKeyMode() {
-        while (!isPaddleMode) {// Only runs when isPaddleMode is false
-            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
-            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
-
-            if (isStraightKeyPressed) { // Implement this method to detect space bar press
-                long pressStartTime = System.nanoTime();
-
-                if (lastReleaseTime != -1) {
-                    long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
-                    System.out.println("Time between presses: " + timeBetweenPresses + " ms");
-                    if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
-                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
-                            morseCodeInput.setText(morseCodeInput.getText() + " ");
-                        }
-                    } else if (timeBetweenPresses > 225) {
-                        if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
-                            morseCodeInput.setText(morseCodeInput.getText() + "/");
-                        }
-                    }
-                }
-
-                // Wait until the space bar is released
-                while (isStraightKeyPressed) {
-                    // Optional: you could add a short sleep to avoid CPU overuse
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-
-                long pressDuration = (System.nanoTime() - pressStartTime) / 1_000_000;
-
-                //System.out.println("Straight key held for: " + pressDuration + " ms");
-                if (pressDuration <= 150) {
-                    morseCodeInput.setText(morseCodeInput.getText() + ".");
-                } else {
-                    morseCodeInput.setText(morseCodeInput.getText() + "-");
-                }
+        } else if (cwChar.equals(" ")) {
+            if(morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != ' ' && morseCodeInput.getText().charAt(morseCodeInput.getText().length() - 1) != '/') {
+                morseCodeInput.setText(morseCodeInput.getText() + " ");
+            }
+        } else {
+            if (cwChar.equals(".")) {
+                morseCodeInput.setText(morseCodeInput.getText() + ".");
+            } else {
+                morseCodeInput.setText(morseCodeInput.getText() + "-");
             }
         }
     }
-
-    private void handleKeyPressed(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A) {
-            isPlaying = true;
-            currentKey = code;
-        }
-
-        if (code == KeyCode.L) {
-            isStraightKeyPressed = true;
-        }
-    }
-
-    private void handleKeyReleased(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A) {
-            isPlaying = false;
-            currentKey = null;
-        }
-
-        if (code == KeyCode.L) {
-            isStraightKeyPressed = false;
-        }
-
-        lastReleaseTime = System.nanoTime();
-    }
-
-
 
     //Method to switch between input modes
     private void setInputMode(boolean usePaddles) {
