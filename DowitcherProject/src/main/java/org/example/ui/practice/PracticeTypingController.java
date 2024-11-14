@@ -202,7 +202,7 @@ public class PracticeTypingController {
     }
 
     private void handleKeyPressed(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
+        if (code == KeyCode.D || code == KeyCode.A) {
             isPlaying = true;
             currentKey = code;
         }
@@ -213,7 +213,7 @@ public class PracticeTypingController {
     }
 
     private void handleKeyReleased(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A || code == KeyCode.S || code == KeyCode.W) {
+        if (code == KeyCode.D || code == KeyCode.A) {
             isPlaying = false;
             currentKey = null;
         }
