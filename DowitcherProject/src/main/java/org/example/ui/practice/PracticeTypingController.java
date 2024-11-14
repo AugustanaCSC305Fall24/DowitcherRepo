@@ -108,13 +108,6 @@ public class PracticeTypingController {
 
             while (isPaddleMode) {
                 if (isPlaying) {
-                    // Example action: call playDitHold or playDahHold as needed
-                    if (currentKey == KeyCode.D) {  // Assume D is the dit key
-                        playDitHold();
-                    } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
-                        playDahHold();
-                    }
-
                     long pressStartTime = System.nanoTime();
 
                     if (lastReleaseTime != -1) {
@@ -129,6 +122,12 @@ public class PracticeTypingController {
                                 morseCodeInput.setText(morseCodeInput.getText() + "/");
                             }
                         }
+                    }
+
+                    if (currentKey == KeyCode.D) {  // Assume D is the dit key
+                        playDitHold();
+                    } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
+                        playDahHold();
                     }
                 }
 
@@ -147,6 +146,7 @@ public class PracticeTypingController {
             Thread.sleep(50);
             morseCodeInput.setText(morseCodeInput.getText() + ".");
         }
+        lastReleaseTime = System.nanoTime();
     }
 
     private void playDahHold() throws LineUnavailableException, InterruptedException {
@@ -155,6 +155,7 @@ public class PracticeTypingController {
             Thread.sleep(50);
             morseCodeInput.setText(morseCodeInput.getText() + "-");
         }
+        lastReleaseTime = System.nanoTime();
     }
 
     private void runStraightKeyMode() {
@@ -283,7 +284,7 @@ public class PracticeTypingController {
                     translateMorseCode();
                     System.out.println("Translating...");
                     break;
-                case "settings":
+                case "settingsKey":
                     switchToSettingsView();
                     System.out.println("Switching to controls view.");
                     break;
