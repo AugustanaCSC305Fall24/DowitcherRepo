@@ -10,9 +10,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.App;
+import org.example.data.User;
 import org.example.utility.RadioFunctions;
 import org.example.utility.MorseCodeTranslator;
+import org.example.utility.Sound;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.*;
 
@@ -25,6 +28,7 @@ public class CwAlphabetController {
     @FXML private Button settingsButton;
     @FXML private Button practiceMenuButton;
     @FXML private Button mainMenuButton;
+    @FXML private Button showLetterButton;
     @FXML private ScrollPane previousTranslationsScrollPane;
     @FXML private TextFlow currentLetterTextFlow;
     @FXML private TextField userInputTextField;
@@ -39,6 +43,7 @@ public class CwAlphabetController {
     private int numCorrect;
     private VBox translationsContainer = new VBox();
     private final String textSize = "20";
+    private boolean showLetter = true;
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
@@ -139,8 +144,11 @@ public class CwAlphabetController {
         currentLetterText.setText(currentLetter);
         currentLetterTextFlow.getChildren().clear();
         currentLetterTextFlow.getChildren().add(currentLetterText);
-    }
 
+        if (!showLetter) {
+            currentLetterTextFlow.getChildren().clear();
+        }
+    }
 
     @FXML
     private void restartAlphabet() {
@@ -152,4 +160,49 @@ public class CwAlphabetController {
         generateRandomOrder();
         generateNewLetter();
     }
+
+    @FXML
+    private void handleShowLetter() {
+        if (showLetter) {
+            showLetter = false;
+            currentLetterTextFlow.getChildren().clear();
+            showLetterButton.setText("Show Character");
+        } else {
+            showLetter = true;
+            currentLetterTextFlow.getChildren().clear();
+            currentLetterTextFlow.getChildren().add(currentLetterText);
+            showLetterButton.setText("Hide Character");
+        }
+    }
+
+    @FXML
+    private void playAudio() {
+        char[] messageArray = currentCW.toCharArray();
+
+        Thread audioThread = new Thread(() -> {
+            for (int i = 0; i < messageArray.length; i++) {
+                if (messageArray[i] == '-') {
+                    try {
+                        Sound.playDah();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (messageArray[i] == '.') {
+                    try {
+                        Sound.playDit();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (messageArray[i] == ' ') {
+                    try {
+                        Thread.sleep(User.getCwSpeed());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        audioThread.start();
+    }
+
 }
