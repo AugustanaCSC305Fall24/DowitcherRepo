@@ -50,9 +50,17 @@ public class CwAlphabetController implements MorseCodeOutput{
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
-        App.settingsView();}
-    @FXML private void handlePracticeMenuButton() throws IOException {App.practiceMenuView();}
-    @FXML private void handleMainMenuButton() throws IOException {App.homeScreenView();}
+        radioFunctions.stopTypingMode();
+        App.settingsView();
+    }
+    @FXML private void handlePracticeMenuButton() throws IOException {
+        radioFunctions.stopTypingMode();
+        App.practiceMenuView();
+    }
+    @FXML private void handleMainMenuButton() throws IOException {
+        radioFunctions.stopTypingMode();
+        App.homeScreenView();
+    }
 
     @FXML
     private void initialize() {
@@ -215,7 +223,9 @@ public class CwAlphabetController implements MorseCodeOutput{
         straightKeyModeButton.setDisable(false);
         //currentModeLabel.setText("Current Mode - Paddle");
 
-        radioFunctions.handleTyping("Paddle", "PracticeTalking");
+        radioFunctions.stopTypingMode();
+        radioFunctions.setTypingOutputController(this);
+        radioFunctions.handleTyping("Paddle", "CwAlphabet");
     }
 
     @FXML
@@ -224,7 +234,9 @@ public class CwAlphabetController implements MorseCodeOutput{
         straightKeyModeButton.setDisable(true);
         //currentModeLabel.setText("Current Mode - Straight Key");
 
-        radioFunctions.handleTyping("Straight", "PracticeTalking");
+        radioFunctions.stopTypingMode();
+        radioFunctions.setTypingOutputController(this);
+        radioFunctions.handleTyping("Straight", "CwAlphabet");
     }
 
     public void addCwToInput(String cwChar) {

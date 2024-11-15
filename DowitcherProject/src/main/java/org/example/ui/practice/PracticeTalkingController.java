@@ -40,11 +40,13 @@ public class PracticeTalkingController implements MorseCodeOutput {
     // All view-switching button presses
     @FXML
     void handlePracticeMenuButton(ActionEvent event) throws IOException {
+        radioFunctions.stopTypingMode();
         App.practiceMenuView();
     }
 
     @FXML
     void handleMainMenuButton(ActionEvent event) throws IOException {
+        radioFunctions.stopTypingMode();
         App.homeScreenView();
     }
 
@@ -75,6 +77,8 @@ public class PracticeTalkingController implements MorseCodeOutput {
         straightKeyModeButton.setDisable(false);
         //currentModeLabel.setText("Current Mode - Paddle");
 
+        radioFunctions.stopTypingMode();
+        radioFunctions.setTypingOutputController(this);
         radioFunctions.handleTyping("Paddle", "PracticeTalking");
     }
 
@@ -84,6 +88,8 @@ public class PracticeTalkingController implements MorseCodeOutput {
         straightKeyModeButton.setDisable(true);
         //currentModeLabel.setText("Current Mode - Straight Key");
 
+        radioFunctions.stopTypingMode();
+        radioFunctions.setTypingOutputController(this);
         radioFunctions.handleTyping("Straight", "PracticeTalking");
     }
 

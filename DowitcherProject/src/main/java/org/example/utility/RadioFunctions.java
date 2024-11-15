@@ -19,11 +19,14 @@ public class RadioFunctions {
     private boolean isStraightKeyPressed = false;
     private long lastReleaseTime = -1;
     private volatile boolean isPaddleMode = true;
-    private PracticeTypingController practiceTypingController;
     private MorseCodeOutput typingOutputController;
 
     public RadioFunctions(MorseCodeOutput controller) {
         this.typingOutputController = controller;
+    }
+
+    public void setTypingOutputController(MorseCodeOutput newController) {
+        this.typingOutputController = newController;
     }
 
     public static List<Object> checkTranslation(String userTranslation, String currentCW, String textSize) {
@@ -141,6 +144,7 @@ public class RadioFunctions {
             }
         } catch (InterruptedException e) {
 //            System.out.println("Paddle mode interrupted.");
+            Thread.currentThread().interrupt();
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
         }
@@ -232,5 +236,10 @@ public class RadioFunctions {
         lastReleaseTime = System.nanoTime();
     }
 
+    public void stopTypingMode() {
+        if (typingModeThread != null && typingModeThread.isAlive()) {
+            typingModeThread.interrupt();
+        }
+    }
 
 }
