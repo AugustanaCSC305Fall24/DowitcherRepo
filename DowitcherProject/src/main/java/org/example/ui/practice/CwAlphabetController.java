@@ -19,7 +19,7 @@ import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.*;
 
-public class CwAlphabetController {
+public class CwAlphabetController implements MorseCodeOutput{
 
     // All FXML elements on screen that are interacted with
     @FXML private Button checkAnswerButton;
@@ -29,9 +29,11 @@ public class CwAlphabetController {
     @FXML private Button practiceMenuButton;
     @FXML private Button mainMenuButton;
     @FXML private Button showLetterButton;
+    @FXML private Button paddleModeButton;
+    @FXML private Button straightKeyModeButton;
     @FXML private ScrollPane previousTranslationsScrollPane;
     @FXML private TextFlow currentLetterTextFlow;
-    @FXML private TextField userInputTextField;
+    @FXML private TextField cwInputTextField;
 
     private Random random = new Random();
     private Stack<String> cwStack = new Stack<>();
@@ -44,6 +46,7 @@ public class CwAlphabetController {
     private VBox translationsContainer = new VBox();
     private final String textSize = "20";
     private boolean showLetter = true;
+    @FXML private RadioFunctions radioFunctions;
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
@@ -57,6 +60,7 @@ public class CwAlphabetController {
         currentLetterText.setFont(new Font(48));
         currentLetterTextFlow.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         previousTranslationsScrollPane.setContent(translationsContainer);
+        radioFunctions = new RadioFunctions(this);
         restartAlphabet();
     }
 
@@ -81,7 +85,7 @@ public class CwAlphabetController {
 
     @FXML
     private void checkAnswer() {
-        String userTranslation = userInputTextField.getText();
+        String userTranslation = cwInputTextField.getText();
 
         List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
@@ -109,7 +113,7 @@ public class CwAlphabetController {
         previousTranslationsScrollPane.layout();
         previousTranslationsScrollPane.setVvalue(1.0);
 
-        userInputTextField.clear();
+        cwInputTextField.clear();
     }
 
     @FXML
@@ -203,6 +207,47 @@ public class CwAlphabetController {
             }
         });
         audioThread.start();
+    }
+
+    @FXML
+    private void handlePaddleMode() {
+        paddleModeButton.setDisable(true);
+        straightKeyModeButton.setDisable(false);
+        //currentModeLabel.setText("Current Mode - Paddle");
+
+        radioFunctions.handleTyping("Paddle", "PracticeTalking");
+    }
+
+    @FXML
+    private void handleStraightKeyMode() {
+        paddleModeButton.setDisable(false);
+        straightKeyModeButton.setDisable(true);
+        //currentModeLabel.setText("Current Mode - Straight Key");
+
+        radioFunctions.handleTyping("Straight", "PracticeTalking");
+    }
+
+    public void addCwToInput(String cwChar) {
+        if (cwChar.equals("/")) {
+            if(cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != '/') {
+                cwInputTextField.setText(cwInputTextField.getText() + "/");
+            }
+        } else if (cwChar.equals(" ")) {
+            if(cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != ' ' && cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != '/') {
+                cwInputTextField.setText(cwInputTextField.getText() + " ");
+            }
+        } else {
+            if (cwChar.equals(".")) {
+                cwInputTextField.setText(cwInputTextField.getText() + ".");
+            } else {
+                cwInputTextField.setText(cwInputTextField.getText() + "-");
+            }
+        }
+    }
+
+    @FXML
+    private void clearInput() {
+        cwInputTextField.clear();
     }
 
 }

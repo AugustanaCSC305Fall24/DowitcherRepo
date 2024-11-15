@@ -58,14 +58,13 @@
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="800.0" spacing="2.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Response:" />
-                  <TextField fx:id="typingTextField" />
+                  <TextField fx:id="cwInputTextField" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="800.0" spacing="30.0">
                <children>
-                  <Button fx:id="ditButton" mnemonicParsing="false" onAction="#handleDitButton" text="Dit" />
-                  <Button fx:id="dahButton" mnemonicParsing="false" onAction="#handleDahButton" text="Dah" />
-                  <Button fx:id="straightKeyButton" mnemonicParsing="false" onAction="#handleStraightKeyButton" text="Straight Key" />
+                  <Button fx:id="paddleModeButton" mnemonicParsing="false" onAction="#handlePaddleMode" text="Paddle" />
+                  <Button fx:id="straightKeyModeButton" mnemonicParsing="false" onAction="#handleStraightKeyMode" text="Striaght Key" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="800.0" spacing="30.0">

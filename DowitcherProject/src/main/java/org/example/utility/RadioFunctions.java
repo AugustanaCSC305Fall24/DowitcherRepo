@@ -4,6 +4,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.App;
+import org.example.ui.practice.MorseCodeOutput;
 import org.example.ui.practice.PracticeTypingController;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -19,10 +20,10 @@ public class RadioFunctions {
     private long lastReleaseTime = -1;
     private volatile boolean isPaddleMode = true;
     private PracticeTypingController practiceTypingController;
-    private String currentTypingOutputController;
+    private MorseCodeOutput typingOutputController;
 
-    public RadioFunctions(PracticeTypingController controller) {
-        this.practiceTypingController = controller;
+    public RadioFunctions(MorseCodeOutput controller) {
+        this.typingOutputController = controller;
     }
 
     public static List<Object> checkTranslation(String userTranslation, String currentCW, String textSize) {
@@ -90,7 +91,7 @@ public class RadioFunctions {
     public void handleTyping(String mode, String currentController) {
         System.out.println("handleTyping called with mode: " + mode );  // Debug print
         System.out.println("Output Controller: " + currentController );// Debug print
-        currentTypingOutputController = currentController;
+        //currentTypingOutputController = currentController;
 
         // Stop the existing thread if it's running
         if (typingModeThread != null && typingModeThread.isAlive()) {
@@ -204,9 +205,7 @@ public class RadioFunctions {
     }
 
     private void addCw(String cwChar) {
-        if (currentTypingOutputController.equals("PracticeTyping")) {
-            practiceTypingController.addCwToInput(cwChar);
-        }
+        typingOutputController.addCwToInput(cwChar);
     }
 
     private void handleKeyPressed(KeyCode code) {

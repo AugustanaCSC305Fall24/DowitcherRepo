@@ -36,12 +36,27 @@
                         <TextFlow fx:id="currentLetterTextFlow" prefHeight="93.0" prefWidth="120.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="12.0">
                      <children>
-                        <Label prefHeight="85.0" prefWidth="98.0" text="Type the &#10;given letter in  --&gt;&#10;Morse Code" />
-                        <TextField fx:id="userInputTextField" prefHeight="50.0" prefWidth="132.0" />
+                        <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="59.0" text="Input  --&gt;" />
+                              <TextField fx:id="cwInputTextField" prefHeight="50.0" prefWidth="132.0" />
+                           </children>
+                        </HBox>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Input Mode">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Button fx:id="paddleModeButton" mnemonicParsing="false" onAction="#handlePaddleMode" text="Paddle" />
+                              <Button fx:id="straightKeyModeButton" mnemonicParsing="false" onAction="#handleStraightKeyMode" text="Straight Key" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
          </children>

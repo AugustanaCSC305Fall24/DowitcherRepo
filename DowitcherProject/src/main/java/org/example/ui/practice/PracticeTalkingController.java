@@ -5,29 +5,26 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.example.App;
+import org.example.utility.RadioFunctions;
 //import org.example.data.VertexWebScrapper;
-import org.example.utility.Sound;
 
-import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 
-public class PracticeTalkingController {
+public class PracticeTalkingController implements MorseCodeOutput {
 
     // Data
     @FXML private Button practiceMenuButton;
     @FXML private TextArea chatLogTextArea;
     @FXML private VBox chatLogVBox;
-    @FXML private Button dahButton;
-    @FXML private Button ditButton;
+    @FXML private Button paddleModeButton;
+    @FXML private Button straightKeyModeButton;
     @FXML private Slider filterSlider;
     @FXML private Slider frequencySlider;
     @FXML private Button mainMenuButton;
     @FXML private Label roomTitleLabel;
-    @FXML private Button straightKeyButton;
-    @FXML private TextField typingTextField;
+    @FXML private TextField cwInputTextField;
     @FXML private Button sendButton;  // Add a Send button for sending typed messages
-
-    private boolean isPlaying = false;
+    @FXML private RadioFunctions radioFunctions;
 
     // Chatbot instance
 //    private VertexWebScrapper chatBot;
@@ -37,6 +34,7 @@ public class PracticeTalkingController {
     public void initialize() {
         // Instantiate the GeminiWebScraper for chatbot communication
 //        chatBot = new VertexWebScrapper();
+        radioFunctions = new RadioFunctions(this);
     }
 
     // All view-switching button presses
@@ -53,7 +51,7 @@ public class PracticeTalkingController {
     // Handle the send button click to communicate with the AI
     @FXML
     void handleSendButton(ActionEvent event) {
-        String userMessage = typingTextField.getText().trim();
+        String userMessage = cwInputTextField.getText().trim();
         if (!userMessage.isEmpty()) {
             // Display user's message in the chat log
             chatLogTextArea.appendText("You: " + userMessage + "\n");
@@ -65,63 +63,45 @@ public class PracticeTalkingController {
                 // Update chat log with bot's response (on JavaFX Application Thread)
                 javafx.application.Platform.runLater(() -> {
                     //chatLogTextArea.appendText("Bot: " + botResponse + "\n");
-                    typingTextField.clear();
+                    cwInputTextField.clear();
                 });
             }).start();
         }
     }
 
-    // Morse code handling methods
     @FXML
-    void handleDahButton() {
-        dahButton.setOnMousePressed(event -> {
-            new Thread(() -> {
-                isPlaying = true;
-                try {
-                    playDahHold();
-                } catch (LineUnavailableException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        });
+    private void handlePaddleMode() {
+        paddleModeButton.setDisable(true);
+        straightKeyModeButton.setDisable(false);
+        //currentModeLabel.setText("Current Mode - Paddle");
 
-        dahButton.setOnMouseReleased(event -> isPlaying = false);
+        radioFunctions.handleTyping("Paddle", "PracticeTalking");
     }
 
     @FXML
-    void handleDitButton() {
-        ditButton.setOnMousePressed(event -> {
-            isPlaying = true;
-            new Thread(() -> {
-                try {
-                    playDitHold();
-                } catch (LineUnavailableException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        });
+    private void handleStraightKeyMode() {
+        paddleModeButton.setDisable(false);
+        straightKeyModeButton.setDisable(true);
+        //currentModeLabel.setText("Current Mode - Straight Key");
 
-        ditButton.setOnMouseReleased(event -> isPlaying = false);
+        radioFunctions.handleTyping("Straight", "PracticeTalking");
     }
 
-    // Straight key button handler
-    @FXML
-    void handleStraightKeyButton(ActionEvent event) {}
-
-    // Morse code playback methods
-    private void playDitHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying) {
-            Sound.playDit();
-            Thread.sleep(50);
-            typingTextField.setText(typingTextField.getText() + ".");
-        }
-    }
-
-    private void playDahHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying) {
-            Sound.playDah();
-            Thread.sleep(50);
-            typingTextField.setText(typingTextField.getText() + "-");
+    public void addCwToInput(String cwChar) {
+        if (cwChar.equals("/")) {
+            if(cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != '/') {
+                cwInputTextField.setText(cwInputTextField.getText() + "/");
+            }
+        } else if (cwChar.equals(" ")) {
+            if(cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != ' ' && cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != '/') {
+                cwInputTextField.setText(cwInputTextField.getText() + " ");
+            }
+        } else {
+            if (cwChar.equals(".")) {
+                cwInputTextField.setText(cwInputTextField.getText() + ".");
+            } else {
+                cwInputTextField.setText(cwInputTextField.getText() + "-");
+            }
         }
     }
 }

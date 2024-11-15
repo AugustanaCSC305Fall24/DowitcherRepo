@@ -36,7 +36,7 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="61.0" prefWidth="600.0" spacing="20.0">
                      <children>
-                        <TextArea fx:id="morseCodeInput" editable="false" prefHeight="39.0" prefWidth="314.0" />
+                        <TextArea fx:id="cwInputTextArea" editable="false" prefHeight="39.0" prefWidth="314.0" />
                      </children>
                   </HBox>
                </children>
@@ -61,6 +61,7 @@
          <children>
             <Button fx:id="paddleModeButton" mnemonicParsing="false" onAction="#handlePaddleMode" prefHeight="26.0" prefWidth="96.0" text="Paddle" />
             <Button fx:id="straightKeyModeButton" mnemonicParsing="false" onAction="#handleStraightKeyMode" prefHeight="26.0" prefWidth="99.0" text="Straight Key" />
+            <Button fx:id="clearInputButton" mnemonicParsing="false" onAction="#clearInput" text="Clear Input" />
             <Button fx:id="translateButton" mnemonicParsing="false" onAction="#translateMorseCode" prefHeight="26.0" prefWidth="82.0" text="Translate" />
          </children>
       </HBox>
