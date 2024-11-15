@@ -88,20 +88,18 @@ public class PracticeTalkingController implements MorseCodeOutput {
     }
 
     public void addCwToInput(String cwChar) {
+        String currentText = cwInputTextField.getText();
+
         if (cwChar.equals("/")) {
-            if(cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != '/') {
-                cwInputTextField.setText(cwInputTextField.getText() + "/");
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != '/') {
+                cwInputTextField.setText(currentText + "/");
             }
         } else if (cwChar.equals(" ")) {
-            if(cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != ' ' && cwInputTextField.getText().charAt(cwInputTextField.getText().length() - 1) != '/') {
-                cwInputTextField.setText(cwInputTextField.getText() + " ");
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != ' ' && currentText.charAt(currentText.length() - 1) != '/') {
+                cwInputTextField.setText(currentText + " ");
             }
         } else {
-            if (cwChar.equals(".")) {
-                cwInputTextField.setText(cwInputTextField.getText() + ".");
-            } else {
-                cwInputTextField.setText(cwInputTextField.getText() + "-");
-            }
+            cwInputTextField.setText(currentText + cwChar);
         }
     }
 }

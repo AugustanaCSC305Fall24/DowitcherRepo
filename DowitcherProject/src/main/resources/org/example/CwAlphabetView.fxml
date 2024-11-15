@@ -41,7 +41,7 @@
                         <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" spacing="10.0">
                            <children>
                               <Label prefHeight="30.0" prefWidth="59.0" text="Input  --&gt;" />
-                              <TextField fx:id="cwInputTextField" prefHeight="50.0" prefWidth="132.0" />
+                              <TextField fx:id="cwInputTextField" editable="false" prefHeight="50.0" prefWidth="132.0" />
                            </children>
                         </HBox>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Input Mode">
@@ -61,11 +61,12 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="585.0" spacing="50.0">
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="585.0" spacing="30.0">
          <children>
             <Button fx:id="playAudioButton" mnemonicParsing="false" onAction="#playAudio" text="Play Audio" />
             <Button fx:id="showLetterButton" mnemonicParsing="false" onAction="#handleShowLetter" text="Hide Character" />
             <Button fx:id="checkAnswerButton" mnemonicParsing="false" onAction="#checkAnswer" text="Check" />
+            <Button fx:id="clearInputButton" mnemonicParsing="false" onAction="#clearInput" text="Clear Input" />
             <Button fx:id="skipNextButton" mnemonicParsing="false" onAction="#handleSkipNextButton" text="Skip" />
             <Button fx:id="restartButton" mnemonicParsing="false" onAction="#restartAlphabet" text="Restart" />
          </children>

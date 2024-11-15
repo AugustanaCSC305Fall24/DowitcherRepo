@@ -67,20 +67,18 @@ public class PracticeTypingController implements MorseCodeOutput {
     }
 
     public void addCwToInput(String cwChar) {
+        String currentText = cwInputTextArea.getText();
+
         if (cwChar.equals("/")) {
-            if(cwInputTextArea.getText().charAt(cwInputTextArea.getText().length() - 1) != '/') {
-                cwInputTextArea.setText(cwInputTextArea.getText() + "/");
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != '/') {
+                cwInputTextArea.setText(currentText + "/");
             }
         } else if (cwChar.equals(" ")) {
-            if(cwInputTextArea.getText().charAt(cwInputTextArea.getText().length() - 1) != ' ' && cwInputTextArea.getText().charAt(cwInputTextArea.getText().length() - 1) != '/') {
-                cwInputTextArea.setText(cwInputTextArea.getText() + " ");
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != ' ' && currentText.charAt(currentText.length() - 1) != '/') {
+                cwInputTextArea.setText(currentText + " ");
             }
         } else {
-            if (cwChar.equals(".")) {
-                cwInputTextArea.setText(cwInputTextArea.getText() + ".");
-            } else {
-                cwInputTextArea.setText(cwInputTextArea.getText() + "-");
-            }
+            cwInputTextArea.setText(currentText + cwChar);
         }
     }
 
