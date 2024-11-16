@@ -10,14 +10,23 @@ import org.example.data.User;
 import javax.sound.sampled.LineUnavailableException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RadioFunctions {
 
     private Thread typingModeThread;
     private KeyCode currentKey;
-    private KeyCode ditKeyCode;
+
+    private KeyCode exitKeyCode;
+    private KeyCode settingsKeyCode;
     private KeyCode dahKeyCode;
+    private KeyCode ditKeyCode;
     private KeyCode straightKeyCode;
+    private KeyCode freqUpKeyCode;
+    private KeyCode freqDownKeyCode;
+    private KeyCode filterUpKeyCode;
+    private KeyCode filterDownKeyCode;
+
     public boolean isPlaying = true;
     private boolean isStraightKeyPressed = false;
     private long lastReleaseTime = -1;
@@ -31,6 +40,45 @@ public class RadioFunctions {
     public void setTypingOutputController(MorseCodeOutput newController) {
         this.typingOutputController = newController;
         System.out.println("TypingOutputController changed. Called with: " + newController.getClass().getName() + " Current controller: " + typingOutputController.getClass().getName());
+    }
+
+    public void setKeyCodes(Map<String, KeyCode> keyCodes) {
+        for (Map.Entry<String, KeyCode> entry : keyCodes.entrySet()) {
+            String action = entry.getKey();
+            KeyCode key = entry.getValue();
+            switch (action) {
+                case "exitProgram":
+                    exitKeyCode = key;
+                    break;
+                case "settingsKey":
+                    settingsKeyCode = key;
+                    break;
+                case "dahKey":
+                    dahKeyCode = key;
+                    break;
+                case "ditKey":
+                    ditKeyCode = key;
+                    break;
+                case "straightKey":
+                    straightKeyCode = key;
+                    break;
+                case "frequencyUpKey":
+                    freqUpKeyCode = key;
+                    break;
+                case "frequencyDownKey":
+                    freqDownKeyCode = key;
+                    break;
+                case "filterUpKey":
+                    filterUpKeyCode = key;
+                    break;
+                case "filterDownKey":
+                    filterDownKeyCode = key;
+                    break;
+                default:
+                    // Handle any unexpected actions if needed
+                    break;
+            }
+        }
     }
 
     public static List<Object> checkTranslation(String userTranslation, String currentCW, String textSize) {
@@ -102,9 +150,7 @@ public class RadioFunctions {
 
         stopTypingMode();
         setTypingOutputController(currentController);
-        ditKeyCode =User.getKeyForAction("ditKey");
-        dahKeyCode =User.getKeyForAction("dahKey");
-        straightKeyCode = User.getKeyForAction("straightKey");
+        setKeyCodes(User.getActionFirstActionMap());
 
         // Stop the existing thread if it's running
         if (typingModeThread != null && typingModeThread.isAlive()) {
@@ -223,14 +269,30 @@ public class RadioFunctions {
         typingOutputController.addCwToInput(cwChar);
     }
 
+    public void stopTypingMode() {
+        if (typingModeThread != null && typingModeThread.isAlive()) {
+            typingModeThread.interrupt();
+        }
+    }
+
     private void handleKeyPressed(KeyCode code) {
-        if (code == ditKeyCode || code == dahKeyCode) {
+        if (code == exitKeyCode) {
+            
+        } else if (code == settingsKeyCode) {
+
+        } else if (code == ditKeyCode || code == dahKeyCode) {
             isPlaying = true;
             currentKey = code;
-        }
-
-        if (code == straightKeyCode) {
+        } else if (code == straightKeyCode) {
             isStraightKeyPressed = true;
+        }else if (code == freqUpKeyCode) {
+
+        } else if (code == freqDownKeyCode) {
+
+        } else if (code == filterUpKeyCode) {
+
+        } else if (code == filterDownKeyCode) {
+
         }
     }
 
@@ -238,19 +300,11 @@ public class RadioFunctions {
         if (code == ditKeyCode || code == dahKeyCode) {
             isPlaying = false;
             currentKey = null;
-        }
-
-        if (code == straightKeyCode) {
+        } else if (code == straightKeyCode) {
             isStraightKeyPressed = false;
         }
 
         lastReleaseTime = System.nanoTime();
-    }
-
-    public void stopTypingMode() {
-        if (typingModeThread != null && typingModeThread.isAlive()) {
-            typingModeThread.interrupt();
-        }
     }
 
 }

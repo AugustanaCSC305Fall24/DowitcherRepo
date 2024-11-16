@@ -70,7 +70,7 @@ public class User implements Serializable {
     public boolean getShowCWLetters() {return showCWLetters;}
     public boolean getShowCWAcronyms() {return showCWAcronyms;}
     public Map<KeyCode, String> getKeyFirstActionMap(){return this.keyFirstActionMap;}
-    public Map<String, KeyCode> getActionFirstActionMap(){return actionFirstActionMap;}
+    public static Map<String, KeyCode> getActionFirstActionMap(){return actionFirstActionMap;}
     public String getLastView() {if (!viewStack.isEmpty()) {return (String) viewStack.peek();}return "HomeScreenView";}
 
     //User Data Set Methods
