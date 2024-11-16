@@ -62,13 +62,6 @@ public class PracticeTypingController implements MorseCodeOutput {
         dahKeyLabel.setText("Dah  ->  " + dahKeyCode);
         straightKeyLabel.setText("Straight Key  ->  " + straightKeyCode);
 
-        App.getScene().setOnKeyPressed(event -> {
-            try {
-                handleKeyPress(event);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     @FXML

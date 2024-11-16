@@ -62,13 +62,7 @@ public class PracticeListeningController {
         cwMessagesList = (HashMap<String, String>) MorseCodeTranslator.getCwMessagesMap();
         newAudio();
         App.currentUser.addView("PracticeListeningView");
-        App.getScene().setOnKeyPressed(event -> {
-            try {
-                handleKeyPress(event);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+
     }
 
     @FXML
@@ -231,5 +225,5 @@ public class PracticeListeningController {
         }
         return lineBreak;
     }
-    
+
 }
