@@ -27,6 +27,7 @@ public class RadioFunctions {
 
     public void setTypingOutputController(MorseCodeOutput newController) {
         this.typingOutputController = newController;
+        System.out.println("TypingOutputController changed. Called with: " + newController.getClass().getName() + " Current controller: " + typingOutputController.getClass().getName());
     }
 
     public static List<Object> checkTranslation(String userTranslation, String currentCW, String textSize) {
@@ -91,10 +92,13 @@ public class RadioFunctions {
 
     }
 
-    public void handleTyping(String mode, String currentController) {
+    public void handleTyping(String mode, MorseCodeOutput currentController) {
         System.out.println("handleTyping called with mode: " + mode );  // Debug print
-        System.out.println("Output Controller: " + currentController );// Debug print
+        //System.out.println("Output Controller: " + currentController );// Debug print
         //currentTypingOutputController = currentController;
+
+        stopTypingMode();
+        setTypingOutputController(currentController);
 
         // Stop the existing thread if it's running
         if (typingModeThread != null && typingModeThread.isAlive()) {
@@ -109,6 +113,7 @@ public class RadioFunctions {
             isPaddleMode = false;
             typingModeThread = new Thread(this::runStraightKeyMode);
         }
+
 
         lastReleaseTime = -1;
         typingModeThread.start();

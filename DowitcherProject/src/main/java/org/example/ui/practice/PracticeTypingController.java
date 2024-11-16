@@ -67,7 +67,7 @@ public class PracticeTypingController implements MorseCodeOutput {
 
         radioFunctions.stopTypingMode();
         radioFunctions.setTypingOutputController(this);
-        radioFunctions.handleTyping("Paddle", "PracticeTyping");
+        radioFunctions.handleTyping("Paddle", this);
     }
 
     @FXML
@@ -78,7 +78,7 @@ public class PracticeTypingController implements MorseCodeOutput {
 
         radioFunctions.stopTypingMode();
         radioFunctions.setTypingOutputController(this);
-        radioFunctions.handleTyping("Straight", "PracticeTyping");
+        radioFunctions.handleTyping("Straight", this);
     }
 
     public void addCwToInput(String cwChar) {
