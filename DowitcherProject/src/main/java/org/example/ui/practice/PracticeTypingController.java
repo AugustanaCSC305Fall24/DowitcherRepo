@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import org.example.App;
+import org.example.data.User;
 import org.example.utility.MorseCodeTranslator;
 import org.example.utility.RadioFunctions;
 
@@ -22,6 +23,9 @@ public class PracticeTypingController implements MorseCodeOutput {
    @FXML private Button paddleModeButton;
    @FXML private Button straightKeyModeButton;
    @FXML private Label currentModeLabel;
+    @FXML private Label ditKeyLabel;
+    @FXML private Label dahKeyLabel;
+    @FXML private Label straightKeyLabel;
 
    private MorseCodeTranslator morseCodeTranslator;
    private RadioFunctions radioFunctions;
@@ -49,6 +53,14 @@ public class PracticeTypingController implements MorseCodeOutput {
         morseCodeTranslator = new MorseCodeTranslator();
         radioFunctions = new RadioFunctions(this);
         App.currentUser.addView("PracticeTypingView");
+
+        String ditKeyCode = User.getKeyForAction("ditKey").getName();
+        String dahKeyCode =User.getKeyForAction("dahKey").getName();
+        String straightKeyCode = User.getKeyForAction("straightKey").getName();
+
+        ditKeyLabel.setText("Dit  ->  " + ditKeyCode);
+        dahKeyLabel.setText("Dah  ->  " + dahKeyCode);
+        straightKeyLabel.setText("Straight Key  ->  " + straightKeyCode);
 
         App.getScene().setOnKeyPressed(event -> {
             try {

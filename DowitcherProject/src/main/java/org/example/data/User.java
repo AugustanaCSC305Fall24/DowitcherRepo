@@ -1,6 +1,8 @@
 package org.example.data;
 
 
+import javafx.scene.input.KeyCode;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +23,8 @@ public class User implements Serializable {
     private double staticAmount; // Slider for static amount
     private boolean showCWLetters; // Boolean to show CW letters
     private boolean showCWAcronyms; // Boolean to show CW acronyms
-    private Map<String, String> keyFirstActionMap;
-    private Map<String, String> actionFirstActionMap;
+    private static Map<KeyCode, String> keyFirstActionMap;
+    private static Map<String, KeyCode> actionFirstActionMap;
 
     //Constructor
     public User(String username, String password, String email){
@@ -38,8 +40,18 @@ public class User implements Serializable {
         this.keyFirstActionMap = new HashMap<>();
         this.actionFirstActionMap = new HashMap<>();
         //Setting default keys for the action map
-        setActionMap("ESCAPE", "TAB", "D", "A", "RIGHT", "LEFT", "UP", "DOWN");
-    }
+        KeyCode exitProgramKey = KeyCode.valueOf("ESCAPE");
+        KeyCode settingsKey = KeyCode.valueOf("TAB");
+        KeyCode dahKey = KeyCode.valueOf("D");
+        KeyCode ditKey = KeyCode.valueOf("A");
+        KeyCode straightKey = KeyCode.valueOf("L");
+        KeyCode frequencyUpKey = KeyCode.valueOf("RIGHT");
+        KeyCode frequencyDownKey = KeyCode.valueOf("LEFT");
+        KeyCode filterUpKey = KeyCode.valueOf("UP");
+        KeyCode filterDownKey = KeyCode.valueOf("DOWN");
+
+        // Call setActionMap with KeyCode
+        setActionMap(exitProgramKey, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);    }
     public User(){
         this("Default", "Default", "Default");
     }
@@ -57,8 +69,8 @@ public class User implements Serializable {
     public double getStaticAmount() {return staticAmount;}
     public boolean getShowCWLetters() {return showCWLetters;}
     public boolean getShowCWAcronyms() {return showCWAcronyms;}
-    public Map<String, String> getKeyFirstActionMap(){return this.keyFirstActionMap;}
-    public Map<String, String> getActionFirstActionMap(){return actionFirstActionMap;}
+    public Map<KeyCode, String> getKeyFirstActionMap(){return this.keyFirstActionMap;}
+    public Map<String, KeyCode> getActionFirstActionMap(){return actionFirstActionMap;}
     public String getLastView() {if (!viewStack.isEmpty()) {return (String) viewStack.peek();}return "HomeScreenView";}
 
     //User Data Set Methods
@@ -75,40 +87,47 @@ public class User implements Serializable {
     public void setShowCWLetters(boolean showCWLetters) {this.showCWLetters = showCWLetters;}
     public void setShowCWAcronyms(boolean showCWAcronyms) {this.showCWAcronyms = showCWAcronyms;}
 
-    // User Action Map Set Methods
-    public void setActionMap(String exitProgram, String settingsKey, String dahKey, String ditKey,
-                             String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
-    ) {
-        setKeyFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
-        setActionFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+    public void setActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
+                             KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
+        setKeyFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+        setActionFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
     }
 
-    private void setKeyFirstActionMap(String exitProgram, String settingsKey, String dahKey, String ditKey,
-                                      String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
-    ) {
+    private void setKeyFirstActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
+                                      KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
         // Map keyboard keys to actions
         keyFirstActionMap.put(exitProgram, "exitProgram");                      // Exit Program
         keyFirstActionMap.put(settingsKey, "settingsKey");                      // Settings
         keyFirstActionMap.put(dahKey, "dahKey");                                // Dah action
         keyFirstActionMap.put(ditKey, "ditKey");                                // Dit action
+        keyFirstActionMap.put(straightKey, "straightKey");
         keyFirstActionMap.put(frequencyUpKey, "frequencyUpKey");                // Frequency Up
         keyFirstActionMap.put(frequencyDownKey, "frequencyDownKey");            // Frequency Down
         keyFirstActionMap.put(filterUpKey, "filterUpKey");                      // Filter Up
         keyFirstActionMap.put(filterDownKey, "filterDownKey");                  // Filter Down
     }
 
-    private void setActionFirstActionMap(String exitProgram, String settingsKey, String dahKey, String ditKey,
-                                         String frequencyUpKey, String frequencyDownKey, String filterUpKey, String filterDownKey
-    ) {
-        // Map keyboard keys to actions
+    private void setActionFirstActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
+                                         KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
+        // Map actions to keyboard keys
         actionFirstActionMap.put("exitProgram", exitProgram);                      // Exit Program
         actionFirstActionMap.put("settingsKey", settingsKey);                      // Settings
         actionFirstActionMap.put("dahKey", dahKey);                                // Dah action
         actionFirstActionMap.put("ditKey", ditKey);                                // Dit action
+        actionFirstActionMap.put("straightKey", straightKey);
         actionFirstActionMap.put("frequencyUpKey", frequencyUpKey);                // Frequency Up
         actionFirstActionMap.put("frequencyDownKey", frequencyDownKey);            // Frequency Down
         actionFirstActionMap.put("filterUpKey", filterUpKey);                      // Filter Up
         actionFirstActionMap.put("filterDownKey", filterDownKey);                  // Filter Down
+    }
+
+    // Example usage: Get action or key from the map
+    public String getActionForKey(KeyCode keyCode) {
+        return keyFirstActionMap.get(keyCode);
+    }
+
+    public static KeyCode getKeyForAction(String action) {
+        return actionFirstActionMap.get(action);
     }
 
 }

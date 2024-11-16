@@ -49,10 +49,10 @@
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="59.0" text="Paddle  -" />
-                  <Label prefHeight="17.0" prefWidth="130.0" text="Dit  -&gt;  D" />
-                  <Label prefHeight="17.0" prefWidth="133.0" text="Dah  -&gt;  A" />
+                  <Label fx:id="ditKeyLabel" prefHeight="17.0" prefWidth="130.0" text="Dit  -&gt;  D" />
+                  <Label fx:id="dahKeyLabel" prefHeight="17.0" prefWidth="133.0" text="Dah  -&gt;  A" />
                   <Label text="Straight Key -" />
-                  <Label prefHeight="17.0" prefWidth="131.0" text="Straight Key - L" />
+                  <Label fx:id="straightKeyLabel" prefHeight="17.0" prefWidth="131.0" text="Straight Key  -&gt;  L" />
                </children>
             </VBox>
          </children>

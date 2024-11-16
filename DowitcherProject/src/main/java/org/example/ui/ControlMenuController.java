@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.example.App;
@@ -33,6 +34,7 @@ public class ControlMenuController {
     @FXML private TextField settingsKeyField;
     @FXML private TextField dahKeyField;
     @FXML private TextField ditKeyField;
+    @FXML private TextField straightKeyField;
     @FXML private TextField frequencyUpTextField;
     @FXML private TextField frequencyDownTextField;
     @FXML private TextField filterUpTextField;
@@ -41,6 +43,7 @@ public class ControlMenuController {
     //Buttons to change what a hot key is
     @FXML private Button changeDahKeyButton;
     @FXML private Button changeDitKeyButton;
+    @FXML private Button changeStraightKeyButton;
     @FXML private Button changeExitKeyButton;
     @FXML private Button changeFilterDownKeyChangeButton;
     @FXML private Button changeFilterUpKeyChangeButton;
@@ -55,41 +58,49 @@ public class ControlMenuController {
     }
 
     private void setActionTextField(){
-        Map<String, String> actionMap = App.currentUser.getActionFirstActionMap();
-        for (Map.Entry<String, String> entry : actionMap.entrySet()) {
+        Map<String, KeyCode> actionMap = App.currentUser.getActionFirstActionMap();
+        for (Map.Entry<String, KeyCode> entry : actionMap.entrySet()) {
             String action = entry.getKey();
-            String key = entry.getValue();
+            KeyCode key = entry.getValue();
+            String keyString = key.getName();
+            if (keyString.equalsIgnoreCase("Esc")) {
+                keyString = "Escape";
+            }
             switch (action) {
                 case "exitProgram":
-                    exitKeyField.setText(key);
+                    exitKeyField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "settingsKey":
-                    settingsKeyField.setText(key);
+                    settingsKeyField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "dahKey":
-                    dahKeyField.setText(key);
+                    dahKeyField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "ditKey":
-                    ditKeyField.setText(key);
+                    ditKeyField.setText(keyString);
+                    System.out.println(key);
+                    break;
+                case "straightKey":
+                    straightKeyField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "frequencyUpKey":
-                    frequencyUpTextField.setText(key);
+                    frequencyUpTextField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "frequencyDownKey":
-                    frequencyDownTextField.setText(key);
+                    frequencyDownTextField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "filterUpKey":
-                    filterUpTextField.setText(key);
+                    filterUpTextField.setText(keyString);
                     System.out.println(key);
                     break;
                 case "filterDownKey":
-                    filterDownTextField.setText(key);
+                    filterDownTextField.setText(keyString);
                     System.out.println(key);
                     break;
                 default:
@@ -107,18 +118,29 @@ public class ControlMenuController {
         checkForDuplicateKeys(); // Check for duplicate keys before proceeding with saving
         if (!checkForDuplicateKeys()) {
             // Retrieve the key bindings from each text field
-            String exitProgram = exitKeyField.getText();
-            String settingsKey = settingsKeyField.getText();
-            String dahKey = dahKeyField.getText();
-            String ditKey = ditKeyField.getText();
-            String frequencyUpKey = frequencyUpTextField.getText();
-            String frequencyDownKey = frequencyDownTextField.getText();
-            String filterUpKey = filterUpTextField.getText();
-            String filterDownKey = filterDownTextField.getText();
+            KeyCode exitProgramKeyCode = KeyCode.valueOf(exitKeyField.getText().toUpperCase());
+            KeyCode settingsKeyCode = KeyCode.valueOf(settingsKeyField.getText().toUpperCase());
+            KeyCode dahKeyCode = KeyCode.valueOf(dahKeyField.getText().toUpperCase());
+            KeyCode ditKeyCode = KeyCode.valueOf(ditKeyField.getText().toUpperCase());
+            KeyCode straightKeyCode = KeyCode.valueOf(straightKeyField.getText().toUpperCase());
+            KeyCode frequencyUpKeyCode = KeyCode.valueOf(frequencyUpTextField.getText().toUpperCase());
+            KeyCode frequencyDownKeyCode = KeyCode.valueOf(frequencyDownTextField.getText().toUpperCase());
+            KeyCode filterUpKeyCode = KeyCode.valueOf(filterUpTextField.getText().toUpperCase());
+            KeyCode filterDownKeyCode = KeyCode.valueOf(filterDownTextField.getText().toUpperCase());
             //exitProgram settingsKey dahKey ditKey frequencyUpKey frequencyDownKey filterUpKey filterDownKey
             // Update the user's action map with the new bindings
 
-            App.currentUser.setActionMap(exitProgram, settingsKey, dahKey, ditKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+            App.currentUser.setActionMap(
+                    exitProgramKeyCode,
+                    settingsKeyCode,
+                    dahKeyCode,
+                    ditKeyCode,
+                    straightKeyCode,
+                    frequencyUpKeyCode,
+                    frequencyDownKeyCode,
+                    filterUpKeyCode,
+                    filterDownKeyCode
+            );
 
             // Optionally, provide feedback to the user that the save was successful
             System.out.println("Key bindings saved successfully.");
@@ -157,6 +179,7 @@ public class ControlMenuController {
     // All Handler Methods for the change key buttons
     @FXML void handleChangeDahKeyButton(ActionEvent event) {handleChangeKeyButton(dahKeyField);}
     @FXML void handleChangeDitKeyButton(ActionEvent event) {handleChangeKeyButton(ditKeyField);}
+    @FXML void handleChangeStraightKeyButton(ActionEvent event) {handleChangeKeyButton(straightKeyField);}
     @FXML void handleChangeExitKeyButton(ActionEvent event) {handleChangeKeyButton(exitKeyField);}
     @FXML void handleChangeFilterDownKeyChangeButton(ActionEvent event) {handleChangeKeyButton(filterDownTextField);}
     @FXML void handleChangeFilterUpKeyChangeButton(ActionEvent event) {handleChangeKeyButton(filterUpTextField);}

@@ -6,7 +6,7 @@ import javafx.scene.text.TextFlow;
 import org.example.App;
 import org.example.ui.practice.MorseCodeOutput;
 import org.example.ui.practice.PracticeTypingController;
-
+import org.example.data.User;
 import javax.sound.sampled.LineUnavailableException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,9 @@ public class RadioFunctions {
 
     private Thread typingModeThread;
     private KeyCode currentKey;
+    private KeyCode ditKeyCode;
+    private KeyCode dahKeyCode;
+    private KeyCode straightKeyCode;
     public boolean isPlaying = true;
     private boolean isStraightKeyPressed = false;
     private long lastReleaseTime = -1;
@@ -99,6 +102,9 @@ public class RadioFunctions {
 
         stopTypingMode();
         setTypingOutputController(currentController);
+        ditKeyCode =User.getKeyForAction("ditKey");
+        dahKeyCode =User.getKeyForAction("dahKey");
+        straightKeyCode = User.getKeyForAction("straightKey");
 
         // Stop the existing thread if it's running
         if (typingModeThread != null && typingModeThread.isAlive()) {
@@ -138,9 +144,9 @@ public class RadioFunctions {
                         }
                     }
 
-                    if (currentKey == KeyCode.D) {  // Assume D is the dit key
+                    if (currentKey == ditKeyCode) {  // Assume D is the dit key
                         playDitHold();
-                    } else if (currentKey == KeyCode.A) {  // Assume A is the dah key
+                    } else if (currentKey == dahKeyCode) {  // Assume A is the dah key
                         playDahHold();
                     }
                 }
@@ -156,7 +162,7 @@ public class RadioFunctions {
     }
 
     private void playDitHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying && currentKey == KeyCode.D){
+        while (isPlaying && currentKey == ditKeyCode){
             Sound.playDit();
             Thread.sleep(50);
             addCw(".");
@@ -165,7 +171,7 @@ public class RadioFunctions {
     }
 
     private void playDahHold() throws LineUnavailableException, InterruptedException {
-        while (isPlaying&& currentKey == KeyCode.A){
+        while (isPlaying&& currentKey == dahKeyCode){
             Sound.playDah();
             Thread.sleep(50);
             addCw("-");
@@ -218,23 +224,23 @@ public class RadioFunctions {
     }
 
     private void handleKeyPressed(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A) {
+        if (code == ditKeyCode || code == dahKeyCode) {
             isPlaying = true;
             currentKey = code;
         }
 
-        if (code == KeyCode.L) {
+        if (code == straightKeyCode) {
             isStraightKeyPressed = true;
         }
     }
 
     private void handleKeyReleased(KeyCode code) {
-        if (code == KeyCode.D || code == KeyCode.A) {
+        if (code == ditKeyCode || code == dahKeyCode) {
             isPlaying = false;
             currentKey = null;
         }
 
-        if (code == KeyCode.L) {
+        if (code == straightKeyCode) {
             isStraightKeyPressed = false;
         }
 
