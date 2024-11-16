@@ -123,30 +123,5 @@ public class PracticeTypingController implements MorseCodeOutput {
         cwInputTextArea.clear();
     }
 
-    private void handleKeyPress(KeyEvent event) throws IOException {
-        // Check if the pressed key has a corresponding action in the map
-        String pressedKey = event.getCode().toString();
-        String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
-        if (action != null) {
-            switch (action) {
-                case "translate":
-                    translateMorseCode();
-                    System.out.println("Translating...");
-                    break;
-                case "settingsKey":
-                    switchToSettingsView();
-                    System.out.println("Switching to controls view.");
-                    break;
-                case "mainMenu":
-                    switchToHomeScreenView();
-                    System.out.println("Switching to main menu.");
-                    break;
-                default:
-                    System.out.println("No action assigned for this key.");
-                    break;
-            }
-        }
-    }
-
 }
 

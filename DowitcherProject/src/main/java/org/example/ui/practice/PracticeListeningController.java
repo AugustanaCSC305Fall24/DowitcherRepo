@@ -231,38 +231,5 @@ public class PracticeListeningController {
         }
         return lineBreak;
     }
-
-    private void handleKeyPress(KeyEvent event) throws IOException, InterruptedException {
-        String pressedKey = event.getCode().toString(); // Get the pressed key as a string
-
-        // Check if the pressed key has a corresponding action in the map
-        String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
-        if (action != null) {
-            switch (action) {
-                case "playPauseAudio":
-                    playPauseAudio();
-                    System.out.println("Playing/Pausing audio...");
-                    break;
-                case "checkTranslation":
-                    checkTranslation();
-                    System.out.println("Checking translating...");
-                    break;
-                case "newAudio":
-                    newAudio();
-                    System.out.println("New audio...");
-                    break;
-                case "settings":
-                    switchToSettingsView();
-                    System.out.println("Switching to controls view.");
-                    break;
-                case "mainMenu":
-                    switchToHomeScreenView();
-                    System.out.println("Switching to main menu.");
-                    break;
-                default:
-                    System.out.println("No action assigned for this key.");
-                    break;
-            }
-        }
-    }
+    
 }
