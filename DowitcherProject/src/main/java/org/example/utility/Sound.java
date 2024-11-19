@@ -3,6 +3,7 @@ package org.example.utility;
 import org.example.data.User;
 
 import javax.sound.sampled.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Sound {
 
@@ -10,6 +11,8 @@ public class Sound {
     private static int ditFrequency = 600;
     private static int dahDuration = 225;
     private static int dahFrequency = 600;
+
+    private static SourceDataLine staticSourceLine; // **New field for persistent sound line**
 
     public static void playDit() throws LineUnavailableException {
         playTone(ditFrequency,ditDuration);
@@ -98,20 +101,38 @@ public class Sound {
         sourceDataLine.close();
     }
 
-
-    public static void adjustVolumeOfStatic( double sliderVolume) throws LineUnavailableException {
+    // *** New: Start static playback ***
+    public static void startStaticSound(double sliderVolume) throws LineUnavailableException {
+        if (staticSourceLine != null && staticSourceLine.isOpen()) {
+            return; // Avoid reopening if already playing
+        }
         AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
-        SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+        staticSourceLine = (SourceDataLine) AudioSystem.getLine(info);
 
-        sourceDataLine.open(format);
-        FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+        staticSourceLine.open(format);
+        adjustVolumeOfStatic(sliderVolume); // Set initial volume
+        staticSourceLine.start();
+    }
+
+    // *** New: Stop static playback ***
+    public static void stopStaticSound() {
+        if (staticSourceLine != null) {
+            staticSourceLine.stop();
+            staticSourceLine.flush();
+            staticSourceLine.close();
+        }
+    }
+
+    public static void adjustVolumeOfStatic( double sliderVolume) throws LineUnavailableException {
+        if (staticSourceLine == null || !staticSourceLine.isOpen()) {
+            return; // Avoid errors if staticSourceLine is not initialized
+        }
+        FloatControl volumeControl = (FloatControl) staticSourceLine.getControl(FloatControl.Type.MASTER_GAIN);
         float range = volumeControl.getMaximum() - volumeControl.getMinimum();
-        float gain = (int) ((range * (sliderVolume / 100.0f)) + volumeControl.getMinimum());
+        float gain = (float) ((range * (sliderVolume / 100.0f)) + volumeControl.getMinimum());
         volumeControl.setValue(gain);
+    }
 
     }
 
-
-
-}

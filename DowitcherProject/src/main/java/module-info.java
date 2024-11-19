@@ -16,7 +16,7 @@ module org.example {
     exports org.example;
     exports org.example.ui;
     exports org.example.data;
-
+    opens org.example.data to com.google.gson;
     opens org.example.ui to javafx.fxml;
     opens org.example.ui.practice to javafx.fxml;
     exports org.example.ui.practice;

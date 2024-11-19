@@ -55,12 +55,14 @@ public class PracticeTuningController {
     @FXML
     void handlePracticeMenuButton(ActionEvent event) throws IOException {
         isPlaying = false;
+        stopStatic();
         App.practiceMenuView();
     }
 
     @FXML
     void handleMainMenuButton(ActionEvent event) throws IOException {
         isPlaying = false;
+        stopStatic();
         App.homeScreenView();
     }
 
@@ -182,18 +184,34 @@ public class PracticeTuningController {
         audioThread.setDaemon(true);
         audioThread.start();
     }
-    private void playStatic(double volume){
+
+    private void playStatic(double volume) {
         Thread audioThread = new Thread(() -> {
             try {
+                Sound.staticSound(volume, true); // *** Use startStaticSound ***
                 while (isPlaying) {
-                    Sound.staticSound(volume, isPlaying);
+                    Thread.sleep(100); // Loop until stopped
                 }
-            } catch (LineUnavailableException e) {
+                Sound.staticSound(volume, false); // *** Stop static when playback ends ***
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
         audioThread.setDaemon(true);
         audioThread.start();
+    }
+
+    private void stopStatic() {
+        double volume = getStaticVolume();
+        isPlaying = false;
+        try{
+            while(isPlaying) {
+                Thread.sleep(100);
+            }
+            Sound.staticSound(volume, false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private double getStaticVolume() {
