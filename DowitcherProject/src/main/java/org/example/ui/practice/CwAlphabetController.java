@@ -32,7 +32,8 @@ public class CwAlphabetController implements MorseCodeOutput{
     @FXML private Button paddleModeButton;
     @FXML private Button straightKeyModeButton;
     @FXML private ScrollPane previousTranslationsScrollPane;
-    @FXML private TextFlow currentLetterTextFlow;
+    @FXML
+    public TextFlow currentLetterTextFlow;
     @FXML private TextField cwInputTextField;
 
     private Random random = new Random();
