@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.example.ui.practice.CwAlphabetController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import javafx.scene.text.TextFlow;
 
 import java.util.Stack;
 
@@ -17,6 +18,7 @@ public class CwAlphabetControllerTest {
         controller = new CwAlphabetController();
         controller.cwStack = new Stack<>();
         controller.letterStack = new Stack<>();
+        controller.currentLetterTextFlow = new TextFlow();
     }
 
     @Test
