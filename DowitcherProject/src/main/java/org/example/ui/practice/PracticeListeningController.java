@@ -59,40 +59,10 @@ public class PracticeListeningController {
     // Initializes HashMap and fills it with all practice messages
     // Then generates a starting message
     private void initialize() {
-        cwMessagesList = new HashMap<>();
-        addMessages();
+        cwMessagesList = (HashMap<String, String>) MorseCodeTranslator.getCwMessagesMap();
         newAudio();
         App.currentUser.addView("PracticeListeningView");
-        App.getScene().setOnKeyPressed(event -> {
-            try {
-                handleKeyPress(event);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
 
-    // Adds messages into cwMessageList
-    private void addMessages() {
-        cwMessagesList.put("CQ", "-.-. --.-");
-        cwMessagesList.put("DE", "-.. .");
-        cwMessagesList.put("QTH", "--.- - ....");
-        cwMessagesList.put("RST", ".-. ... -");
-        cwMessagesList.put("QSL", "--.- ... .-..");
-        cwMessagesList.put("QRZ?", "--.- .-. --..");
-        cwMessagesList.put("QRL?", "--.- .-. .-..");
-        cwMessagesList.put("73", "--... ...--");
-        cwMessagesList.put("88", "---.. ---..");
-        cwMessagesList.put("QSB", "--.- ... -...");
-        cwMessagesList.put("QRP", "--.- .-. .--.");
-        cwMessagesList.put("QSY", "--.- ... -.--");
-        cwMessagesList.put("QSO", "--.- ... ---");
-        cwMessagesList.put("QRM", "--.- .-. --");
-        cwMessagesList.put("QRN", "--.- .-. -.");
-        cwMessagesList.put("QRX", "--.- .-. -..-");
-        cwMessagesList.put("QRV", "--.- .-. ...-");
-        cwMessagesList.put("QRO", "--.- .-. ---");
-        cwMessagesList.put("SK", "... -.-");
     }
 
     @FXML
@@ -256,37 +226,4 @@ public class PracticeListeningController {
         return lineBreak;
     }
 
-    private void handleKeyPress(KeyEvent event) throws IOException, InterruptedException {
-        String pressedKey = event.getCode().toString(); // Get the pressed key as a string
-
-        // Check if the pressed key has a corresponding action in the map
-        String action = App.currentUser.getKeyFirstActionMap().get(pressedKey);
-        if (action != null) {
-            switch (action) {
-                case "playPauseAudio":
-                    playPauseAudio();
-                    System.out.println("Playing/Pausing audio...");
-                    break;
-                case "checkTranslation":
-                    checkTranslation();
-                    System.out.println("Checking translating...");
-                    break;
-                case "newAudio":
-                    newAudio();
-                    System.out.println("New audio...");
-                    break;
-                case "settings":
-                    switchToSettingsView();
-                    System.out.println("Switching to controls view.");
-                    break;
-                case "mainMenu":
-                    switchToHomeScreenView();
-                    System.out.println("Switching to main menu.");
-                    break;
-                default:
-                    System.out.println("No action assigned for this key.");
-                    break;
-            }
-        }
-    }
 }

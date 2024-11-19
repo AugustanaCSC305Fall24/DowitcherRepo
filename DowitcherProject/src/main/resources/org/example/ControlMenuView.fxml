@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="30.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.ControlMenuController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="637.0" spacing="30.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.ControlMenuController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Controls">
          <font>
@@ -16,12 +16,13 @@
       </Text>
       <HBox alignment="CENTER" prefHeight="250.0" prefWidth="600.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="99.0" spacing="19.0">
+            <VBox alignment="TOP_CENTER" prefHeight="332.0" prefWidth="99.0" spacing="19.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Program" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dah (Long)" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dit (Short)" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="StraightKey" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency Up" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Frequency Down" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Up" />
@@ -34,6 +35,7 @@
                   <TextField fx:id="settingsKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" />
                   <TextField fx:id="dahKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" />
                   <TextField fx:id="ditKeyField" editable="false" prefWidth="50.0" />
+                  <TextField fx:id="straightKeyField" editable="false" />
                   <TextField fx:id="frequencyUpTextField" editable="false" prefWidth="50.0" />
                   <TextField fx:id="frequencyDownTextField" editable="false" prefWidth="50.0" />
                   <TextField fx:id="filterUpTextField" editable="false" prefWidth="50.0" />
@@ -45,7 +47,8 @@
                   <Button fx:id="changeExitKeyButton" mnemonicParsing="false" onAction="#handleChangeExitKeyButton" text="Change Exit Key" />
                   <Button fx:id="changeSettingsKeyButton" mnemonicParsing="false" onAction="#handleChangeSettingsKeyButton" text="Change Settings Key" />
                   <Button fx:id="changeDahKeyButton" mnemonicParsing="false" onAction="#handleChangeDahKeyButton" text="Change Dah Key" />
-                  <Button fx:id="changeDitKeyButton" mnemonicParsing="false" onAction="#handleChangeDitKeyButton" text="Change DitKey" />
+                  <Button fx:id="changeDitKeyButton" mnemonicParsing="false" onAction="#handleChangeDitKeyButton" text="Change Dit Key" />
+                  <Button fx:id="changeStraightKeyButton" mnemonicParsing="false" onAction="#handleChangeStraightKeyButton" text="Change Straight Key" />
                   <Button fx:id="changeFrequencyUpKeyButton" mnemonicParsing="false" onAction="#handleChangeFrequencyUpKeyButton" text="Change Frequency Up Key" />
                   <Button fx:id="changeFrequencyDownKeyButton" mnemonicParsing="false" onAction="#handleChangeFrequencyDownKeyButton" text="Change Frequency Down Key" />
                   <Button fx:id="changeFilterUpKeyChangeButton" mnemonicParsing="false" onAction="#handleChangeFilterUpKeyChangeButton" text="Change Filter Up Key" />

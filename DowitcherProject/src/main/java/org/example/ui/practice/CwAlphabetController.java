@@ -10,13 +10,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.App;
+import org.example.data.User;
 import org.example.utility.RadioFunctions;
 import org.example.utility.MorseCodeTranslator;
+import org.example.utility.Sound;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.*;
 
-public class CwAlphabetController {
+public class CwAlphabetController implements MorseCodeOutput{
 
     // All FXML elements on screen that are interacted with
     @FXML private Button checkAnswerButton;
@@ -25,9 +28,12 @@ public class CwAlphabetController {
     @FXML private Button settingsButton;
     @FXML private Button practiceMenuButton;
     @FXML private Button mainMenuButton;
+    @FXML private Button showLetterButton;
+    @FXML private Button paddleModeButton;
+    @FXML private Button straightKeyModeButton;
     @FXML private ScrollPane previousTranslationsScrollPane;
     @FXML private TextFlow currentLetterTextFlow;
-    @FXML private TextField userInputTextField;
+    @FXML private TextField cwInputTextField;
 
     private Random random = new Random();
     public Stack<String> cwStack = new Stack<>();
@@ -39,12 +45,22 @@ public class CwAlphabetController {
     private int numCorrect;
     private VBox translationsContainer = new VBox();
     private final String textSize = "20";
+    private boolean showLetter = true;
+    @FXML private RadioFunctions radioFunctions;
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
-        App.settingsView();}
-    @FXML private void handlePracticeMenuButton() throws IOException {App.practiceMenuView();}
-    @FXML private void handleMainMenuButton() throws IOException {App.homeScreenView();}
+        radioFunctions.stopTypingMode();
+        App.settingsView();
+    }
+    @FXML private void handlePracticeMenuButton() throws IOException {
+        radioFunctions.stopTypingMode();
+        App.practiceMenuView();
+    }
+    @FXML private void handleMainMenuButton() throws IOException {
+        radioFunctions.stopTypingMode();
+        App.homeScreenView();
+    }
 
     @FXML
     private void initialize() {
@@ -52,6 +68,7 @@ public class CwAlphabetController {
         currentLetterText.setFont(new Font(48));
         currentLetterTextFlow.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         previousTranslationsScrollPane.setContent(translationsContainer);
+        radioFunctions = new RadioFunctions(this);
         restartAlphabet();
     }
 
@@ -76,7 +93,7 @@ public class CwAlphabetController {
 
     @FXML
     private void checkAnswer() {
-        String userTranslation = userInputTextField.getText();
+        String userTranslation = cwInputTextField.getText();
 
         List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
@@ -104,7 +121,7 @@ public class CwAlphabetController {
         previousTranslationsScrollPane.layout();
         previousTranslationsScrollPane.setVvalue(1.0);
 
-        userInputTextField.clear();
+        cwInputTextField.clear();
     }
 
     @FXML
@@ -139,8 +156,11 @@ public class CwAlphabetController {
         currentLetterText.setText(currentLetter);
         currentLetterTextFlow.getChildren().clear();
         currentLetterTextFlow.getChildren().add(currentLetterText);
-    }
 
+        if (!showLetter) {
+            currentLetterTextFlow.getChildren().clear();
+        }
+    }
 
     @FXML
     private void restartAlphabet() {
@@ -152,4 +172,92 @@ public class CwAlphabetController {
         generateRandomOrder();
         generateNewLetter();
     }
+
+    @FXML
+    private void handleShowLetter() {
+        if (showLetter) {
+            showLetter = false;
+            currentLetterTextFlow.getChildren().clear();
+            showLetterButton.setText("Show Character");
+        } else {
+            showLetter = true;
+            currentLetterTextFlow.getChildren().clear();
+            currentLetterTextFlow.getChildren().add(currentLetterText);
+            showLetterButton.setText("Hide Character");
+        }
+    }
+
+    @FXML
+    private void playAudio() {
+        char[] messageArray = currentCW.toCharArray();
+
+        Thread audioThread = new Thread(() -> {
+            for (int i = 0; i < messageArray.length; i++) {
+                if (messageArray[i] == '-') {
+                    try {
+                        Sound.playDah();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (messageArray[i] == '.') {
+                    try {
+                        Sound.playDit();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (messageArray[i] == ' ') {
+                    try {
+                        Thread.sleep(User.getCwSpeed());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        audioThread.start();
+    }
+
+    @FXML
+    private void handlePaddleMode() {
+        paddleModeButton.setDisable(true);
+        straightKeyModeButton.setDisable(false);
+        //currentModeLabel.setText("Current Mode - Paddle");
+
+        radioFunctions.stopTypingMode();
+        radioFunctions.setTypingOutputController(this);
+        radioFunctions.handleTyping("Paddle", this);
+    }
+
+    @FXML
+    private void handleStraightKeyMode() {
+        paddleModeButton.setDisable(false);
+        straightKeyModeButton.setDisable(true);
+        //currentModeLabel.setText("Current Mode - Straight Key");
+
+        radioFunctions.stopTypingMode();
+        radioFunctions.setTypingOutputController(this);
+        radioFunctions.handleTyping("Straight", this);
+    }
+
+    public void addCwToInput(String cwChar) {
+        String currentText = cwInputTextField.getText();
+
+        if (cwChar.equals("/")) {
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != '/') {
+                cwInputTextField.setText(currentText + "/");
+            }
+        } else if (cwChar.equals(" ")) {
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != ' ' && currentText.charAt(currentText.length() - 1) != '/') {
+                cwInputTextField.setText(currentText + " ");
+            }
+        } else {
+            cwInputTextField.setText(currentText + cwChar);
+        }
+    }
+
+    @FXML
+    private void clearInput() {
+        cwInputTextField.clear();
+    }
+
 }
