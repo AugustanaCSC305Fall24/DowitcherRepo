@@ -30,10 +30,10 @@ public class CwAlphabetController {
     @FXML private TextField userInputTextField;
 
     private Random random = new Random();
-    private Stack<String> cwStack = new Stack<>();
-    private Stack<String> letterStack = new Stack<>();
-    private String currentCW;
-    private String currentLetter;
+    public Stack<String> cwStack = new Stack<>();
+    public Stack<String> letterStack = new Stack<>();
+    public String currentCW;
+    public String currentLetter;
     private Text currentLetterText = new Text();
     private boolean correctAnswer = false;
     private int numCorrect;
@@ -56,7 +56,7 @@ public class CwAlphabetController {
     }
 
 
-    private void generateRandomOrder() {
+    public void generateRandomOrder() {
         List<Map.Entry<String, String>> cwAlphabetList = new ArrayList<>(MorseCodeTranslator.getCwAlphabet().entrySet());
 
         while (!cwAlphabetList.isEmpty()) {
@@ -122,7 +122,7 @@ public class CwAlphabetController {
     }
 
     @FXML
-    private void generateNewLetter() {
+    public void generateNewLetter() {
         if (!cwStack.isEmpty() || !letterStack.isEmpty()) {
             currentCW = cwStack.pop();
             currentLetter = letterStack.pop();
