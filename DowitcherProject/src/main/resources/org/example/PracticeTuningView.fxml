@@ -16,7 +16,7 @@
 
 <!-- Filter Width Slider -->
 <Label text="Filter Width (KHz)" />
-<Slider fx:id="filterWidthSlider" max="5.0" min="0.5" value="1.0" />
+<Slider fx:id="filterWidthSlider" max="5.0" value="1.0" />
 <Label fx:id="filterLabel" text="Filter Width: 0.5 KHz" />
 
 <!-- Buttons -->
