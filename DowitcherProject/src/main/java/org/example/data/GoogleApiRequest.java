@@ -14,14 +14,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class GoogleApiRequest {
-    // Changed to this link on 11/6/24 8:10 PM https://us-central1-aiplatform.googleapis.com/v1/projects/1014730854479/locations/us-central1/endpoints/2951881956834410496
-    // Prior link was https://us-central1-aiplatform.googleapis.com/v1/projects/dowitchercwbot/locations/us-central1/endpoints/2951881956834410496/predict
-    //
-    // Stack Overflow link format https://us-central1-aiplatform.googleapis.com/v1beta1/projects/dowitchercwbot/locations/us-central1/endpoints/2951881956834410496:predict
-    private static final String API_ENDPOINT = "https://us-central1-aiplatform.googleapis.com/v1/projects/dowitchercwbot/locations/us-central1/endpoints/2951881956834410496:predict";
+    // Correct API endpoint with the specific endpoint ID for your project.
+    private static final String API_ENDPOINT = "https://us-central1-aiplatform.googleapis.com/v1/projects/1014730854479/locations/us-central1/endpoints/9049404008573173760:predict";
+
+    // The project and location are also defined here for clarity.
     private static final String PROJECT_ID = "dowitchercwbot";
     private static final String LOCATION_ID = "us-central1";
-    private static final String MODEL_ID = "google/gemini-1.5-flash-002";
+    private static final String ENDPOINT_ID = "9049404008573173760"; // This is your endpoint ID.
 
     public String sendApiRequest(String requestBody, String accessToken) throws IOException {
         HttpURLConnection connection = null;
