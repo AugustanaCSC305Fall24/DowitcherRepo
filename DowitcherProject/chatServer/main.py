@@ -1,12 +1,3 @@
-# This simple websocket chat server is adapted from the tutorial at
-# https://medium.com/@chodvadiyasaurabh/building-a-real-time-chat-application-with-fastapi-and-websocket-9965778e97be
-#
-# (Modified by Dr. Stonedahl to relay JSON objects rather than plain text, and have a little more debugging/error handling.)
-#
-# It requires the FastAPI, Uvicorn, and WebSockets libraries.
-# See the instructions at the top of the tutorial for instructions on setting up a "virtual python environment"
-# and installing those libraries.
-
 from fastapi import FastAPI, WebSocket
 
 app = FastAPI()

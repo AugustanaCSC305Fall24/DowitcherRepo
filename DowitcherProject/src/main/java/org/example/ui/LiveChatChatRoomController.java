@@ -1,5 +1,9 @@
 package org.example.ui;
 
+
+import com.google.api.client.json.Json;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,12 +16,12 @@ import org.example.utility.RadioFunctions;
 import java.io.*;
 import java.net.Socket;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Random;
+import java.net.URL;
+import java.net.http.WebSocket;
 
-//@ClientEndpoint
+
+//ask about what server gets, am i writing to the server? does the server actually receive the message?
+
 public class LiveChatChatRoomController implements MorseCodeOutput {
 
     // UI elements
@@ -33,6 +37,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     @FXML private TextField cwInputTextField;
     @FXML private Button sendButton; // Send button for sending messages
     @FXML private RadioFunctions radioFunctions;
+    @FXML private Button connectButton;
 
     private Socket socket;
     private BufferedReader reader;
@@ -41,68 +46,39 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
 
     @FXML
     public void initialize() {
-        try {
-            connectToWebSocketServer("ws://localhost:8000/ws/user");
-        } catch (Exception e) {
-            appendToChatLog("Error connecting to server: " + e.getMessage());
-        }
+        radioFunctions = new RadioFunctions(this);
     }
 
-    private void connectToWebSocketServer(String serverUri) throws Exception {
-        URI uri = new URI(serverUri);
+
+    @FXML
+    private void connectToServer() throws Exception {
+        URI uri = new URI("ws://localhost:8000/ws/user");
+
         String host = uri.getHost();
         int port = uri.getPort() == -1 ? 80 : uri.getPort();
         String path = uri.getPath();
 
-        socket = new Socket(host, port);
+        socket = new Socket(host,port);
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-        // Perform WebSocket handshake
-        String secWebSocketKey = generateWebSocketKey();
-        String handshakeRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + host + "\r\n" +
-                "Upgrade: websocket\r\n" +
-                "Connection: Upgrade\r\n" +
-                "Sec-WebSocket-Key: " + secWebSocketKey + "\r\n" +
-                "Sec-WebSocket-Version: 13\r\n" +
-                "\r\n";
-
-        writer.write(handshakeRequest);
-        writer.flush();
-
-        // Read handshake response
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.isEmpty()) break; // End of headers
+        connected = socket.isConnected();
+        if(connected){
+            appendToChatLog("Connected to server.");
+        } else {
+            appendToChatLog("Not connected to server.");
         }
-
-        connected = true;
-        appendToChatLog("Connected to server.");
-
         // Start a thread to listen for messages
         new Thread(this::listenForMessages).start();
-    }
-
-    private String generateWebSocketKey() {
-        byte[] keyBytes = new byte[16];
-        new Random().nextBytes(keyBytes);
-        return Base64.getEncoder().encodeToString(keyBytes);
     }
 
     private void listenForMessages() {
         try {
             while (connected) {
-                // Read raw WebSocket frame
-                int firstByte = reader.read();
-                if (firstByte == -1) break; // End of stream
-
-                int payloadLength = reader.read() & 0x7F;
-                byte[] payload = new byte[payloadLength];
-                reader.read();
-
-                String message = new String(payload, StandardCharsets.UTF_8);
-                Platform.runLater(() -> appendToChatLog("Received: " + message));
+                String message = reader.readLine();
+                JsonObject jsonObject = JsonParser.parseString(message).getAsJsonObject();
+                String jsonMessage = jsonObject.get("message").toString();
+                Platform.runLater(() -> appendToChatLog("Received: " + jsonMessage));
             }
         } catch (IOException e) {
             appendToChatLog("Error receiving message: " + e.getMessage());
@@ -110,13 +86,12 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     }
 
     private void sendMessage(String message) throws IOException {
-        byte[] payload = message.getBytes(StandardCharsets.UTF_8);
-        int payloadLength = payload.length;
-
-        writer.write(0x81); // Text frame with FIN bit set
-        writer.write(payloadLength); // No masking, short payload
-        writer.write(Arrays.toString(payload));
+        JsonObject jsonObject = new JsonObject();//JsonParser.parseString(message).getAsJsonObject();
+        jsonObject.addProperty("message",message);
+        writer.write(jsonObject.toString());
+        writer.newLine();
         writer.flush();
+
     }
 
     private void appendToChatLog(String message) {
@@ -145,6 +120,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         App.homeScreenView();
     }
 
+    @FXML
     private void handleSendButton() {
         String message = cwInputTextField.getText().trim();
         if (!message.isEmpty() && connected) {
