@@ -168,6 +168,7 @@ public class RadioFunctions {
 
 
         lastReleaseTime = -1;
+        System.out.println("Starting Typing Input Thread");
         typingModeThread.start();
     }
 
@@ -183,9 +184,9 @@ public class RadioFunctions {
                     if (lastReleaseTime != -1) {
                         long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
                         System.out.println("Time between presses: " + timeBetweenPresses + " ms");
-                        if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
+                        if (timeBetweenPresses >= 150 && timeBetweenPresses <= 300) {
                             addCw(" ");
-                        } else if (timeBetweenPresses > 225) {
+                        } else if (timeBetweenPresses > 450) {
                             addCw("/");
                         }
                     }
@@ -236,9 +237,9 @@ public class RadioFunctions {
                 if (lastReleaseTime != -1) {
                     long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
                     System.out.println("Time between presses: " + timeBetweenPresses + " ms");
-                    if (timeBetweenPresses >= 75 && timeBetweenPresses <= 225) {
+                    if (timeBetweenPresses >= 150 && timeBetweenPresses <= 300) {
                         addCw(" ");
-                    } else if (timeBetweenPresses > 225) {
+                    } else if (timeBetweenPresses > 450) {
                         addCw("/");
                     }
                 }
@@ -272,12 +273,13 @@ public class RadioFunctions {
     public void stopTypingMode() {
         if (typingModeThread != null && typingModeThread.isAlive()) {
             typingModeThread.interrupt();
+            System.out.println("Typing Input Thread Stopped");
         }
     }
 
     private void handleKeyPressed(KeyCode code) {
         if (code == exitKeyCode) {
-            
+
         } else if (code == settingsKeyCode) {
 
         } else if (code == ditKeyCode || code == dahKeyCode) {

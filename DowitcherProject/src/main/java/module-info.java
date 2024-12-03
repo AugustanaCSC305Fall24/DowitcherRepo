@@ -9,7 +9,6 @@ module org.example {
     requires tyrus.standalone.client;
     requires java.net.http;
     requires com.google.api.client;
-    requires com.fasterxml.jackson.databind;
 //    requires org.jsoup;
 
 //    requires google.cloud.aiplatform;
