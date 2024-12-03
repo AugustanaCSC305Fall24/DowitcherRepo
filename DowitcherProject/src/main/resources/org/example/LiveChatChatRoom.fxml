@@ -65,6 +65,7 @@
                     <children>
                         <Button fx:id="paddleModeButton" mnemonicParsing="false" onAction="#handlePaddleMode" text="Paddle" />
                         <Button fx:id="straightKeyModeButton" mnemonicParsing="false" onAction="#handleStraightKeyMode" text="Striaght Key" />
+                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#handleSendButton" text="Send" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="39.0" prefWidth="800.0" spacing="30.0">
