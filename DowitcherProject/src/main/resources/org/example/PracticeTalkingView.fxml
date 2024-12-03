@@ -59,6 +59,7 @@
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Response:" />
                   <TextField fx:id="cwInputTextField" />
+                  <Button fx:id="SendButton" mnemonicParsing="false" onAction="#handleSendButton" text="Send" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="800.0" spacing="30.0">

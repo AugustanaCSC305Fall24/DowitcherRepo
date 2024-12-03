@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.example.App;
-import org.example.data.AccessTokenFetcher;
-import org.example.data.GoogleApiRequest;
+import org.example.data.RadioApiRequestHandler;
+
 import java.io.IOException;
 
 public class AiTestController {
@@ -16,13 +16,14 @@ public class AiTestController {
     @FXML private TextArea conversationTextArea;
     @FXML private Button sendButton;
 
-    private GoogleApiRequest googleApiRequest;
-
-    private static final String SERVICE_ACCOUNT_KEY_PATH = "C:\\SoftwareDev\\dowitchercwbot-5d84a82c5f0c.json";
+    private RadioApiRequestHandler radioApiRequestHandler;
+    private StringBuilder conversationHistory;
 
     @FXML
     public void initialize() {
-        googleApiRequest = new GoogleApiRequest();
+        // Initialize the APIRequestExample class and conversation history
+        radioApiRequestHandler = new RadioApiRequestHandler();
+        conversationHistory = new StringBuilder();
     }
 
     @FXML
@@ -31,28 +32,35 @@ public class AiTestController {
 
         if (!inputText.isEmpty()) {
             try {
-                // Construct the request body
-                String requestBody = "{ \"instances\": [{\"input\": \"" + inputText + "\"}] }";
+                // Append the user's input to the conversation history
+                conversationHistory.append("You: ").append(inputText).append("\n");
 
-                // Fetch the access token once and pass it
-                String accessToken = AccessTokenFetcher.getAccessToken(SERVICE_ACCOUNT_KEY_PATH);
+                // Send the user input to the API and get the response
+                String response = radioApiRequestHandler.sendRequest(inputText);
 
-                // Send the API request using the fetched access token
-                String response = googleApiRequest.sendApiRequest(requestBody, accessToken);
+                // Append the bot's response to the conversation history
+                if (response.contains("Error")) {
+                    conversationHistory.append("Bot: Error - ").append(response).append("\n");
+                } else {
+                    conversationHistory.append("Bot: ").append(response).append("\n");
+                }
 
-                // Display the bot's response in the output area
-                conversationTextArea.setText(response);
+                // Update the conversationTextArea with the complete conversation history
+                conversationTextArea.setText(conversationHistory.toString());
+
             } catch (Exception e) {
                 e.printStackTrace();
-                conversationTextArea.setText("Error: Could not send request.");
+                conversationHistory.append("Error: Could not send request.\n");
+                conversationTextArea.setText(conversationHistory.toString());
             }
         } else {
-            conversationTextArea.setText("Error: Input is empty.");
+            conversationHistory.append("Error: Input is empty.\n");
+            conversationTextArea.setText(conversationHistory.toString());
         }
 
+        // Clear the user text field after sending the message
         UserTextField.clear();
     }
-
 
     public void handleExitButton(ActionEvent actionEvent) {
         App.exitProgram();
