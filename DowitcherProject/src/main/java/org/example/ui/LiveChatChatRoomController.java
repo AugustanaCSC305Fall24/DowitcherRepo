@@ -96,7 +96,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         if (!message.isEmpty() ) {
             try {
                 sendMessage(message);
-                chatLogTextArea.appendText("You: " + message);
+                chatLogTextArea.appendText("You: " + message+"\n");
                 cwInputTextField.clear();
             } catch (Exception e) {
                 chatLogTextArea.appendText("Error sending message: " + e.getMessage());
