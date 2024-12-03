@@ -17,7 +17,7 @@ public class HomeScreenController {
     @FXML private Button exitProgramButton;
 
     //All view switching button presses
-    @FXML private void handleToLiveChatButton(ActionEvent event) {handleUnbuiltButton(toLiveChatViewButton);}
+    @FXML private void handleToLiveChatButton(ActionEvent event) throws IOException {App.liveChatView1();}
     @FXML private void handleToPracticeMenuButton(ActionEvent actionEvent) throws IOException {
         App.practiceMenuView();}
     @FXML private void handleToTutorialButton(ActionEvent event) {handleUnbuiltButton(toTutorialViewButton);}

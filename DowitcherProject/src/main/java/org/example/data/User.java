@@ -12,7 +12,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // User Identity Data
-    private String username;
+    private static String username;
     private String password;
     private String email;
 
@@ -61,7 +61,7 @@ public class User implements Serializable {
     public String popLastView() {if (!viewStack.isEmpty()){return viewStack.pop();} else{return "HomeScreenView";}}
 
     //User Data Get Methods
-    public String getUsername(){return username;}
+    public static String getUsername(){return username;}
     public String getPassword(){return password;}
     public String getEmail(){return email;}
     public static long getCwSpeed() {return cwSpeed;}

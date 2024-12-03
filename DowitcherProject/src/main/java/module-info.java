@@ -6,6 +6,8 @@ module org.example {
     requires com.google.gson;
     requires com.google.auth;
     requires com.google.auth.oauth2;
+    requires tyrus.standalone.client;
+    requires java.net.http;
 //    requires org.jsoup;
 
 //    requires google.cloud.aiplatform;

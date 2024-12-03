@@ -75,4 +75,5 @@ public class App extends Application {
     public static void signupView() throws IOException {App.setRoot("SignupView");}
     public static void exitProgram() {Platform.exit();}
     public static void testAiView() throws IOException {App.setRoot("AiTestView");}
+    public static void liveChatView1() throws IOException {App.setRoot("LiveChatChatRoom");}
 }
