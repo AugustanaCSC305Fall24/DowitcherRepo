@@ -1,7 +1,6 @@
 module org.example {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
     requires jdk.compiler;
     requires com.google.gson;
     requires com.google.auth;
@@ -9,6 +8,8 @@ module org.example {
     requires tyrus.standalone.client;
     requires java.net.http;
     requires com.google.api.client;
+    requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 //    requires org.jsoup;
 
 //    requires google.cloud.aiplatform;
