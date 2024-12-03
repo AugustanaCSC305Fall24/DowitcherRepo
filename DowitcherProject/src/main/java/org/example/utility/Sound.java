@@ -134,5 +134,5 @@ public class Sound {
         volumeControl.setValue(gain);
     }
 
-    }
+}
 

@@ -10,12 +10,6 @@ module org.example {
     requires com.google.api.client;
     requires com.fasterxml.jackson.databind;
     requires java.desktop;
-//    requires org.jsoup;
-
-//    requires google.cloud.aiplatform;
-//    requires proto.google.cloud.vertexai.v1;
-//    requires proto.google.cloud.vertexai.v1;
-//    requires google.cloud.vertexai;
 
     exports org.example;
     exports org.example.ui;
