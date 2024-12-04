@@ -1,31 +1,23 @@
 package org.example.ui;
 
-
-import com.google.api.client.json.Json;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import org.example.App;
 import org.example.data.ChatMessage;
+import org.example.data.User;
 import org.example.ui.practice.MorseCodeOutput;
 import org.example.utility.RadioFunctions;
-
 import java.io.*;
-import java.net.Socket;
 import java.net.URI;
-import java.net.URL;
-import java.net.http.WebSocket;
 import java.util.Random;
-
 import jakarta.websocket.*;
+import org.example.utility.Sound;
 
+import javax.sound.sampled.LineUnavailableException;
 
-//ask about what server gets, am i writing to the server? does the server actually receive the message?
 @ClientEndpoint
 public class LiveChatChatRoomController implements MorseCodeOutput {
 
@@ -63,12 +55,41 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     }
 
     @OnMessage
-    public void onMessage(String jsonMessage) {
+    public void onMessage(String jsonMessage) throws InterruptedException {
         System.out.println("Received WebSocket message: " + jsonMessage);
-
         ChatMessage chatMessage = new Gson().fromJson(jsonMessage, ChatMessage.class);
+        playMessage(chatMessage);
         chatLogTextArea.appendText(chatMessage.getSender() + " : " + chatMessage.getText()  + "\n");
     }
+
+    private void playMessage(ChatMessage chatMessage) throws InterruptedException {
+        String msg = chatMessage.getText();
+        char[] messageArray = msg.toCharArray();
+        for (int i = 0; i < messageArray.length;i++ ){
+            if (messageArray[i] == '-') {
+                try {
+                    Sound.playDah();
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (messageArray[i] == '.') {
+                try {
+                    Sound.playDit();
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (messageArray[i] == ' ') {
+                try {
+                    Thread.sleep(User.getCwSpeed());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (messageArray[i] == '/') {
+                Thread.sleep(2*User.getCwSpeed());
+            }
+        }
+    }
+
 
     private void sendMessage(String message) throws IOException {
         ChatMessage msg = new ChatMessage(message, USER_NAME, 7000);
