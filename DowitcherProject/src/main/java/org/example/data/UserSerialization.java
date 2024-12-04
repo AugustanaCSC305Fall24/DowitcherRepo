@@ -33,7 +33,7 @@ public class UserSerialization {
     public static boolean userExists(String username, String filename) {
         try {
             User user = deserializeUser(filename);  // Deserialize the user from file
-            return user.getUsername().equals(username);   // Check if username matches
+            return User.getUsername().equals(username);   // Check if username matches
         } catch (IOException e) {
             System.out.println("Error reading user data: " + e.getMessage());
             return false;
