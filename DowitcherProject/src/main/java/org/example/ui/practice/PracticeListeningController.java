@@ -39,20 +39,17 @@ public class PracticeListeningController {
     HashMap<String, String> cwMessagesList;
     Random random = new Random();
 
-
     private Boolean isPaused = true;
-    private int pauseIndex;
-    private Thread audioThread;
-    private volatile boolean stopAudio = false;
+    private Sound sound = new Sound();
 
     private final List<TextFlow> userInputsList = new ArrayList<>();
     private final String textSize = "16";
 
     //All view switching button presses
-    @FXML private void switchToSettingsView() throws IOException, InterruptedException {stopAudioPlayback();
+    @FXML private void switchToSettingsView() throws IOException, InterruptedException {sound.stopAudioPlayback();
         App.settingsView();}
-    @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {stopAudioPlayback();App.homeScreenView();}
-    @FXML private void handlePracticeMenuButton() throws IOException, InterruptedException {stopAudioPlayback();App.practiceMenuView();}
+    @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {sound.stopAudioPlayback();App.homeScreenView();}
+    @FXML private void handlePracticeMenuButton() throws IOException, InterruptedException {sound.stopAudioPlayback();App.practiceMenuView();}
 
     @FXML
     // Initializes HashMap and fills it with all practice messages
@@ -69,11 +66,9 @@ public class PracticeListeningController {
     // If audio is paused, plays audio and changes button to say pause
     // If audio is playing, pauses audio and changes button to say play
     private void playPauseAudio() throws InterruptedException {
-        char[] messageArray = cwAudio.toCharArray();
+        sound.playPauseAudio(cwAudio);
         if (isPaused){
             isPaused = false;
-            stopAudio = false;
-            playAudio(pauseIndex,messageArray);
             playPauseAudioButton.setText("Pause");
         } else {
             isPaused = true;
@@ -81,59 +76,11 @@ public class PracticeListeningController {
         }
     }
 
-    //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
-    private void playAudio(int index, char[] messageArray) throws InterruptedException {
-        stopAudioPlayback();
-
-        audioThread = new Thread(() -> {
-            for (int i = index; i < messageArray.length; i++) {
-                if (isPaused || stopAudio) {
-                    pauseIndex = i;
-                    break;
-                }
-                if (messageArray[i] == '-') {
-                    try {
-                        Sound.playDah();
-                    } catch (LineUnavailableException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if (messageArray[i] == '.') {
-                    try {
-                        Sound.playDit();
-                    } catch (LineUnavailableException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if (messageArray[i] == ' ') {
-                    try {
-                        Thread.sleep(User.getCwSpeed());
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-        audioThread.start();
-    }
-
     @FXML
     // Restarts the audio that is playing
     private void restartAudio() throws InterruptedException {
-        stopAudioPlayback();
-
-        char[] messageArray = cwAudio.toCharArray();
-        pauseIndex = 0;
-        isPaused = true;
-        stopAudio = false;
+        sound.restartAudio();
         playPauseAudioButton.setText("Play");
-    }
-
-    // Stops the current audio that is playing
-    private void stopAudioPlayback() throws InterruptedException {
-        if (audioThread != null && audioThread.isAlive()) {
-            stopAudio = true;
-            audioThread.join();
-            stopAudio = false;
-        }
     }
 
     @FXML
@@ -182,8 +129,7 @@ public class PracticeListeningController {
     // Sets cwMessage and cwAudio to a random new message and audio from
     // the HashMap containing all the messages and audios
     private void newAudio() {
-        pauseIndex = 0;
-        isPaused = true;
+
         playPauseAudioButton.setText("Play");
         List<String> allCWMessages = new ArrayList<>(cwMessagesList.keySet());
         int randomMessageNum = random.nextInt(allCWMessages.size());
