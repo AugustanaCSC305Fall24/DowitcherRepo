@@ -227,10 +227,10 @@ public class RadioFunctions {
     }
 
     private void runStraightKeyMode() {
-        while (!isPaddleMode) {// Only runs when isPaddleMode is false
-            App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
-            App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
+        App.getScene().setOnKeyPressed(event -> handleKeyPressed(event.getCode()));
+        App.getScene().setOnKeyReleased(event -> handleKeyReleased(event.getCode()));
 
+        while (!isPaddleMode) {// Only runs when isPaddleMode is false
             if (isStraightKeyPressed) { // Implement this method to detect space bar press
                 long pressStartTime = System.nanoTime();
 
@@ -246,9 +246,8 @@ public class RadioFunctions {
 
                 // Wait until the space bar is released
                 while (isStraightKeyPressed) {
-                    // Optional: you could add a short sleep to avoid CPU overuse
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(10); // Avoid CPU overuse
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
