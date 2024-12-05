@@ -10,6 +10,7 @@ public class ChatBot {
     private String ChatLog;
     private String callSign;
     private Double Frequency;
+    private String defaultMessageInCW;
     private final String defaultInfo =
             "You’re using Continuous Wave (CW) Morse code to communicate, which involves short, simple interactions due to the nature of Morse code. "
                     + "Keep messages brief and straightforward, using simple English that’s easy to translate into Morse code. "
@@ -18,7 +19,6 @@ public class ChatBot {
                     + "The following is information that the user filled out specific to your character. "
                     + "In order, separated by a period, it will be your name, call sign, context, and the conversation up to this point.";
 
-    public static List<ChatBot> chatBotRegistry = new ArrayList<>();
 
     public ChatBot(String name, String context, String chatLog) {
         this.Name = name;
@@ -27,7 +27,9 @@ public class ChatBot {
         this.callSign = generateUniqueCallSign(name);
         this.Frequency = generateUniqueFrequency();
 
-        chatBotRegistry.add(this);
+        User.chatBotRegistry.add(this);
+
+        this.defaultMessageInCW = "CQ " + callSign + " DE";
     }
 
     public String getName() {
@@ -106,7 +108,7 @@ public class ChatBot {
 
     // Check if the call sign is already taken
     private boolean isCallSignTaken(String callSign) {
-        for (ChatBot bot : chatBotRegistry) {
+        for (ChatBot bot : User.chatBotRegistry) {
             if (bot.getCallSign().equals(callSign)) {
                 return true;
             }
@@ -132,11 +134,23 @@ public class ChatBot {
     // Check if the frequency is too close to others
     private boolean isFrequencyTooClose(Double frequency) {
         double threshold = 0.05; // 50 kHz threshold to consider frequencies too close
-        for (ChatBot bot : chatBotRegistry) {
+        for (ChatBot bot : User.chatBotRegistry) {
             if (Math.abs(bot.getFrequency() - frequency) < threshold) {
                 return true;
             }
         }
         return false;
+    }
+
+    public String getDefaultMessageInCW() {
+        return defaultMessageInCW;
+    }
+
+    public void setDefaultMessageInCW(String defaultMessageInCW) {
+        this.defaultMessageInCW = defaultMessageInCW;
+    }
+
+    public String getDefaultInfo() {
+        return defaultInfo;
     }
 }

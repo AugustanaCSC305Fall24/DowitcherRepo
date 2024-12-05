@@ -3,9 +3,7 @@ package org.example.data;
 import javafx.scene.input.KeyCode;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -24,6 +22,9 @@ public class User implements Serializable {
     // Static Maps for actions and keys (to be shared across all instances)
     private static Map<KeyCode, String> keyFirstActionMap = new HashMap<>();
     private static Map<String, KeyCode> actionFirstActionMap = new HashMap<>();
+
+    //All user made bots
+    public static List<ChatBot> chatBotRegistry = new ArrayList<>();
 
     // Constructor
     public User(String callSign) {

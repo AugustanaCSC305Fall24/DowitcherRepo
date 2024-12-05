@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.example.App;
 import org.example.data.ChatBot;
+import org.example.data.User;
 
 import java.io.IOException;
 import java.util.Random;
@@ -30,7 +31,7 @@ public class BotCreationController {
     @FXML
     public void initialize() {
         // Populate the bot list from chatBotRegistry
-        botListView.getItems().addAll(ChatBot.chatBotRegistry);
+        botListView.getItems().addAll(User.chatBotRegistry);
 
         // Set a custom cell factory for better display of ChatBot objects
         botListView.setCellFactory(listView -> new ListCell<>() {
@@ -81,7 +82,7 @@ public class BotCreationController {
             return;
         }
 
-        ChatBot.chatBotRegistry.remove(selectedBot);
+        User.chatBotRegistry.remove(selectedBot);
         botListView.getItems().remove(selectedBot);
         clearForm();
     }

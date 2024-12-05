@@ -13,6 +13,8 @@ public class Sound {
     private static int dahFrequency = 600;
 
     private static SourceDataLine staticSourceLine; // **New field for persistent sound line**
+    private static Thread audioThread;  // Track the current audio thread
+    public static AtomicBoolean isAudioPlaying = new AtomicBoolean(false);  // Track audio playback state
 
     public static void playDit() throws LineUnavailableException {
         playTone(ditFrequency,ditDuration);
@@ -134,5 +136,59 @@ public class Sound {
         volumeControl.setValue(gain);
     }
 
+    public static void playAudio(String morseCode) {
+        // Convert the input Morse code string to a character array
+        char[] messageArray = morseCode.toCharArray();
+
+        // Stop the audio if it's already playing
+        if (isAudioPlaying.get() && audioThread != null && audioThread.isAlive()) {
+            audioThread.interrupt();  // Interrupt the current playback thread
+            try {
+                audioThread.join();  // Wait for the thread to finish
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // If no sound is requested, just return
+        if (morseCode.isEmpty()) {
+            isAudioPlaying.set(false); // Ensure the audio is marked as not playing
+            return;
+        }
+
+        // Create and start a new thread for playing audio
+        audioThread = new Thread(() -> {
+            isAudioPlaying.set(true);  // Mark audio as playing
+
+            for (char c : messageArray) {
+                try {
+                    if (Thread.currentThread().isInterrupted()) {
+                        break;  // Exit the loop if interrupted
+                    }
+
+                    if (c == '-') {
+                        // Play dah
+                        Sound.playDah();
+                    } else if (c == '.') {
+                        // Play dit
+                        Sound.playDit();
+                    } else if (c == ' ') {
+                        // Pause between letters/words
+                        Thread.sleep(User.getCwSpeed());
+                    }
+                } catch (LineUnavailableException | InterruptedException e) {
+                    if (Thread.currentThread().isInterrupted()) {
+                        break;  // Exit the loop if interrupted
+                    }
+                    throw new RuntimeException(e);
+                }
+            }
+
+            isAudioPlaying.set(false);  // Mark audio as finished
+        });
+
+        // Start the thread
+        audioThread.start();
+    }
 }
 
