@@ -104,7 +104,6 @@ public class CwAlphabetController implements MorseCodeOutput{
 
         List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
-        TextFlow correctTranslation = (TextFlow) checkedList.get(1);
         correctAnswer = (boolean) checkedList.get(2);
 
         if (correctAnswer) {
@@ -117,7 +116,7 @@ public class CwAlphabetController implements MorseCodeOutput{
 
         // Add the new TextFlows to the VBox container
         HBox translationPair = new HBox(10); // To display the two TextFlows side by side
-        translationPair.getChildren().addAll(letterToDisplay, checkedUserInput, correctTranslation);
+        translationPair.getChildren().addAll(letterToDisplay, checkedUserInput);
 
         // Add spacing and style if needed
         translationPair.setSpacing(20); // Spacing between the user input and correct translation
