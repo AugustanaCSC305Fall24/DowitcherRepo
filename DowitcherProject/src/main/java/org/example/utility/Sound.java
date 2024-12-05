@@ -143,20 +143,19 @@ public class Sound {
     // If audio is paused, plays audio and changes button to say pause
     // If audio is playing, pauses audio and changes button to say play
     public void playPauseAudio(String cwAudio) throws InterruptedException {
-        char[] messageArray = cwAudio.toCharArray();
-
         if (isPaused){
             isPaused = false;
             stopAudio = false;
-            playAudio(pauseIndex,messageArray);
+            playAudio(pauseIndex, cwAudio);
         } else {
             isPaused = true;
         }
     }
 
     //play audio method for how the audio plays and saves the index where the message is paused so it picks up where it left off
-    public void playAudio(int index, char[] messageArray) throws InterruptedException {
+    public void playAudio(int index, String cwAudio) throws InterruptedException {
         stopAudioPlayback();
+        char[] messageArray = cwAudio.toCharArray();
         pauseIndex = 0;
         isPaused = false;
 
@@ -208,5 +207,8 @@ public class Sound {
         stopAudio = false;
     }
 
+    public Boolean isAudioPlaying() {
+        return !isPaused;
+    }
 }
 
