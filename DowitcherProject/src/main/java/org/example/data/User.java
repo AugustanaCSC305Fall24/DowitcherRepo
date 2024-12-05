@@ -25,6 +25,7 @@ public class User implements Serializable {
 
     //All user made bots
     public static List<ChatBot> chatBotRegistry = new ArrayList<>();
+    private boolean isStatic;
 
     // Constructor
     public User(String callSign) {
@@ -183,5 +184,13 @@ public class User implements Serializable {
                 ", showCWLetters=" + showCWLetters +
                 ", showCWAcronyms=" + showCWAcronyms +
                 '}';
+    }
+
+    public void setStaticEnabled(boolean selected) {
+    this.isStatic = selected;
+    }
+
+    public boolean isStaticEnabled() {
+        return isStatic;
     }
 }

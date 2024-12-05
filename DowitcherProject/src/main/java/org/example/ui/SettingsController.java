@@ -1,47 +1,58 @@
 package org.example.ui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import org.example.App;
 
-import java.io.IOException;
-
 public class SettingsController {
-    //UI Elements In Order
-    @FXML private Button switchToControlMenuButton;
+    // UI Elements
     @FXML private Slider cwSpeedSlider;
-    @FXML private Slider volumeSlider;
-    @FXML private Slider staticSlider;
+    @FXML private CheckBox staticCheckBox;
     @FXML private CheckBox showCWLettersCheckBox;
     @FXML private CheckBox showCWAcronymsCheckBox;
     @FXML private Button saveButton;
-    @FXML private Button toControlMenuButton;
-    @FXML private Button toMainMenuButton;
-    @FXML private Button toBackButton;
+    @FXML private Button editControlsButton;
 
-
-    //All view switching button presses
-    @FXML void handleToControlMenuButton() throws IOException {
-        App.currentUser.addView("SettingsView");App.controlMenuView();}
-    @FXML private void handleToMainMenuButton() throws IOException {App.homeScreenView();}
-    @FXML private void handleToBackButton() throws IOException {App.back();}
-
-    //Handlers
-    @FXML private void handleSaveButton(){
-        App.currentUser.setCwSpeed((long) (cwSpeedSlider.getValue() * 100));
-        App.currentUser.setVolume(volumeSlider.getValue());
-        App.currentUser.setStaticAmount(staticSlider.getValue());
-        App.currentUser.setShowCWLetters(showCWLettersCheckBox.isSelected());
-        App.currentUser.setShowCWAcronyms(showCWAcronymsCheckBox.isSelected());
-    }
-
-    @FXML public void initialize() {
-        cwSpeedSlider.setValue(App.currentUser.getCwSpeed());
-        volumeSlider.setValue(App.currentUser.getVolume());
-        staticSlider.setValue(App.currentUser.getStaticAmount());
+    // Initialize UI Elements with Current User Data
+    @FXML
+    public void initialize() {
+        // Bind sliders and checkboxes to user settings
+        cwSpeedSlider.setValue(App.currentUser.getCwSpeed() / 100.0); // Convert back to UI scale
+        staticCheckBox.setSelected(App.currentUser.isStaticEnabled());
         showCWLettersCheckBox.setSelected(App.currentUser.getShowCWLetters());
         showCWAcronymsCheckBox.setSelected(App.currentUser.getShowCWAcronyms());
+    }
+
+    // Save Changes and Close Popup
+    @FXML
+    private void handleSaveButton(ActionEvent event) {
+        // Save current settings to the user object
+        App.currentUser.setCwSpeed((long) (cwSpeedSlider.getValue() * 100)); // Convert to storage scale
+        App.currentUser.setStaticEnabled(staticCheckBox.isSelected());
+        App.currentUser.setShowCWLetters(showCWLettersCheckBox.isSelected());
+        App.currentUser.setShowCWAcronyms(showCWAcronymsCheckBox.isSelected());
+
+        // Optional: Close the popup
+        closePopup();
+    }
+
+    // Navigate to Edit Controls View
+    @FXML
+    private void handleEditControlsButton(ActionEvent event) {
+        // Add logic to transition to the controls editing view
+        try {
+            App.controlMenuView(); // Assuming `App.controlMenuView` handles the transition
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Utility Method to Close the Popup
+    private void closePopup() {
+        // Locate the popup and hide it
+        saveButton.getScene().getWindow().hide(); // This assumes the popup is the current window
     }
 }
