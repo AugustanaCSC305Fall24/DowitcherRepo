@@ -1,5 +1,6 @@
 package org.example.ui.practice;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -88,7 +89,7 @@ public class PracticeTypingController implements MorseCodeOutput {
 
     public void addCwToInput(String cwChar) {
         String currentText = cwInputTextArea.getText();
-
+        System.out.println("adding " + cwChar + " to text area" + cwInputTextArea.hashCode());
         if (cwChar.equals("/")) {
             if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != '/') {
                 cwInputTextArea.setText(currentText + "/");
@@ -100,6 +101,7 @@ public class PracticeTypingController implements MorseCodeOutput {
         } else {
             cwInputTextArea.setText(currentText + cwChar);
         }
+
     }
 
     @FXML

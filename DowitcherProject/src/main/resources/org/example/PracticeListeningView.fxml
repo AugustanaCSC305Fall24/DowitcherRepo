@@ -19,28 +19,14 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="249.0" prefWidth="610.0" spacing="30.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="275.0" spacing="10.0">
+            <VBox alignment="CENTER" prefHeight="250.0" prefWidth="425.0" spacing="10.0">
                <children>
-                  <Label text="Your Translation -">
+                  <Label text="Checked Translations - ">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
                   <ScrollPane fx:id="userInputScrollPane" prefHeight="200.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
-                  </ScrollPane>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="275.0" spacing="10.0">
-               <children>
-                  <Label text="Correct Answer - ">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <ScrollPane fx:id="correctAnswerScrollPane" prefHeight="200.0">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                     </content>

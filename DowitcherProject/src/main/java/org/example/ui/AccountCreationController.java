@@ -1,7 +1,7 @@
 package org.example.ui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,151 +13,99 @@ import java.io.IOException;
 
 public class AccountCreationController {
 
-    // Paths to user data files
-    private static final String USER_DATA_FILE = "userdata.Json";
-
-    // Login View
-    //Buttons
+    @FXML private TextField callSignTextField;
     @FXML private Button loginButton;
     @FXML private Button signUpButton;
-    @FXML private Button exitButton;
     @FXML private Button continueButton;
+    @FXML private Button exitButton;
+    @FXML private Label messageLabel;
 
-    //TextFields
-    @FXML private TextField passwordTextfield;
-    @FXML private TextField usernameTextfield;
+    private static final String USER_DATA_FILE = "userdata.json";
 
-    //Button Handlers
-    @FXML private void handleSignUpButton() throws IOException {
-        App.signupView();}
-    @FXML private void handleExitButton() {App.exitProgram();}
-    @FXML private void handleContinueAsGuestButton() throws IOException {App.currentUser = new User("Guest", "Guest",  "Guest") ;App.homeScreenView();}
+    // Handle login button click
+    @FXML
+    private void handleLoginButton() {
+        String callSign = callSignTextField.getText().trim();
 
-    @FXML private void handleLoginButton(ActionEvent event) {
-        if (validLogin()) {
-            try {
-                User loginUser = UserSerialization.deserializeUser(USER_DATA_FILE); // Load user data from file
-                App.currentUser = loginUser; // Set the current user in the app
-                App.homeScreenView(); // Navigate to the home screen
-            } catch (IOException | ClassNotFoundException e) {
-                // Handle any errors in loading the user data
-                e.printStackTrace();
-            }
-        } else {
-            // Show an error message: Invalid username or password
-            System.out.println("Invalid username or password.");
+        // Validate the call sign input
+        if (callSign.isEmpty() || isValidCallSign(callSign)) {
+            showError("Call sign is not valid.");
+            return;
         }
-    }
 
-    // Helper Method for Login Button
-    private boolean validLogin() {
         try {
-            // Deserialize the user object from file to check credentials
-            User savedUser = UserSerialization.deserializeUser(USER_DATA_FILE);
+            // Check if the call sign exists in the userdata file
+            boolean userExists = UserSerialization.userExistsByCallSign(callSign);
+            if (userExists) {
+                // Load the user and set them as the current user
+                User user = UserSerialization.loadUsers().stream()
+                        .filter(u -> u.getCallSign().equals(callSign))
+                        .findFirst()
+                        .orElse(null);
 
-            // Check if the entered username and password match the saved user data
-            if (savedUser.getUsername().equals(usernameTextfield.getText()) &&
-                    savedUser.getPassword().equals(passwordTextfield.getText())) {
-                return true;
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            // Handle any errors (e.g., file not found)
-            e.printStackTrace();
-        }
-
-        return false; // Return false if no match is found
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // Signup View
-    @FXML private TextField createUsernameTextfield;
-    @FXML private TextField createUsernameCheckTextfield;
-    @FXML private TextField createPasswordTextfield;
-    @FXML private TextField createPasswordCheckTextfield;
-    @FXML private TextField emailTextfield;
-    @FXML private TextField emailCheckTextfield;
-    @FXML private Button backButton;
-    @FXML private Button createAccountButton;
-    @FXML private Label messageLabel; // This will show messages like "Fields do not match" or "Account created successfully"
-
-
-    private String sameTextColor = "-fx-background-color: red;";
-    private String defaultColor = "";
-
-    // Field handlers
-    @FXML private void handleCreateUsernameTextfield() { handleTextFieldSameCheck(createUsernameTextfield, createUsernameCheckTextfield); }
-    @FXML private void handleCreateUsernameCheckTextfield() { handleTextFieldSameCheck(createUsernameTextfield, createUsernameCheckTextfield); }
-    @FXML private void handleCreatePasswordTextfield() { handleTextFieldSameCheck(createPasswordTextfield, createPasswordCheckTextfield); }
-    @FXML private void handleCreatePasswordCheckTextfield() { handleTextFieldSameCheck(createPasswordTextfield, createPasswordCheckTextfield); }
-    @FXML private void handleEmailTextfield() { handleTextFieldSameCheck(emailTextfield, emailCheckTextfield); }
-    @FXML private void handleEmailCheckTextfield() { handleTextFieldSameCheck(emailTextfield, emailCheckTextfield); }
-
-    // Bottom Buttons
-    @FXML private void handleBackButton() throws IOException { App.loginView(); }
-
-    @FXML private void handleCreateAccountButton() {
-        if (!sameTextField()) {
-            try {
-                if (UserSerialization.userExists(createUsernameTextfield.getText(), USER_DATA_FILE)) {
-                    messageLabel.setText("Username already taken");
-                    return;
+                if (user != null) {
+                    App.currentUser = user;
+                    App.homeScreenView();
                 }
-
-                User newUser = new User(createUsernameTextfield.getText(), createPasswordTextfield.getText(), emailTextfield.getText());
-                UserSerialization.serializeUser(newUser, USER_DATA_FILE);
-                messageLabel.setText("Account created successfully!");
-                messageLabel.setStyle("-fx-text-fill: green;");
-                App.currentUser = newUser;
-                App.homeScreenView();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                showError("Call sign does not exist.");
             }
-        } else {
-            messageLabel.setText("Fields  not match.");
-            messageLabel.setStyle("-fx-text-fill: red;");
+        } catch (IOException e) {
+            showError("Error checking user data: " + e.getMessage());
         }
     }
 
+    // Handle sign-up button click
+    @FXML
+    private void handleSignUpButton() throws IOException {
+        String callSign = callSignTextField.getText().trim();
 
-    // Helper Methods for TextField Handlers
-    private void handleTextFieldSameCheck(TextField f1, TextField f2) {
-        if (!f1.getText().equals(f2.getText())) {
-            setTextFieldRed(f1, f2);
-            createAccountButton.setDisable(true);
-        } else {
-            setTextFieldNormal(f1, f2);
-            createAccountButton.setDisable(false);
+        // Validate the call sign input
+        if (callSign.isEmpty() || isValidCallSign(callSign)) {
+            showError("Call sign is not valid.");
+            return;
+        }
+
+        try {
+            // Check if the call sign already exists
+            boolean userExists = UserSerialization.userExistsByCallSign(callSign);
+            if (userExists) {
+                showError("Call sign already exists. Please choose another one.");
+                return;
+            }
+
+            // Create a new user with default settings
+            User newUser = new User(callSign);  // Adjust fields as necessary
+            UserSerialization.addUser(newUser);
+            App.currentUser = newUser;
+            App.homeScreenView();
+
+        } catch (IOException e) {
+            showError("Error saving user data: " + e.getMessage());
         }
     }
 
-    public void setMessageLabel(Label messageLabel) {
-        this.messageLabel = messageLabel;
+    @FXML
+    private void handleContinueAsGuestButton() throws IOException {
+        App.currentUser = new User("Guest");
+        App.homeScreenView();  // Navigate to HomeScreenController
     }
 
-    private void setTextFieldNormal(TextField f1, TextField f2) {
-        f1.setStyle(defaultColor);
-        f2.setStyle(defaultColor);
+    @FXML
+    private void handleExitButton() {
+        App.exitProgram();  // Exit the application
     }
 
-    private void setTextFieldRed(TextField f1, TextField f2) {
-        f1.setStyle(sameTextColor);
-        f2.setStyle(sameTextColor);
+    private boolean isValidCallSign(String callSign) {
+        return !(callSign.length() >= 4 && callSign.length() <= 7 && callSign.matches(".*\\d.*"));
     }
 
-    private boolean sameTextField() {
-        return (!sameUsername() || !samePassword() || !sameEmail());
-    }
-
-    private boolean sameUsername() {
-        return createUsernameTextfield.getText().equals(createUsernameCheckTextfield.getText());
-    }
-
-    private boolean samePassword() {
-        return createPasswordTextfield.getText().equals(createPasswordCheckTextfield.getText());
-    }
-
-    private boolean sameEmail() {
-        return emailTextfield.getText().equals(emailCheckTextfield.getText());
+    // Helper method to show error alerts
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
