@@ -19,7 +19,7 @@ public class PracticeMenuController {
     //All view switching button presses
     @FXML private void handleToListeningButton() throws IOException {App.practiceListeningView();}
     @FXML private void handleToTypingButton() throws IOException {App.practiceTypingView();}
-    @FXML private void handleToTalkingButton() throws IOException {App.practiceTalkingView();}
+    @FXML private void handleToTalkingButton() throws IOException {App.botAddEditRemoveView();}
     @FXML private void handleToTuningButton() throws IOException {App.practiceTuningView();}                   // No view App.setRoot("PracticeTuningView")
     @FXML private void handleToAlphebetButton() throws IOException {App.cwAlphabetView();}
     @FXML private void handleToMainMenuButton() throws IOException {App.homeScreenView();}

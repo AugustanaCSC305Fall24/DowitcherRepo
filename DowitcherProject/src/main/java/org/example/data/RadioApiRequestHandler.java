@@ -11,58 +11,20 @@ public class RadioApiRequestHandler {
     private String apiKey = "AIzaSyAifj81HJ-xRqkKi-izzQ-k_FfwgcTR8F4";  // Your API key
     private String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
-    // Define the context for the request, including instruction to avoid \n
-    private String context = "You are a ham radio operator participating in the Parks on the Waves program, "
-            + "where operators earn badges by making contact with others in unique parks across the USA. "
-            + "You’re using Continuous Wave (CW) Morse code to communicate, which involves short, simple interactions due to the nature of Morse code. "
-            + "Communication Style: Respond as a friendly ham radio enthusiast who enjoys quick, casual exchanges. "
-            + "Keep messages brief and straightforward, using simple English that’s easy to translate into Morse code. "
-            + "These interactions are conversational, acknowledging the other operator’s location and signal quality, and include any necessary codes for clarity. "
-            + "Do not include newline characters or unnecessary breaks in the message. Keep everything on a single line."
-            + "Even if you are spoken to in normal English, always respond in CW.";
-
     // Method to send a request to the API
-    public String sendRequest(String userInput) throws IOException {
-        // Prepare the JSON body using Jackson
+    public String sendRequest(String prompt) throws IOException {
+        // Prepare the JSON body using the expected format
         Map<String, Object> body = new HashMap<>();
 
         // Add contents to the request body
         List<Map<String, Object>> contents = new ArrayList<>();
 
         // User input as the first content
-        Map<String, Object> userPart = new HashMap<>();
-        userPart.put("text", "CQ POTA DE W1XYZ");  // Example user message
-        contents.add(createContent("user", userPart));
-
-        // Model response as second content (simulated response)
-        Map<String, Object> modelPart = new HashMap<>();
-        modelPart.put("text", "W1ABC DE W1XYZ RST 599 K-0001");
-        contents.add(createContent("model", modelPart));
-
-        // New user message to simulate the input
         Map<String, Object> userInputPart = new HashMap<>();
-        userInputPart.put("text", userInput);  // User's input
+        userInputPart.put("text", prompt);  // User's input
         contents.add(createContent("user", userInputPart));
 
         body.put("contents", contents);
-
-        // Add system instruction with context
-        Map<String, Object> systemInstruction = new HashMap<>();
-        Map<String, Object> systemInstructionPart = new HashMap<>();
-        systemInstructionPart.put("text", context);
-        systemInstruction.put("role", "user");
-        systemInstruction.put("parts", Collections.singletonList(systemInstructionPart));
-        body.put("systemInstruction", systemInstruction);
-
-        // Generation configuration (temperature, etc.)
-        Map<String, Object> generationConfig = new HashMap<>();
-        generationConfig.put("temperature", 1);
-        generationConfig.put("topK", 40);
-        generationConfig.put("topP", 0.95);
-        generationConfig.put("maxOutputTokens", 8192);
-        generationConfig.put("responseMimeType", "text/plain");
-
-        body.put("generationConfig", generationConfig);
 
         // Create an ObjectMapper to convert the Java object to JSON
         ObjectMapper objectMapper = new ObjectMapper();
@@ -73,7 +35,7 @@ public class RadioApiRequestHandler {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);  // Indicating that we will send data in the request body
+        connection.setDoOutput(true);
 
         // Write the JSON payload to the request body
         try (OutputStream os = connection.getOutputStream()) {
@@ -114,6 +76,7 @@ public class RadioApiRequestHandler {
         connection.disconnect();
         return responseMessage;
     }
+
 
     // Helper method to structure content parts
     private Map<String, Object> createContent(String role, Map<String, Object> part) {

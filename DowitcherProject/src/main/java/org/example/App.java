@@ -22,9 +22,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // No need for OAuth, just directly using API Key (No token fetch needed)
-//        initializeAuth();
-
         scene = new Scene(loadFXML("LoginView"), 640, 480);
         stage.setScene(scene);
         stage.setFullScreen(false);                          // Make the stage full screen
@@ -47,19 +44,6 @@ public class App extends Application {
     public static Scene getScene(){return scene;}
 
 
-    // Google Auth Methods
-//    private static void initializeAuth() {
-//        // No need for token or service account; we directly use API Key now
-//        String apiEndpoint = "https://www.googleapis.com/discovery/v1/apis";  // Example endpoint to verify API Key
-//        try {
-//            // Example: Fetching API data with API Key
-//            //JsonObject response = GoogleAuthUtil.fetchJsonFromApi(apiEndpoint);
-//            //System.out.println("API Response: " + response.toString());
-//        } catch (Exception e) {
-//            System.err.println("Failed to fetch data from Google API: " + e.getMessage());
-//        }
-//    }
-
     // All switch view methods
     public static void back() throws IOException {setRoot(currentUser.popLastView());}
     public static void controlMenuView() throws IOException {App.setRoot("ControlMenuView");}
@@ -76,4 +60,5 @@ public class App extends Application {
     public static void exitProgram() {Platform.exit();}
     public static void testAiView() throws IOException {App.setRoot("AiTestView");}
     public static void liveChatView1() throws IOException {App.setRoot("LiveChatChatRoom");}
+    public static void botAddEditRemoveView() throws IOException {App.setRoot("BotAddEditRemoveView");}
 }
