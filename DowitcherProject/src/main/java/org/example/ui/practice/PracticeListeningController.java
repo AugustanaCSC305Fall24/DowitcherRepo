@@ -31,8 +31,6 @@ public class PracticeListeningController {
     @FXML private Button practiceMenuButton;
     @FXML private TextField userInputTextField;
     @FXML private ScrollPane userInputScrollPane;
-    @FXML private ScrollPane correctAnswerScrollPane;
-
 
     private String cwMessage;
     private String cwAudio;
@@ -145,26 +143,22 @@ public class PracticeListeningController {
 
         List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, cwMessage, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
-        TextFlow correctTranslation = (TextFlow) checkedList.get(1);
 
         // Specific to PracticeListening
-        updateCheckedTranslations(checkedUserInput, correctTranslation);
+        updateCheckedTranslations(checkedUserInput);
     }
 
     @FXML
     // Adds lines to the userInputScrollPane and correctAnswerScrollPane while keeping previous lines
-    private void updateCheckedTranslations(TextFlow userInput, TextFlow correctTranslation) {
+    private void updateCheckedTranslations(TextFlow userInput) {
         // Add new translations to the lists
         userInputsList.add(userInput);
-        correctTranslationsList.add(correctTranslation);
 
         // Clear previous content from ScrollPanes
         userInputScrollPane.setContent(null);
-        correctAnswerScrollPane.setContent(null);
 
         // Create a new TextFlow to hold all previous translations
         TextFlow allUserInputs = new TextFlow();
-        TextFlow allCorrectTranslations = new TextFlow();
 
         // Append all previous user inputs with line breaks
         for (TextFlow input : userInputsList) {
@@ -173,14 +167,10 @@ public class PracticeListeningController {
         }
 
         // Append all previous correct translations with line breaks
-        for (TextFlow correct : correctTranslationsList) {
-            allCorrectTranslations.getChildren().add(correct);
-            allCorrectTranslations.getChildren().add(new Text("\n"));
-        }
+
 
         // Set the updated content in the ScrollPanes
         userInputScrollPane.setContent(allUserInputs);
-        correctAnswerScrollPane.setContent(allCorrectTranslations);
 
         // Clear the input field
         userInputTextField.clear();
@@ -202,8 +192,7 @@ public class PracticeListeningController {
         }
 
         TextFlow userInputLineBreak = generateLineBreak();
-        TextFlow correctAnswersLineBreak = generateLineBreak();
-        updateCheckedTranslations(userInputLineBreak, correctAnswersLineBreak);
+        updateCheckedTranslations(userInputLineBreak);
 
         cwMessage = allCWMessages.get(randomMessageNum);
         cwAudio = cwMessagesList.get(cwMessage);
@@ -217,7 +206,7 @@ public class PracticeListeningController {
     // Generates a new line break for the ScrollPanes
     private TextFlow generateLineBreak() {
         TextFlow lineBreak = new TextFlow();
-        int lineBreakLength = 40;
+        int lineBreakLength = 75;
         for (int i = 0; i < lineBreakLength; i++) {
             Text dash = new Text("-");
             dash.setStyle("-fx-fill: black;");
