@@ -63,6 +63,11 @@ public class PracticeTypingController implements MorseCodeOutput {
         dahKeyLabel.setText("Dah  ->  " + dahKeyCode);
         straightKeyLabel.setText("Straight Key  ->  " + straightKeyCode);
 
+        cwInputTextArea.setDisable(true);
+        cwInputTextArea.setStyle("-fx-opacity: 1.0;");
+        englishOutput.setDisable(true);
+        englishOutput.setStyle("-fx-opacity: 1.0;");
+
     }
 
     @FXML

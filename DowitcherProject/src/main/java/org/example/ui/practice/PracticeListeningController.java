@@ -1,5 +1,6 @@
 package org.example.ui.practice;
 
+import javafx.scene.layout.AnchorPane;
 import org.example.App;
 import org.example.utility.RadioFunctions;
 import org.example.utility.*;
@@ -31,6 +32,7 @@ public class PracticeListeningController {
     @FXML private Button practiceMenuButton;
     @FXML private TextField userInputTextField;
     @FXML private ScrollPane userInputScrollPane;
+    @FXML private AnchorPane userInputAnchorPane;
 
     private String cwMessage;
     private String cwAudio;
@@ -44,7 +46,6 @@ public class PracticeListeningController {
     private volatile boolean stopAudio = false;
 
     private final List<TextFlow> userInputsList = new ArrayList<>();
-    private final List<TextFlow> correctTranslationsList = new ArrayList<>();
     private final String textSize = "16";
 
     //All view switching button presses
@@ -60,7 +61,8 @@ public class PracticeListeningController {
         cwMessagesList = (HashMap<String, String>) MorseCodeTranslator.getCwMessagesMap();
         newAudio();
         App.currentUser.addView("PracticeListeningView");
-
+        userInputAnchorPane.setDisable(true);
+        userInputAnchorPane.setStyle("-fx-opacity: 1.0;");
     }
 
     @FXML
@@ -206,7 +208,7 @@ public class PracticeListeningController {
     // Generates a new line break for the ScrollPanes
     private TextFlow generateLineBreak() {
         TextFlow lineBreak = new TextFlow();
-        int lineBreakLength = 75;
+        int lineBreakLength = 72;
         for (int i = 0; i < lineBreakLength; i++) {
             Text dash = new Text("-");
             dash.setStyle("-fx-fill: black;");

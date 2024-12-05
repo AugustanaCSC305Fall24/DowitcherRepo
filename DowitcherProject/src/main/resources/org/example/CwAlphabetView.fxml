@@ -21,7 +21,7 @@
          <children>
             <ScrollPane fx:id="previousTranslationsScrollPane" prefHeight="225.0" prefWidth="270.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="220.0" prefWidth="240.0" />
+                <AnchorPane fx:id="previousTranslationsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="220.0" prefWidth="240.0" />
               </content>
             </ScrollPane>
             <VBox prefHeight="225.0" prefWidth="270.0" spacing="10.0">
