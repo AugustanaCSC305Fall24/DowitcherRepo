@@ -49,6 +49,7 @@ public class CwAlphabetController implements MorseCodeOutput{
     private final String textSize = "20";
     private boolean showLetter = true;
     @FXML private RadioFunctions radioFunctions;
+    private Sound sound;
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
@@ -71,6 +72,7 @@ public class CwAlphabetController implements MorseCodeOutput{
         currentLetterTextFlow.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         previousTranslationsScrollPane.setContent(translationsContainer);
         radioFunctions = new RadioFunctions(this);
+        sound = new Sound();
         restartAlphabet();
 
         previousTranslationsAnchorPane.setDisable(true);
@@ -194,33 +196,8 @@ public class CwAlphabetController implements MorseCodeOutput{
     }
 
     @FXML
-    private void playAudio() {
-        char[] messageArray = currentCW.toCharArray();
-
-        Thread audioThread = new Thread(() -> {
-            for (int i = 0; i < messageArray.length; i++) {
-                if (messageArray[i] == '-') {
-                    try {
-                        Sound.playDah();
-                    } catch (LineUnavailableException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if (messageArray[i] == '.') {
-                    try {
-                        Sound.playDit();
-                    } catch (LineUnavailableException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else if (messageArray[i] == ' ') {
-                    try {
-                        Thread.sleep(User.getCwSpeed());
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-        audioThread.start();
+    private void playAudio() throws InterruptedException {
+        sound.playAudio(0, currentCW);
     }
 
     @FXML
