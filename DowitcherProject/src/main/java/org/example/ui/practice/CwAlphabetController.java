@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -32,8 +33,8 @@ public class CwAlphabetController implements MorseCodeOutput{
     @FXML private Button paddleModeButton;
     @FXML private Button straightKeyModeButton;
     @FXML private ScrollPane previousTranslationsScrollPane;
-    @FXML
-    public TextFlow currentLetterTextFlow;
+    @FXML private AnchorPane previousTranslationsAnchorPane;
+    @FXML public TextFlow currentLetterTextFlow;
     @FXML private TextField cwInputTextField;
 
     private Random random = new Random();
@@ -71,6 +72,11 @@ public class CwAlphabetController implements MorseCodeOutput{
         previousTranslationsScrollPane.setContent(translationsContainer);
         radioFunctions = new RadioFunctions(this);
         restartAlphabet();
+
+        previousTranslationsAnchorPane.setDisable(true);
+        previousTranslationsAnchorPane.setStyle("-fx-opacity: 1.0;");
+        cwInputTextField.setDisable(true);
+        cwInputTextField.setStyle("-fx-opacity: 1.0;");
     }
 
 
@@ -98,7 +104,6 @@ public class CwAlphabetController implements MorseCodeOutput{
 
         List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, currentCW, textSize));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
-        TextFlow correctTranslation = (TextFlow) checkedList.get(1);
         correctAnswer = (boolean) checkedList.get(2);
 
         if (correctAnswer) {
@@ -111,7 +116,7 @@ public class CwAlphabetController implements MorseCodeOutput{
 
         // Add the new TextFlows to the VBox container
         HBox translationPair = new HBox(10); // To display the two TextFlows side by side
-        translationPair.getChildren().addAll(letterToDisplay, checkedUserInput, correctTranslation);
+        translationPair.getChildren().addAll(letterToDisplay, checkedUserInput);
 
         // Add spacing and style if needed
         translationPair.setSpacing(20); // Spacing between the user input and correct translation

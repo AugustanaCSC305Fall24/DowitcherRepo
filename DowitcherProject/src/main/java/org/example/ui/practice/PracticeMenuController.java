@@ -3,8 +3,10 @@ package org.example.ui.practice;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import org.example.App;
+import org.example.utility.MorseCodeTranslator;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class PracticeMenuController {
     //Buttons
@@ -26,5 +28,10 @@ public class PracticeMenuController {
     @FXML private void handleAITestButton() throws IOException {App.testAiView();}
 
     private void handleUnbuiltButton(Button object){object.setText("Not built yet!");}
+
+    @FXML
+    private void initialize() {
+        App.currentUser.addView("PracticeMenuView");
+    }
 
 }
