@@ -72,6 +72,7 @@
                <children>
                   <Button fx:id="mainMenuButton" mnemonicParsing="false" onAction="#handleMainMenuButton" text="Main Menu" />
                   <Button fx:id="practiceMenuButton" mnemonicParsing="false" onAction="#handlePracticeMenuButton" text="Practice Menu" />
+                  <Button fx:id="addEditRemoveBotScreenButton" mnemonicParsing="false" onAction="#handleAddEditRemoveBotScreenButton" text="Add/Edit/Remove Bot Screen" />
                </children>
             </HBox>
          </children>
