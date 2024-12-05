@@ -1,6 +1,5 @@
 package org.example.data;
 
-
 import javafx.scene.input.KeyCode;
 
 import java.io.Serializable;
@@ -12,9 +11,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // User Identity Data
-    private static String username;
-    private String password;
-    private String email;
+    private String callSign;
 
     // User Setting Data
     private Stack<String> viewStack; // Stack to hold last views
@@ -23,23 +20,22 @@ public class User implements Serializable {
     private double staticAmount; // Slider for static amount
     private boolean showCWLetters; // Boolean to show CW letters
     private boolean showCWAcronyms; // Boolean to show CW acronyms
-    private static Map<KeyCode, String> keyFirstActionMap;
-    private static Map<String, KeyCode> actionFirstActionMap;
 
-    //Constructor
-    public User(String username, String password, String email){
-        this.username = username;
-        this.password = password;
-        this.email = email;
+    // Static Maps for actions and keys (to be shared across all instances)
+    private static Map<KeyCode, String> keyFirstActionMap = new HashMap<>();
+    private static Map<String, KeyCode> actionFirstActionMap = new HashMap<>();
+
+    // Constructor
+    public User(String callSign) {
+        this.callSign = callSign;
         this.viewStack = new Stack<>();
         this.cwSpeed = 300; // Default value
         this.volume = 100.0; // Default value
         this.staticAmount = 50.0; // Default value
         this.showCWLetters = true; // Default value
         this.showCWAcronyms = true; // Default value
-        this.keyFirstActionMap = new HashMap<>();
-        this.actionFirstActionMap = new HashMap<>();
-        //Setting default keys for the action map
+
+        // Setting default keys for the action map
         KeyCode exitProgramKey = KeyCode.valueOf("ESCAPE");
         KeyCode settingsKey = KeyCode.valueOf("TAB");
         KeyCode dahKey = KeyCode.valueOf("D");
@@ -51,42 +47,88 @@ public class User implements Serializable {
         KeyCode filterDownKey = KeyCode.valueOf("DOWN");
 
         // Call setActionMap with KeyCode
-        setActionMap(exitProgramKey, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);    }
-    public User(){
-        this("Default", "Default", "Default");
+        setActionMap(exitProgramKey, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+    }
+
+    // Default constructor
+    public User() {
+        this("Default");
     }
 
     // View Stack Methods
-    public void addView(String view) {viewStack.push(view);}
-    public String popLastView() {if (!viewStack.isEmpty()){return viewStack.pop();} else{return "HomeScreenView";}}
+    public void addView(String view) {
+        viewStack.push(view);  // Add a view to the stack
+    }
 
-    //User Data Get Methods
-    public static String getUsername(){return username;}
-    public String getPassword(){return password;}
-    public String getEmail(){return email;}
-    public static long getCwSpeed() {return cwSpeed;}
-    public static double getVolume() {return volume;}
-    public double getStaticAmount() {return staticAmount;}
-    public boolean getShowCWLetters() {return showCWLetters;}
-    public boolean getShowCWAcronyms() {return showCWAcronyms;}
-    public Map<KeyCode, String> getKeyFirstActionMap(){return this.keyFirstActionMap;}
-    public static Map<String, KeyCode> getActionFirstActionMap(){return actionFirstActionMap;}
-    public String getLastView() {if (!viewStack.isEmpty()) {return (String) viewStack.peek();}return "HomeScreenView";}
+    // Pop the last view
+    public String popLastView() {
+        if (!viewStack.isEmpty()) {
+            return viewStack.pop();  // Remove and return the last view
+        } else {
+            return "HomeScreenView";  // Default view if stack is empty
+        }
+    }
 
-    //User Data Set Methods
-    public void setUsername(String username){this.username = username;}
-    public void setPassword(String password){this.password = password;}
-    public void setEmail(String email) {this.email = email;}
-    public void setViewStack(Stack<String> lastView) {this.viewStack = lastView;}
+    // Getters and Setters (for other fields)
+    public String getCallSign() {
+        return callSign;
+    }
+
+    public static long getCwSpeed() {
+        return cwSpeed;
+    }
+
+    public static double getVolume() {
+        return volume;
+    }
+
+    public double getStaticAmount() {
+        return staticAmount;
+    }
+
+    public boolean getShowCWLetters() {
+        return showCWLetters;
+    }
+
+    public boolean getShowCWAcronyms() {
+        return showCWAcronyms;
+    }
+
+    // Static Methods for Maps (since they are static variables)
+    public static Map<KeyCode, String> getKeyFirstActionMap() {
+        return keyFirstActionMap;
+    }
+
+    public static Map<String, KeyCode> getActionFirstActionMap() {
+        return actionFirstActionMap;
+    }
+
+    // Setter Methods for User Settings
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
+    }
+
     public void setCwSpeed(long cwSpeed) {
         this.cwSpeed = cwSpeed;
-        System.out.println(cwSpeed);
     }
-    public void setVolume(double volume) {this.volume = volume;}
-    public void setStaticAmount(double staticAmount) {this.staticAmount = staticAmount;}
-    public void setShowCWLetters(boolean showCWLetters) {this.showCWLetters = showCWLetters;}
-    public void setShowCWAcronyms(boolean showCWAcronyms) {this.showCWAcronyms = showCWAcronyms;}
 
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public void setStaticAmount(double staticAmount) {
+        this.staticAmount = staticAmount;
+    }
+
+    public void setShowCWLetters(boolean showCWLetters) {
+        this.showCWLetters = showCWLetters;
+    }
+
+    public void setShowCWAcronyms(boolean showCWAcronyms) {
+        this.showCWAcronyms = showCWAcronyms;
+    }
+
+    // Set Action Maps for keys and actions
     public void setActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
                              KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
         setKeyFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
@@ -96,29 +138,29 @@ public class User implements Serializable {
     private void setKeyFirstActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
                                       KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
         // Map keyboard keys to actions
-        keyFirstActionMap.put(exitProgram, "exitProgram");                      // Exit Program
-        keyFirstActionMap.put(settingsKey, "settingsKey");                      // Settings
-        keyFirstActionMap.put(dahKey, "dahKey");                                // Dah action
-        keyFirstActionMap.put(ditKey, "ditKey");                                // Dit action
+        keyFirstActionMap.put(exitProgram, "exitProgram");
+        keyFirstActionMap.put(settingsKey, "settingsKey");
+        keyFirstActionMap.put(dahKey, "dahKey");
+        keyFirstActionMap.put(ditKey, "ditKey");
         keyFirstActionMap.put(straightKey, "straightKey");
-        keyFirstActionMap.put(frequencyUpKey, "frequencyUpKey");                // Frequency Up
-        keyFirstActionMap.put(frequencyDownKey, "frequencyDownKey");            // Frequency Down
-        keyFirstActionMap.put(filterUpKey, "filterUpKey");                      // Filter Up
-        keyFirstActionMap.put(filterDownKey, "filterDownKey");                  // Filter Down
+        keyFirstActionMap.put(frequencyUpKey, "frequencyUpKey");
+        keyFirstActionMap.put(frequencyDownKey, "frequencyDownKey");
+        keyFirstActionMap.put(filterUpKey, "filterUpKey");
+        keyFirstActionMap.put(filterDownKey, "filterDownKey");
     }
 
     private void setActionFirstActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
                                          KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
         // Map actions to keyboard keys
-        actionFirstActionMap.put("exitProgram", exitProgram);                      // Exit Program
-        actionFirstActionMap.put("settingsKey", settingsKey);                      // Settings
-        actionFirstActionMap.put("dahKey", dahKey);                                // Dah action
-        actionFirstActionMap.put("ditKey", ditKey);                                // Dit action
+        actionFirstActionMap.put("exitProgram", exitProgram);
+        actionFirstActionMap.put("settingsKey", settingsKey);
+        actionFirstActionMap.put("dahKey", dahKey);
+        actionFirstActionMap.put("ditKey", ditKey);
         actionFirstActionMap.put("straightKey", straightKey);
-        actionFirstActionMap.put("frequencyUpKey", frequencyUpKey);                // Frequency Up
-        actionFirstActionMap.put("frequencyDownKey", frequencyDownKey);            // Frequency Down
-        actionFirstActionMap.put("filterUpKey", filterUpKey);                      // Filter Up
-        actionFirstActionMap.put("filterDownKey", filterDownKey);                  // Filter Down
+        actionFirstActionMap.put("frequencyUpKey", frequencyUpKey);
+        actionFirstActionMap.put("frequencyDownKey", frequencyDownKey);
+        actionFirstActionMap.put("filterUpKey", filterUpKey);
+        actionFirstActionMap.put("filterDownKey", filterDownKey);
     }
 
     // Example usage: Get action or key from the map
@@ -130,5 +172,15 @@ public class User implements Serializable {
         return actionFirstActionMap.get(action);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "callSign='" + callSign + '\'' +
+                ", cwSpeed=" + cwSpeed +
+                ", volume=" + volume +
+                ", staticAmount=" + staticAmount +
+                ", showCWLetters=" + showCWLetters +
+                ", showCWAcronyms=" + showCWAcronyms +
+                '}';
+    }
 }
-
