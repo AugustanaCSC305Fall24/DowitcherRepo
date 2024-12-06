@@ -104,50 +104,7 @@ public class Sound {
             throw new RuntimeException("Audio line unavailable: " + e.getMessage(), e);
         }
     }
-
-
-    /*public void playStraightTone(int frequency, boolean isPlaying) {
-        isStraightTonePlaying = isPlaying;
-        AudioFormat audioFormat = new AudioFormat(44100, 8, 1, true, false);
-        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-        SourceDataLine sourceDataLine;
-
-        try {
-            sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-            sourceDataLine.open(audioFormat);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException("Audio line unavailable: " + e.getMessage(), e);
-        }
-
-        FloatControl volumeControl;
-        try {
-            volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
-            float range = volumeControl.getMaximum() - volumeControl.getMinimum();
-            float gain = (float) ((range * (User.getVolume() / 100.0)) + volumeControl.getMinimum());
-            volumeControl.setValue(gain);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Volume control not supported on this line.");
-        }
-
-        sourceDataLine.start();
-
-        Thread playThread = new Thread(() -> {
-            byte[] data = new byte[44100];
-            while (isStraightTonePlaying) {
-                for (int i = 0; i < data.length; i++) {
-                    double angle = i / (44100.0 / frequency) * 2.0 * Math.PI;
-                    data[i] = (byte) (Math.sin(angle) * 127 + 128);
-                }
-                sourceDataLine.write(data, 0, data.length);
-            }
-
-            sourceDataLine.drain();
-            sourceDataLine.close();
-        });
-
-        playThread.start();
-    }*/
-
+    
     public void setIsStraightTonePlaying(Boolean isStraightTonePlaying) {
         this.isStraightTonePlaying = isStraightTonePlaying;
     }
