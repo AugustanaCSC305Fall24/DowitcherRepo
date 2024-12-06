@@ -1,10 +1,15 @@
 package org.example.ui;
 
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import org.example.App;
 import org.example.data.User;
 import org.example.data.UserSerialization;
@@ -13,6 +18,8 @@ import java.io.IOException;
 
 public class AccountCreationController {
 
+    @FXML private StackPane stackPane;  // StackPane for background
+    @FXML private ImageView backgroundImageView;  // ImageView for background
     @FXML private TextField callSignTextField;
     @FXML private Button loginButton;
     @FXML private Button signUpButton;
@@ -21,6 +28,24 @@ public class AccountCreationController {
     @FXML private Label messageLabel;
 
     private static final String USER_DATA_FILE = "userdata.json";
+
+    @FXML
+    private void initialize() {
+        // Load and set the background image
+        Image backgroundImage = new Image(getClass().getResourceAsStream("/AccountCreationBackground.png"));
+        backgroundImageView.setImage(backgroundImage);
+
+        // Bind the ImageView's dimensions to the StackPane's dimensions
+        backgroundImageView.fitHeightProperty().bind(stackPane.heightProperty());
+        backgroundImageView.fitWidthProperty().bind(stackPane.widthProperty());
+
+        // Ensure resizing behavior for buttons (if needed for consistency with HomeScreenController)
+        VBox.setVgrow(loginButton, Priority.ALWAYS);
+        VBox.setVgrow(signUpButton, Priority.ALWAYS);
+        VBox.setVgrow(continueButton, Priority.ALWAYS);
+        VBox.setVgrow(exitButton, Priority.ALWAYS);
+    }
+
 
     // Handle login button click
     @FXML

@@ -1,5 +1,6 @@
 package org.example.ui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -54,5 +55,15 @@ public class SettingsController {
     private void closePopup() {
         // Locate the popup and hide it
         saveButton.getScene().getWindow().hide(); // This assumes the popup is the current window
+    }
+
+    /**
+     * Handle Save and Exit button click: Closes the application.
+     */
+    @FXML
+    void handleSaveAndExitButton(ActionEvent event) {
+        // Placeholder for saving logic (if needed in the future)
+        System.out.println("Saving user data and exiting..."); // Optional logging
+        Platform.exit(); // Exits the application
     }
 }

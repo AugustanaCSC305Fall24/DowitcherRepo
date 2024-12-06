@@ -25,6 +25,8 @@
       <CheckBox fx:id="showCWLettersCheckBox" mnemonicParsing="false" text="Show CW Letters" />
       <CheckBox fx:id="showCWAcronymsCheckBox" mnemonicParsing="false" text="Show CW Acronyms" />
       <Button fx:id="editControlsButton" mnemonicParsing="false" onAction="#handleEditControlsButton" text="Edit Controls" styleClass="custom-button"/>
-      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save and Exit" styleClass="custom-button"/>
+      <Button fx:id="saveAndExitButton" text="Save and Exit" onAction="#handleSaveAndExitButton"
+              maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" />
    </children>
 </VBox>
