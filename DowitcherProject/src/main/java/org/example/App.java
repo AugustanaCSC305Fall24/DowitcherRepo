@@ -27,7 +27,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("LoginView"), 640, 480);
         stage.setScene(scene);
-        stage.setFullScreen(false);                          // Make the stage full screen
+        stage.setFullScreen(true);                          // Make the stage full screen
         stage.setFullScreenExitHint("");                    // Hides the exit hint text
         stage.setFullScreenExitKeyCombination(null);        // Disables the default escape key to exit full screen
         stage.show();

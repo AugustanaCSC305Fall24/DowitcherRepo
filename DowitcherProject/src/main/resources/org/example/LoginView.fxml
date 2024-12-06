@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.AccountCreationController">
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
+   <center>
+      <StackPane fx:id="stackPane">
+         <!-- Background Image -->
+         <ImageView fx:id="backgroundImageView" preserveRatio="false" />
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.AccountCreationController">
-   <children>
-      <Text text="Enter Your Call Sign" />
+         <!-- VBox content on top of the background -->
+         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
+            <children>
+               <!-- Title Text styled like HomeScreen -->
+               <Text text="Enter Your Call Sign" styleClass="title-text" />
 
-      <!-- Call Sign TextField with limited width -->
-      <TextField fx:id="callSignTextField" promptText="Call Sign" maxWidth="200" />
+               <!-- Styled TextField -->
+               <TextField fx:id="callSignTextField" promptText="Call Sign"
+                          maxWidth="300" styleClass="custom-text-field" />
 
-      <Label fx:id="messageLabel" text="" style="-fx-text-fill: red;" />
+               <!-- Error Message Label -->
+               <Label fx:id="messageLabel" text="" style="-fx-text-fill: red;" />
 
-      <!-- Buttons placed in an HBox at the bottom of the screen -->
-      <HBox spacing="10.0" alignment="CENTER">
-         <Button fx:id="loginButton" text="Login" onAction="#handleLoginButton" />
-         <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUpButton" />
-         <Button fx:id="continueButton" text="Continue as Guest" onAction="#handleContinueAsGuestButton" />
-         <Button fx:id="exitButton" text="Exit" onAction="#handleExitButton" />
-      </HBox>
-   </children>
-</VBox>
+               <!-- Buttons styled like HomeScreen -->
+               <HBox fx:id="buttonHBox" alignment="CENTER" spacing="30.0" styleClass="bottom-hbox">
+                  <children>
+                     <Button fx:id="loginButton" text="Login" onAction="#handleLoginButton"
+                             maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                             prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" />
+                     <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUpButton"
+                             maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                             prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" />
+                     <Button fx:id="continueButton" text="Continue as Guest" onAction="#handleContinueAsGuestButton"
+                             maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                             prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" />
+                     <Button fx:id="exitButton" text="Exit" onAction="#handleExitButton"
+                             maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                             prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" />
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+      </StackPane>
+   </center>
+</BorderPane>

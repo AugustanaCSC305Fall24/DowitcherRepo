@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import java.net.URL?>
 
-<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.PracticeModesPopupController">
+<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.PracticeModesPopupController" style="-fx-background-color: #333333; -fx-padding: 10px;">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
     <children>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Practice Mode">
             <font>
@@ -13,9 +18,9 @@
             </font>
         </Text>
 
-        <Button fx:id="listeningButton" mnemonicParsing="false" text="Listening" onAction="#handleListening" />
-        <Button fx:id="typingButton" mnemonicParsing="false" text="Typing" onAction="#handleTyping" />
-        <Button fx:id="tuningButton" mnemonicParsing="false" text="Tuning" onAction="#handleTuning" />
-        <Button fx:id="cwAlphabetButton" mnemonicParsing="false" text="CW Alphabet" onAction="#handleCwAlphabet" />
+        <Button fx:id="listeningButton" mnemonicParsing="false" text="Listening" onAction="#handleListening" styleClass="custom-button"/>
+        <Button fx:id="typingButton" mnemonicParsing="false" text="Typing" onAction="#handleTyping" styleClass="custom-button"/>
+        <Button fx:id="tuningButton" mnemonicParsing="false" text="Tuning" onAction="#handleTuning" styleClass="custom-button"/>
+        <Button fx:id="cwAlphabetButton" mnemonicParsing="false" text="CW Alphabet" onAction="#handleCwAlphabet" styleClass="custom-button"/>
     </children>
 </VBox>
