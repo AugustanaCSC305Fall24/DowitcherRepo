@@ -1,10 +1,8 @@
 package org.example.utility;
 
-import javafx.fxml.FXML;
 import org.example.data.User;
 
 import javax.sound.sampled.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Sound {
 
@@ -21,6 +19,7 @@ public class Sound {
     private volatile boolean stopAudio = false;
 
     private Boolean isStaticPlaying = false;
+    private Boolean isStraightTonePlaying = false;
 
     public static void playDit() throws LineUnavailableException {
         playTone(ditFrequency,ditDuration);
@@ -62,31 +61,97 @@ public class Sound {
         sourceDataLine.close();
     }
 
-    public static void playStraitTone(int frequency, boolean isPlaying) throws LineUnavailableException {
-        AudioFormat audioFormat = new AudioFormat(44100,8,1,true,false);
-        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-        SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-        sourceDataLine.open(audioFormat);
 
-        FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
-        float range = volumeControl.getMaximum() - volumeControl.getMinimum();
-        float gain = (float) ((range * (User.getVolume() / 100.0f)) + volumeControl.getMinimum());
-        volumeControl.setValue(gain);
+    public void playStraightTone(int frequency, boolean isPlaying) {
+        isStraightTonePlaying = isPlaying;
+        AudioFormat audioFormat = new AudioFormat(44100, 8, 1, true, false);
+        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+
+        try {
+            SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+            sourceDataLine.open(audioFormat);
+
+            // Adjust volume
+            FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+            float range = volumeControl.getMaximum() - volumeControl.getMinimum();
+            float gain = (float) ((range * (User.getVolume() / 100.0)) + volumeControl.getMinimum());
+            volumeControl.setValue(gain);
+
+            sourceDataLine.start();
+
+            // Thread for tone playback
+            Thread playThread = new Thread(() -> {
+                int bufferDurationMs = 50; // Generate 50ms of audio at a time
+                int bufferSize = (int) (44100 * bufferDurationMs / 1000.0); // Samples for 50ms
+                byte[] data = new byte[bufferSize];
+
+                while (isStraightTonePlaying) {
+                    for (int i = 0; i < data.length; i++) {
+                        double angle = i / (44100.0 / frequency) * 2.0 * Math.PI;
+                        data[i] = (byte) (Math.sin(angle) * 127 + 128);
+                    }
+                    sourceDataLine.write(data, 0, data.length); // Write a small chunk of audio
+                }
+
+                // Stop and flush the buffer immediately when the tone ends
+                sourceDataLine.stop();
+                sourceDataLine.flush();
+                sourceDataLine.close();
+            });
+
+            playThread.start();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException("Audio line unavailable: " + e.getMessage(), e);
+        }
+    }
+
+
+    /*public void playStraightTone(int frequency, boolean isPlaying) {
+        isStraightTonePlaying = isPlaying;
+        AudioFormat audioFormat = new AudioFormat(44100, 8, 1, true, false);
+        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+        SourceDataLine sourceDataLine;
+
+        try {
+            sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+            sourceDataLine.open(audioFormat);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException("Audio line unavailable: " + e.getMessage(), e);
+        }
+
+        FloatControl volumeControl;
+        try {
+            volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+            float range = volumeControl.getMaximum() - volumeControl.getMinimum();
+            float gain = (float) ((range * (User.getVolume() / 100.0)) + volumeControl.getMinimum());
+            volumeControl.setValue(gain);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Volume control not supported on this line.");
+        }
 
         sourceDataLine.start();
 
-        byte[] data = new byte[44100];
-        while (isPlaying){
-            for(int i = 0; i < data.length; i++){
-                double angle = i / (44100.0/frequency) * 2.0 * Math.PI;
-                data[i] = (byte) (Math.sin(angle) * 127 +128);
+        Thread playThread = new Thread(() -> {
+            byte[] data = new byte[44100];
+            while (isStraightTonePlaying) {
+                for (int i = 0; i < data.length; i++) {
+                    double angle = i / (44100.0 / frequency) * 2.0 * Math.PI;
+                    data[i] = (byte) (Math.sin(angle) * 127 + 128);
+                }
+                sourceDataLine.write(data, 0, data.length);
             }
-        }
 
-        sourceDataLine.write(data,0, data.length);
-        sourceDataLine.drain();
-        sourceDataLine.close();
+            sourceDataLine.drain();
+            sourceDataLine.close();
+        });
+
+        playThread.start();
+    }*/
+
+    public void setIsStraightTonePlaying(Boolean isStraightTonePlaying) {
+        this.isStraightTonePlaying = isStraightTonePlaying;
     }
+
 
     public void staticSound(double sliderVolume, boolean isPlaying) throws LineUnavailableException {
         isStaticPlaying = isPlaying;

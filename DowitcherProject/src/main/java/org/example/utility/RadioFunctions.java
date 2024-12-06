@@ -32,6 +32,7 @@ public class RadioFunctions {
     private long lastReleaseTime = -1;
     private volatile boolean isPaddleMode = true;
     private MorseCodeOutput typingOutputController;
+    private Sound sound = new Sound();
 
     public RadioFunctions(MorseCodeOutput controller) {
         this.typingOutputController = controller;
@@ -210,7 +211,7 @@ public class RadioFunctions {
 
     private void playDitHold() throws LineUnavailableException, InterruptedException {
         while (isPlaying && currentKey == ditKeyCode){
-            Sound.playDit();
+            sound.playDit();
             Thread.sleep(50);
             addCw(".");
         }
@@ -219,7 +220,7 @@ public class RadioFunctions {
 
     private void playDahHold() throws LineUnavailableException, InterruptedException {
         while (isPlaying&& currentKey == dahKeyCode){
-            Sound.playDah();
+            sound.playDah();
             Thread.sleep(50);
             addCw("-");
         }
@@ -233,7 +234,6 @@ public class RadioFunctions {
         while (!isPaddleMode) {// Only runs when isPaddleMode is false
             if (isStraightKeyPressed) { // Implement this method to detect space bar press
                 long pressStartTime = System.nanoTime();
-
                 if (lastReleaseTime != -1) {
                     long timeBetweenPresses = (pressStartTime - lastReleaseTime) / 1_000_000;
                     System.out.println("Time between presses: " + timeBetweenPresses + " ms");
@@ -285,6 +285,7 @@ public class RadioFunctions {
             isPlaying = true;
             currentKey = code;
         } else if (code == straightKeyCode) {
+            sound.playStraightTone(600, true);
             isStraightKeyPressed = true;
         }else if (code == freqUpKeyCode) {
 
@@ -302,6 +303,7 @@ public class RadioFunctions {
             isPlaying = false;
             currentKey = null;
         } else if (code == straightKeyCode) {
+            sound.setIsStraightTonePlaying(false);
             isStraightKeyPressed = false;
         }
 
