@@ -15,10 +15,7 @@ import org.example.data.User;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class PracticeListeningController {
 
@@ -34,9 +31,11 @@ public class PracticeListeningController {
     @FXML private ScrollPane userInputScrollPane;
     @FXML private AnchorPane userInputAnchorPane;
 
+    private Stack<String> cwMessageStack = new Stack<>();
+    private Stack<String> cwAudioStack = new Stack<>();
     private String cwMessage;
     private String cwAudio;
-    HashMap<String, String> cwMessagesList;
+
     Random random = new Random();
 
     private Boolean isPaused = true;
@@ -55,7 +54,7 @@ public class PracticeListeningController {
     // Initializes HashMap and fills it with all practice messages
     // Then generates a starting message
     private void initialize() {
-        cwMessagesList = (HashMap<String, String>) MorseCodeTranslator.getCwMessagesMap();
+        generateRandomCwMessageOrder();
         newAudio();
         App.currentUser.addView("PracticeListeningView");
         userInputAnchorPane.setDisable(true);
@@ -129,25 +128,35 @@ public class PracticeListeningController {
     // Sets cwMessage and cwAudio to a random new message and audio from
     // the HashMap containing all the messages and audios
     private void newAudio() {
-
         playPauseAudioButton.setText("Play");
-        List<String> allCWMessages = new ArrayList<>(cwMessagesList.keySet());
-        int randomMessageNum = random.nextInt(allCWMessages.size());
 
-        // Makes it so you can not get the same message twice in a row
-        while (allCWMessages.get(randomMessageNum).equals(cwMessage)) {
-            randomMessageNum = random.nextInt(allCWMessages.size());
+        if(cwMessageStack.isEmpty() || cwAudioStack.isEmpty()) {
+            generateRandomCwMessageOrder();
         }
-
-        TextFlow userInputLineBreak = generateLineBreak();
-        updateCheckedTranslations(userInputLineBreak);
-
-        cwMessage = allCWMessages.get(randomMessageNum);
-        cwAudio = cwMessagesList.get(cwMessage);
+        cwMessage = cwMessageStack.pop();
+        cwAudio = cwAudioStack.pop();
         userInputTextField.clear();
 
         // For testing
         System.out.println(cwMessage + " " + cwAudio);
+    }
+
+    private void generateRandomCwMessageOrder () {
+        List<Map.Entry<String, String>> cwMessages = new ArrayList<>(MorseCodeTranslator.getCwMessagesMap().entrySet());
+
+        while (!cwMessages.isEmpty()) {
+            int randIndex = random.nextInt(cwMessages.size());
+            Map.Entry<String, String> entry = cwMessages.get(randIndex);
+
+            String cwMessage = entry.getKey();
+            String audio = entry.getValue();
+
+            cwMessageStack.push(cwMessage);
+            cwAudioStack.push(audio);
+
+            cwMessages.remove(randIndex);
+        }
+
     }
 
     @FXML
