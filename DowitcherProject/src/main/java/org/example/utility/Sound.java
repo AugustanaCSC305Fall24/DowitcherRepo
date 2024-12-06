@@ -104,7 +104,7 @@ public class Sound {
             throw new RuntimeException("Audio line unavailable: " + e.getMessage(), e);
         }
     }
-    
+
     public void setIsStraightTonePlaying(Boolean isStraightTonePlaying) {
         this.isStraightTonePlaying = isStraightTonePlaying;
     }
@@ -134,29 +134,6 @@ public class Sound {
 
     public void setIsStaticPlaying(Boolean isStaticPlaying) {
         this.isStaticPlaying = isStaticPlaying;
-    }
-
-    // *** New: Start static playback ***
-    public static void startStaticSound(double sliderVolume) throws LineUnavailableException {
-        if (staticSourceLine != null && staticSourceLine.isOpen()) {
-            return; // Avoid reopening if already playing
-        }
-        AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
-        DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
-        staticSourceLine = (SourceDataLine) AudioSystem.getLine(info);
-
-        staticSourceLine.open(format);
-        adjustVolumeOfStatic(sliderVolume); // Set initial volume
-        staticSourceLine.start();
-    }
-
-    // *** New: Stop static playback ***
-    public static void stopStaticSound() {
-        if (staticSourceLine != null) {
-            staticSourceLine.stop();
-            staticSourceLine.flush();
-            staticSourceLine.close();
-        }
     }
 
     public static void adjustVolumeOfStatic( double sliderVolume) throws LineUnavailableException {
