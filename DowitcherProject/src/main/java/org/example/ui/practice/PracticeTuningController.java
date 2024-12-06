@@ -50,19 +50,26 @@ public class PracticeTuningController {
     private boolean isMatched;
     private boolean isPlaying = true;
 
+    private Sound sound = new Sound();
+    private Thread staticThread;
+    private Thread messageThread;
 
     //All view switching button presses
     @FXML
     void handlePracticeMenuButton(ActionEvent event) throws IOException {
+        sound.setIsStaticPlaying(false);
+        staticThread.interrupt();
+        messageThread.interrupt();
         isPlaying = false;
-        stopStatic();
         App.practiceMenuView();
     }
 
     @FXML
     void handleMainMenuButton(ActionEvent event) throws IOException {
+        sound.setIsStaticPlaying(false);
+        staticThread.interrupt();
+        messageThread.interrupt();
         isPlaying = false;
-        stopStatic();
         App.homeScreenView();
     }
 
@@ -148,7 +155,7 @@ public class PracticeTuningController {
 
 
     private void playSound(String message) {
-        Thread audioThread = new Thread(() -> {
+        messageThread = new Thread(() -> {
             while (isPlaying) {
                 int frequency = getFrequencyForSound();
                 for (char character : message.toCharArray()) {
@@ -181,37 +188,24 @@ public class PracticeTuningController {
                 }
             }
         });
-        audioThread.setDaemon(true);
-        audioThread.start();
+        messageThread.setDaemon(true);
+        messageThread.start();
     }
 
     private void playStatic(double volume) {
-        Thread audioThread = new Thread(() -> {
+        staticThread = new Thread(() -> {
             try {
-                Sound.staticSound(volume, true); // *** Use startStaticSound ***
+                sound.staticSound(volume, true); // *** Use startStaticSound ***
                 while (isPlaying) {
                     Thread.sleep(100); // Loop until stopped
                 }
-                Sound.staticSound(volume, false); // *** Stop static when playback ends ***
+                sound.staticSound(volume, false); // *** Stop static when playback ends ***
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
-        audioThread.setDaemon(true);
-        audioThread.start();
-    }
-
-    private void stopStatic() {
-        double volume = getStaticVolume();
-        isPlaying = false;
-        try{
-            while(isPlaying) {
-                Thread.sleep(100);
-            }
-            Sound.staticSound(volume, false);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        staticThread.setDaemon(true);
+        staticThread.start();
     }
 
     private double getStaticVolume() {

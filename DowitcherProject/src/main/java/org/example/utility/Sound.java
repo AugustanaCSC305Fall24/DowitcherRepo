@@ -20,6 +20,8 @@ public class Sound {
     private Thread audioThread;
     private volatile boolean stopAudio = false;
 
+    private Boolean isStaticPlaying = false;
+
     public static void playDit() throws LineUnavailableException {
         playTone(ditFrequency,ditDuration);
     }
@@ -86,7 +88,8 @@ public class Sound {
         sourceDataLine.close();
     }
 
-    public static void staticSound(double sliderVolume, boolean isPlaying) throws LineUnavailableException {
+    public void staticSound(double sliderVolume, boolean isPlaying) throws LineUnavailableException {
+        isStaticPlaying = isPlaying;
         AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
         SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
@@ -96,7 +99,7 @@ public class Sound {
         adjustVolumeOfStatic(sliderVolume);
 
         byte[] data = new byte[1024];
-        while(isPlaying) {
+        while(isStaticPlaying) {
             for (int i = 0; i < data.length; i++) {
                 data[i] = (byte) (Math.random() * 256 - 128);
             }
@@ -105,6 +108,10 @@ public class Sound {
         }
         sourceDataLine.drain();
         sourceDataLine.close();
+    }
+
+    public void setIsStaticPlaying(Boolean isStaticPlaying) {
+        this.isStaticPlaying = isStaticPlaying;
     }
 
     // *** New: Start static playback ***
