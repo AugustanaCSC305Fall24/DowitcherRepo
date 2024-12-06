@@ -1,0 +1,17 @@
+.custom-button {
+    -fx-background-color: #4CAF50; /* Example green color */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.bottom-hbox {
+    -fx-background-color: #333; /* Dark background for the bottom section */
+    -fx-padding: 20px;
+}
+
+.custom-button:hover {
+    -fx-background-color: #45a049; /* Darker green on hover */
+}

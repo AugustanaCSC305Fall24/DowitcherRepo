@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Background?>
-<?import javafx.scene.layout.BackgroundFill?>
-<?import javafx.scene.paint.Color?>
 
-<StackPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.HomeScreenController">
-   <!-- Background Image -->
-   <ImageView fx:id="backgroundImageView" fitWidth="800.0" fitHeight="600.0" preserveRatio="true" />
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.HomeScreenController">
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
 
-   <!-- VBox content on top of the background -->
-   <VBox alignment="CENTER" spacing="30.0">
-      <children>
-         <HBox alignment="TOP_RIGHT" prefHeight="19.0" prefWidth="531.0">
+   <center>
+      <StackPane fx:id="stackPane">
+         <!-- Background Image -->
+         <ImageView fx:id="backgroundImageView" preserveRatio="false" />
+
+         <!-- VBox content on top of the background -->
+         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-               <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings" />
+               <!-- Empty space between the top and bottom content -->
+               <HBox alignment="TOP_RIGHT" prefHeight="619.0" prefWidth="800.0" />
+
+               <!-- Bottom HBox styled via CSS -->
+               <HBox fx:id="bottomHBox" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="800.0" spacing="30.0" styleClass="bottom-hbox">
+                  <children>
+                     <Button fx:id="toLiveChatViewButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleToLiveChatButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Live Chat" />
+                     <Button fx:id="aiChatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleToPracticeTalkingButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="AI Chat" />
+                     <Button fx:id="learnCWButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleLearnCWButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Learn CW" />
+                     <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSettingsButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Settings" />
+                  </children>
+               </HBox>
             </children>
-         </HBox>
-
-         <!-- Empty space between the top and bottom content -->
-         <HBox alignment="TOP_RIGHT" prefHeight="231.0" prefWidth="531.0" />
-
-         <!-- Bottom HBox with black background -->
-         <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="76.0" prefWidth="531.0" spacing="60.0">
-            <children>
-               <Button fx:id="toLiveChatViewButton" mnemonicParsing="false" onAction="#handleToLiveChatButton" prefHeight="80.0" prefWidth="140.0" text="Live Chat" />
-               <Button fx:id="aiChatButton" mnemonicParsing="false" onAction="#handleToPracticeTalkingButton" prefHeight="89.0" prefWidth="140.0" text="Ai Chat" />
-               <Button fx:id="learnCWButton" mnemonicParsing="false" onAction="#handleLearnCWButton" prefHeight="86.0" prefWidth="140.0" text="Learn CW" />
-            </children>
-         </HBox>
-
-      </children>
-   </VBox>
-</StackPane>
+         </VBox>
+      </StackPane>
+   </center>
+</BorderPane>

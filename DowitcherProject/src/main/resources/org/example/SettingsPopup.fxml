@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import java.net.URL?>
 
-<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.SettingsController">
+<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.SettingsController" style="-fx-background-color: #333333; -fx-padding: 10px;">
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
+
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
          <font>
@@ -19,7 +24,7 @@
       <CheckBox fx:id="staticCheckBox" mnemonicParsing="false" text="Static On/Off" />
       <CheckBox fx:id="showCWLettersCheckBox" mnemonicParsing="false" text="Show CW Letters" />
       <CheckBox fx:id="showCWAcronymsCheckBox" mnemonicParsing="false" text="Show CW Acronyms" />
-      <Button fx:id="editControlsButton" mnemonicParsing="false" onAction="#handleEditControlsButton" text="Edit Controls" />
-      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save and Exit" />
+      <Button fx:id="editControlsButton" mnemonicParsing="false" onAction="#handleEditControlsButton" text="Edit Controls" styleClass="custom-button"/>
+      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save and Exit" styleClass="custom-button"/>
    </children>
 </VBox>

@@ -8,123 +8,137 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import org.example.App;
 
-import javax.swing.*;
 import java.io.IOException;
+
 public class HomeScreenController {
 
-    @FXML public HBox bottomHBox;
-    @FXML public Button aiChatButton;
-    @FXML private Button learnCWButton;
-    @FXML private Button settingsButton;
-    @FXML private Button toLiveChatViewButton;
-    @FXML private ImageView backgroundImageView; // Bind this to the ImageView in the FXML
+    @FXML
+    private StackPane stackPane; // Bind to the StackPane in FXML
+    @FXML
+    private ImageView backgroundImageView; // Bind this to the ImageView in the FXML
+    @FXML
+    private Button learnCWButton; // Button to load the CW learning popup
+    @FXML
+    private Button settingsButton; // Button to open settings popup
+    @FXML
+    private Button toLiveChatViewButton; // Button to navigate to Live Chat
+    @FXML
+    private Button aiChatButton; // Button to navigate to AI Chat
 
     private Popup settingsPopup; // Popup for settings
     private Popup practiceModesPopup; // Popup for practice modes
 
-    @FXML private Scene scene; // Reference to the current scene
+    @FXML
+    private HBox bottomHBox;
 
-    // Learn CW Button Handler
+    /**
+     * Handle Learn CW button click: Toggles the practice modes popup.
+     */
     @FXML
     void handleLearnCWButton(ActionEvent event) {
-        if (practiceModesPopup == null) {
-            try {
-                // Load PracticeModesPopup FXML and controller
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("PracticeModesPopup.fxml"));
-                Parent popupContent = loader.load();
-
-                // Create the popup and add content
-                practiceModesPopup = new Popup();
-                practiceModesPopup.getContent().add(popupContent);
-
-                // Set popup properties
-                practiceModesPopup.setAutoHide(true); // Hide when clicking outside
-                practiceModesPopup.setHideOnEscape(true);
-
-                // Show the popup near the Learn CW button
-                practiceModesPopup.show(
-                        learnCWButton.getScene().getWindow(),
-                        learnCWButton.localToScene(learnCWButton.getBoundsInLocal()).getMaxX() + learnCWButton.getScene().getWindow().getX(),
-                        learnCWButton.localToScene(learnCWButton.getBoundsInLocal()).getMinY() + learnCWButton.getScene().getWindow().getY()
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Toggle visibility of the popup
-            if (practiceModesPopup.isShowing()) {
-                practiceModesPopup.hide();
-            } else {
-                practiceModesPopup.show(
-                        learnCWButton.getScene().getWindow(),
-                        learnCWButton.localToScene(learnCWButton.getBoundsInLocal()).getMaxX() + learnCWButton.getScene().getWindow().getX(),
-                        learnCWButton.localToScene(learnCWButton.getBoundsInLocal()).getMinY() + learnCWButton.getScene().getWindow().getY()
-                );
-            }
-        }
+        togglePopup(
+                practiceModesPopup,
+                "PracticeModesPopup.fxml",
+                learnCWButton
+        );
     }
 
-    // Settings Button Handler
+    /**
+     * Handle Settings button click: Toggles the settings popup.
+     */
     @FXML
     void handleSettingsButton(ActionEvent event) {
-        if (settingsPopup == null) {
-            try {
-                // Load SettingsView FXML
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("SettingsView.fxml"));
-                Parent settingsContent = loader.load();
-
-                // Create a popup and add content
-                settingsPopup = new Popup();
-                settingsPopup.getContent().add(settingsContent);
-
-                // Set popup properties
-                settingsPopup.setAutoHide(true); // Hide when clicking outside
-                settingsPopup.setHideOnEscape(true);
-
-                // Show the popup near the settings button
-                settingsPopup.show(
-                        settingsButton.getScene().getWindow(),
-                        settingsButton.localToScene(settingsButton.getBoundsInLocal()).getMaxX() + settingsButton.getScene().getWindow().getX(),
-                        settingsButton.localToScene(settingsButton.getBoundsInLocal()).getMinY() + settingsButton.getScene().getWindow().getY()
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            // Toggle visibility of the popup
-            if (settingsPopup.isShowing()) {
-                settingsPopup.hide();
-            } else {
-                settingsPopup.show(
-                        settingsButton.getScene().getWindow(),
-                        settingsButton.localToScene(settingsButton.getBoundsInLocal()).getMaxX() + settingsButton.getScene().getWindow().getX(),
-                        settingsButton.localToScene(settingsButton.getBoundsInLocal()).getMinY() + settingsButton.getScene().getWindow().getY()
-                );
-            }
-        }
+        togglePopup(
+                settingsPopup,
+                "SettingsPopup.fxml",
+                settingsButton
+        );
     }
 
-    // Live Chat Button Handler
-    @FXML void handleToLiveChatButton(ActionEvent event) throws IOException {App.liveChatView1();}
-    @FXML void handleToPracticeTalkingButton(ActionEvent event) throws IOException {App.botAddEditRemoveView();}
+    /**
+     * Handle Live Chat button click: Navigate to the Live Chat view.
+     */
+    @FXML
+    void handleToLiveChatButton(ActionEvent event) throws IOException {
+        App.liveChatView1();
+    }
 
-   // Initialize View
+    /**
+     * Handle AI Chat button click: Navigate to the AI Chat view.
+     */
+    @FXML
+    void handleToPracticeTalkingButton(ActionEvent event) throws IOException {
+        App.botAddEditRemoveView();
+    }
+
+    /**
+     * Initialize the Home Screen.
+     */
     @FXML
     private void initialize() {
         App.currentUser.addView("HomeScreenView");
 
+        // Load and set the background image
         Image backgroundImage = new Image(getClass().getResourceAsStream("/HomeScreenBackground.png"));
         backgroundImageView.setImage(backgroundImage);
 
-        BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, null, null);
-        Background background = new Background(backgroundFill);
-        bottomHBox.setBackground(background);
+        // Bind the ImageView's dimensions to the StackPane's dimensions
+        backgroundImageView.fitHeightProperty().bind(stackPane.heightProperty());
+        backgroundImageView.fitWidthProperty().bind(stackPane.widthProperty());
+
+        HBox.setHgrow(bottomHBox, Priority.ALWAYS);
+
+        // Enable horizontal resizing of buttons
+        HBox.setHgrow(toLiveChatViewButton, Priority.ALWAYS);
+        HBox.setHgrow(aiChatButton, Priority.ALWAYS);
+        HBox.setHgrow(learnCWButton, Priority.ALWAYS);
+        HBox.setHgrow(settingsButton, Priority.ALWAYS);
+
+        VBox.setVgrow(toLiveChatViewButton, Priority.ALWAYS);
+        VBox.setVgrow(aiChatButton, Priority.ALWAYS);
+        VBox.setVgrow(learnCWButton, Priority.ALWAYS);
+        VBox.setVgrow(settingsButton, Priority.ALWAYS);
+    }
+
+    /**
+     * Toggle visibility of a popup. If not created, it initializes the popup using the given FXML.
+     *
+     * @param popup       The Popup instance to toggle.
+     * @param fxmlFile    The FXML file to load for the popup content.
+     * @param anchorButton The button to position the popup relative to.
+     */
+    private void togglePopup(Popup popup, String fxmlFile, Button anchorButton) {
+        if (popup == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlFile));
+                Parent content = loader.load();
+                popup = new Popup();
+                popup.getContent().add(content);
+                popup.setAutoHide(true);
+                popup.setHideOnEscape(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        if (popup.isShowing()) {
+            popup.hide();
+        } else {
+            double xPos = anchorButton.localToScene(anchorButton.getBoundsInLocal()).getMinX()
+                    + anchorButton.getScene().getWindow().getX();
+            // Position below the button (positive Y offset for below)
+            double yPos = anchorButton.localToScene(anchorButton.getBoundsInLocal()).getMaxY()
+                    + anchorButton.getScene().getWindow().getY() + 10;
+
+            popup.show(anchorButton.getScene().getWindow(), xPos, yPos);
+        }
     }
 }

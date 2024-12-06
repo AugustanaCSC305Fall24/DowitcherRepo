@@ -41,7 +41,7 @@ public class generalizedHamRadioController {
         if (settingsPopup == null) {
             try {
                 // Load the Settings FXML
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("SettingsView.fxml"));
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("SettingsPopup.fxml"));
                 Parent settingsContent = loader.load();
 
                 // Create the popup and set its content
