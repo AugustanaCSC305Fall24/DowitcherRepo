@@ -50,6 +50,8 @@ public class CwAlphabetController implements MorseCodeOutput{
     private boolean showLetter = true;
     @FXML private RadioFunctions radioFunctions;
     private Sound sound;
+    private List<TextFlow> checkedInputList = new ArrayList<>();
+    private List<Text> checkedLetterList = new ArrayList<>();
 
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
@@ -118,7 +120,15 @@ public class CwAlphabetController implements MorseCodeOutput{
 
         // Add the new TextFlows to the VBox container
         HBox translationPair = new HBox(10); // To display the two TextFlows side by side
-        translationPair.getChildren().addAll(letterToDisplay, checkedUserInput);
+
+        checkedInputList.add(checkedUserInput);
+        checkedLetterList.add(letter);
+
+        if (showLetter) {
+            translationPair.getChildren().addAll(letterToDisplay, checkedUserInput);
+        } else {
+            translationPair.getChildren().addAll(checkedUserInput);
+        }
 
         // Add spacing and style if needed
         translationPair.setSpacing(20); // Spacing between the user input and correct translation
@@ -186,13 +196,35 @@ public class CwAlphabetController implements MorseCodeOutput{
         if (showLetter) {
             showLetter = false;
             currentLetterTextFlow.getChildren().clear();
+
+            translationsContainer.getChildren().clear();
+            for( int i = 0; i < checkedInputList.size(); i++) {
+                HBox translationPair = new HBox(10); // To display the two TextFlows side by side
+                translationPair.getChildren().addAll(checkedInputList.get(i));
+                translationPair.setSpacing(20); // Spacing between the user input and correct translation
+                translationsContainer.getChildren().add(translationPair);
+            }
+
             showLetterButton.setText("Show Character");
         } else {
             showLetter = true;
             currentLetterTextFlow.getChildren().clear();
             currentLetterTextFlow.getChildren().add(currentLetterText);
+
+            translationsContainer.getChildren().clear();
+            for( int i = 0; i < checkedInputList.size(); i++) {
+                HBox translationPair = new HBox(10); // To display the two TextFlows side by side
+                translationPair.getChildren().addAll(checkedLetterList.get(i), checkedInputList.get(i));
+                translationPair.setSpacing(20); // Spacing between the user input and correct translation
+                translationsContainer.getChildren().add(translationPair);
+            }
+
             showLetterButton.setText("Hide Character");
         }
+
+        // Ensure the scroll pane scrolls to the bottom after adding new content
+        previousTranslationsScrollPane.layout();
+        previousTranslationsScrollPane.setVvalue(1.0);
     }
 
     @FXML
