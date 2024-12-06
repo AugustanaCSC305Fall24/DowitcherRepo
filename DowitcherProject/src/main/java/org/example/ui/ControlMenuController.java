@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.example.App;
 
@@ -189,7 +188,7 @@ public class ControlMenuController {
 
     private void handleChangeKeyButton(TextField targetTextField) {
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/example/KeyChangePopup.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/example/popup/KeyChangePopup.fxml"));
             Parent root = loader.load();
 
             // Initialize the new Stage (popup window)
