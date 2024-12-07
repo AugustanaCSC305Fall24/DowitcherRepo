@@ -24,7 +24,7 @@ public class ControlMenuController {
     @FXML private Button backButton;
 
     //All view switching button presses
-    @FXML private void handleToSettingsButton() throws IOException {App.settingsView();}
+//    @FXML private void handleToSettingsButton() throws IOException {App.settingsView();}
     @FXML private void switchToHomeScreenView() throws IOException {App.homeScreenView();}
     @FXML private void handleBackButton() throws IOException {App.back();}
 

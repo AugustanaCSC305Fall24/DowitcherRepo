@@ -141,12 +141,9 @@ public class PracticeTalkingController implements MorseCodeOutput {
         return null;  // No bot found nearby
     }
 
-
-
     // All view-switching button presses
-    @FXML void handlePracticeMenuButton(ActionEvent event) throws IOException { radioFunctions.stopTypingMode(); App.practiceMenuView(); }
     @FXML void handleMainMenuButton(ActionEvent event) throws IOException { radioFunctions.stopTypingMode(); App.homeScreenView(); }
-    @FXML void handleAddEditRemoveBotScreenButton(ActionEvent event) throws IOException { radioFunctions.stopTypingMode(); App.botAddEditRemoveView(); }
+    @FXML void handleAddEditRemoveBotScreenButton(ActionEvent event) throws IOException { radioFunctions.stopTypingMode(); App.botView(); }
 
     // Handle the send button click to communicate with the AI
     @FXML

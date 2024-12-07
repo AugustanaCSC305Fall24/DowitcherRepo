@@ -27,10 +27,10 @@
                <!-- Bottom HBox styled via CSS -->
                <HBox fx:id="bottomHBox" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="800.0" spacing="30.0" styleClass="bottom-hbox">
                   <children>
-                     <Button fx:id="toLiveChatViewButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleToLiveChatButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Live Chat" />
-                     <Button fx:id="aiChatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleToPracticeTalkingButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="AI Chat" />
-                     <Button fx:id="learnCWButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleLearnCWButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Learn CW" />
-                     <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSettingsButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Settings" />
+                     <Button fx:id="liveChatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleLiveChat" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Live Chat" />
+                     <Button fx:id="aiChatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleAiChat" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="AI Chat" />
+                     <Button fx:id="learnCWButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleLearnCW" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Learn CW" />
+                     <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSettings" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Settings" />
                   </children>
                </HBox>
             </children>

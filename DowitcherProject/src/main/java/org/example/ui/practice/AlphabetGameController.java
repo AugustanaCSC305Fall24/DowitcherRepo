@@ -11,16 +11,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.App;
-import org.example.data.User;
 import org.example.utility.RadioFunctions;
 import org.example.utility.MorseCodeTranslator;
 import org.example.utility.Sound;
 
-import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.*;
 
-public class CwAlphabetController implements MorseCodeOutput{
+public class AlphabetGameController implements MorseCodeOutput{
 
     // All FXML elements on screen that are interacted with
     @FXML private Button checkAnswerButton;
@@ -56,11 +54,11 @@ public class CwAlphabetController implements MorseCodeOutput{
     //All view switching button presses
     @FXML private void handleSettingsButton() throws IOException {
         radioFunctions.stopTypingMode();
-        App.settingsView();
+        App.settingsPopupView();
     }
     @FXML private void handlePracticeMenuButton() throws IOException {
         radioFunctions.stopTypingMode();
-        App.practiceMenuView();
+        App.practiceModesPopupView();
     }
     @FXML private void handleMainMenuButton() throws IOException {
         radioFunctions.stopTypingMode();

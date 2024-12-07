@@ -11,12 +11,10 @@ import org.example.utility.Sound;
 //import javafx.scene.media.AudioClip;
 
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
 
-public class PracticeTuningController {
+public class TuningGameController {
 
     @FXML
     private Slider frequencySlider;
@@ -34,8 +32,6 @@ public class PracticeTuningController {
     private Button transmitButton;
     @FXML
     private Button resetButton;
-    @FXML
-    private Button PracticeMenuButton;
     @FXML
     private Button MainMenuButton;
 
@@ -55,15 +51,6 @@ public class PracticeTuningController {
     private Thread messageThread;
 
     //All view switching button presses
-    @FXML
-    void handlePracticeMenuButton(ActionEvent event) throws IOException {
-        sound.setIsStaticPlaying(false);
-        staticThread.interrupt();
-        messageThread.interrupt();
-        isPlaying = false;
-        App.practiceMenuView();
-    }
-
     @FXML
     void handleMainMenuButton(ActionEvent event) throws IOException {
         sound.setIsStaticPlaying(false);

@@ -8,16 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import org.example.data.User;
 
-import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.*;
 
-public class PracticeListeningController {
+public class ListeningGameController {
 
     // All FXML elements on screen that are interacted with
     @FXML private Button mainMenuButton;
@@ -26,7 +23,6 @@ public class PracticeListeningController {
     @FXML private Button restartAudioButton;
     @FXML private Button checkTranslationButton;
     @FXML private Button newAudioButton;
-    @FXML private Button practiceMenuButton;
     @FXML private TextField userInputTextField;
     @FXML private ScrollPane userInputScrollPane;
     @FXML private AnchorPane userInputAnchorPane;
@@ -46,9 +42,8 @@ public class PracticeListeningController {
 
     //All view switching button presses
     @FXML private void switchToSettingsView() throws IOException, InterruptedException {sound.stopAudioPlayback();
-        App.settingsView();}
+        App.settingsPopupView();}
     @FXML private void switchToHomeScreenView() throws IOException, InterruptedException {sound.stopAudioPlayback();App.homeScreenView();}
-    @FXML private void handlePracticeMenuButton() throws IOException, InterruptedException {sound.stopAudioPlayback();App.practiceMenuView();}
 
     @FXML
     // Initializes HashMap and fills it with all practice messages

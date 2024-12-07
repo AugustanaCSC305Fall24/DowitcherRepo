@@ -14,27 +14,24 @@ public class PracticeModesPopupController {
     @FXML private Button tuningButton;
     @FXML private Button cwAlphabetButton;
 
-    // Handle Listening Button
     @FXML
     private void handleListening(ActionEvent event) throws IOException {
-        App.practiceListeningView();
+        App.generalizedHamRadioView("Listening Game");
     }
 
-    // Handle Typing Button
     @FXML
     private void handleTyping(ActionEvent event) throws IOException {
-        App.practiceTypingView();
+        App.generalizedHamRadioView("Typing Game");
     }
 
-    // Handle Tuning Button
     @FXML
     private void handleTuning(ActionEvent event) throws IOException {
-        App.practiceTuningView();
+        App.generalizedHamRadioView("Tuning Game");
     }
 
-    // Handle CW Alphabet Button
     @FXML
     private void handleCwAlphabet(ActionEvent event) throws IOException {
-        App.cwAlphabetView();
+        App.generalizedHamRadioView("Alphabet Game");
     }
+
 }

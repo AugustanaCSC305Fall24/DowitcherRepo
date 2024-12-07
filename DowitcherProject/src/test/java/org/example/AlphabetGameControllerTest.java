@@ -2,20 +2,20 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.example.ui.practice.CwAlphabetController;
+import org.example.ui.practice.AlphabetGameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.text.TextFlow;
 
 import java.util.Stack;
 
-public class CwAlphabetControllerTest {
+public class AlphabetGameControllerTest {
 
-    private CwAlphabetController controller;
+    private AlphabetGameController controller;
 
     @BeforeEach
     void setUp() {
-        controller = new CwAlphabetController();
+        controller = new AlphabetGameController();
         controller.cwStack = new Stack<>();
         controller.letterStack = new Stack<>();
         controller.currentLetterTextFlow = new TextFlow();
