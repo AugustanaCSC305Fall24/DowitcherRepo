@@ -102,7 +102,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     @FXML
     void handlePracticeMenuButton(ActionEvent event) throws IOException {
         radioFunctions.stopTypingMode();
-        App.practiceMenuView();
+        App.practiceModesPopupView();
     }
 
     @FXML

@@ -1,11 +1,9 @@
 package org.example.ui.practice;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyEvent;
 import org.example.App;
 import org.example.data.User;
 import org.example.utility.MorseCodeTranslator;
@@ -14,12 +12,11 @@ import org.example.utility.RadioFunctions;
 import java.io.IOException;
 
 
-public class PracticeTypingController implements MorseCodeOutput {
+public class TypingGameController implements MorseCodeOutput {
 
    // Data
    @FXML private TextArea cwInputTextArea;
    @FXML private Button translateButton;
-   @FXML private Button practiceMenuButton;
    @FXML private TextArea englishOutput;
    @FXML private Button paddleModeButton;
    @FXML private Button straightKeyModeButton;
@@ -32,11 +29,7 @@ public class PracticeTypingController implements MorseCodeOutput {
    private RadioFunctions radioFunctions;
 
    //All view switching button presses
-   @FXML
-   private void handlePracticeMenuButton() throws IOException {
-        radioFunctions.stopTypingMode();
-        App.practiceMenuView();
-   }
+
     @FXML
     private void switchToHomeScreenView() throws IOException {
         radioFunctions.stopTypingMode();
@@ -45,7 +38,7 @@ public class PracticeTypingController implements MorseCodeOutput {
     @FXML
     private void switchToSettingsView() throws IOException{
         radioFunctions.stopTypingMode();
-        App.settingsView();
+        App.settingsPopupView();
     }
 
     // Initialize the controller and translator

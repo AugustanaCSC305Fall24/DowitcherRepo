@@ -46,14 +46,13 @@ public class AccountCreationController {
         VBox.setVgrow(exitButton, Priority.ALWAYS);
     }
 
-
     // Handle login button click
     @FXML
     private void handleLoginButton() {
         String callSign = callSignTextField.getText().trim();
 
         // Validate the call sign input
-        if (callSign.isEmpty() || isValidCallSign(callSign)) {
+        if (callSign.isEmpty() || !isValidCallSign(callSign)) {
             showError("Call sign is not valid.");
             return;
         }
@@ -86,7 +85,7 @@ public class AccountCreationController {
         String callSign = callSignTextField.getText().trim();
 
         // Validate the call sign input
-        if (callSign.isEmpty() || isValidCallSign(callSign)) {
+        if (callSign.isEmpty() || !isValidCallSign(callSign)) {
             showError("Call sign is not valid.");
             return;
         }
@@ -122,7 +121,8 @@ public class AccountCreationController {
     }
 
     private boolean isValidCallSign(String callSign) {
-        return !(callSign.length() >= 4 && callSign.length() <= 7 && callSign.matches(".*\\d.*"));
+        // Ensure the call sign is between 4 to 7 characters and contains at least one letter (no digits allowed)
+        return callSign.length() >= 4 && callSign.length() <= 7 && callSign.matches(".*[a-zA-Z]+.*") && !callSign.matches(".*\\d.*");
     }
 
     // Helper method to show error alerts

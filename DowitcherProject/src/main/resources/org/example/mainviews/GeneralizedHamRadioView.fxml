@@ -19,7 +19,7 @@
                <graphic>
                   <ImageView fx:id="backImgae" fitHeight="29.0" fitWidth="26.0">
                      <image>
-                        <Image url="@../../../../../../../../../SoftwareDev/Images/BackButton.jpg" />
+                        <Image url="@../../../../../../../../../../SoftwareDev/Images/BackButton.jpg" />
                      </image>
                   </ImageView>
                </graphic>

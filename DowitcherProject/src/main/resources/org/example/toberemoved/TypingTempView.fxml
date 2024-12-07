@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="363.0" prefWidth="644.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.PracticeTypingController">
+<VBox alignment="CENTER" prefHeight="363.0" prefWidth="644.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.TypingGameController">
    <children>
       <Label alignment="CENTER" prefHeight="31.0" prefWidth="261.0" text="Practice Typing">
          <font>

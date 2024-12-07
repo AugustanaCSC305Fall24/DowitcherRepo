@@ -25,7 +25,7 @@ public class BotCreationController {
 
     //View Switching Methods
     @FXML void handleBackButton(ActionEvent event) throws IOException {App.back();}
-    @FXML void handleGoToChatButton(ActionEvent event) throws IOException {App.practiceTalkingView();}
+    @FXML void handleGoToChatButton(ActionEvent event) throws IOException {App.generalizedHamRadioView("PracticeTalkingController");}
     @FXML void handleMainMenuButton(ActionEvent event) throws IOException {App.homeScreenView();}
 
     @FXML
