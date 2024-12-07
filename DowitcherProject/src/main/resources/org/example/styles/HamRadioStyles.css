@@ -1,0 +1,39 @@
+/* Style for the top HBox */
+.top-hbox {
+    -fx-background-color: black; /* Black background */
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+/* Style for the bottom HBox */
+.bottom-hbox {
+    -fx-background-color: black; /* Black background */
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+/* Style for the right VBox */
+.right-vbox {
+    -fx-background-color: black; /* Black background */
+    -fx-padding: 10px;
+}
+
+/* Style for the center TextArea */
+.center-text-area .content {
+    -fx-background-color: grey;
+    -fx-border-color: #ccc; /* Light border color */
+}
+
+/* General button styles (if needed for buttons or custom elements) */
+.custom-button {
+    -fx-background-color: #4CAF50; /* Green background */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.custom-button:hover {
+    -fx-background-color: #45a049; /* Darker green on hover */
+}

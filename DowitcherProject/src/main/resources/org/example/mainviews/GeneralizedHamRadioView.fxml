@@ -1,57 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
+<?import java.net.URL?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.generalizedHamRadioController">
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <stylesheets>
+      <URL value="@../styles/HamRadioStyles.css" />
+   </stylesheets>
+
    <top>
-      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="300.0" spacing="30.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="backButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#back" text="Button">
-               <graphic>
-                  <ImageView fx:id="backImgae" fitHeight="29.0" fitWidth="26.0">
-                     <image>
-                        <Image url="@../../../../../../../../../../SoftwareDev/Images/BackButton.jpg" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Text fx:id="modeTitleText" strokeType="OUTSIDE" strokeWidth="0.0" text="*Mode Title Text*" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Button fx:id="settinngButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleSettingsButton" prefHeight="40.0" prefWidth="50.0" text="Button">
-               <graphic>
-                  <ImageView fx:id="settingsImage" fitHeight="29.0" fitWidth="33.0">
-                     <image>
-                        <Image url="@../../../../../../../../../Users/lucas/Downloads/DALL·E%202024-12-05%2014.01.02%20-%20A%20simple%20grey%20gear%20icon%20with%20a%20plain%20design%20and%20a%20solid%20black%20outline,%20viewed%20from%20a%20front-on%20perspective.%20The%20gear%20is%20symmetrical%20with%20evenly%20spaced%20.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </HBox>
+      <HBox fx:id="topHBox" alignment="CENTER" prefHeight="49.0" prefWidth="300.0" spacing="30.0" BorderPane.alignment="CENTER" styleClass="top-hbox"/>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER" />
+      <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="40.0" prefWidth="300.0" spacing="30.0" BorderPane.alignment="CENTER" styleClass="bottom-hbox"/>
    </bottom>
    <right>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="rightVBox" alignment="CENTER" prefHeight="200.0" prefWidth="75.0" spacing="30.0" BorderPane.alignment="CENTER" styleClass="right-vbox"/>
    </right>
    <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <TextArea fx:id="mainTextArea" prefHeight="200.0" prefWidth="200.0" />
-         </content>
-      </ScrollPane>
+      <TextArea fx:id="mainTextArea" prefHeight="200.0" prefWidth="200.0" styleClass="center-text-area"/>
    </center>
 </BorderPane>

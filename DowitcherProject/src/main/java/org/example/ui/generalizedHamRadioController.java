@@ -13,7 +13,7 @@ import org.example.App;
 
 import java.io.IOException;
 
-public class generalizedHamRadioController {
+public abstract class generalizedHamRadioController {
 
     // Default Buttons
     @FXML private Button backButton;

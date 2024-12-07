@@ -100,18 +100,30 @@ public class App extends Application {
     }
 
     public static void generalizedHamRadioView(String controllerName) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(MAIN_VIEWS_PATH + "GeneralizedHamRadioView.fxml"));
+        System.out.println("Attempting to load: " + "/org/example/mainviews/GeneralizedHamRadioView.fxml");
 
-        // Set the controller dynamically
-        Object controller = CONTROLLER_MAP.get(controllerName);
-        if (controller == null) {
-            throw new IllegalArgumentException("Unknown controller: " + controllerName);
-        }
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/example/mainviews/GeneralizedHamRadioView.fxml"));
+
+        // Lazy load the controller if necessary
+        Object controller = CONTROLLER_MAP.computeIfAbsent(controllerName, key -> {
+            switch (key) {
+                case "AlphabetGameController": return new AlphabetGameController();
+                case "ListeningGameController": return new ListeningGameController();
+                case "TuningGameController": return new TuningGameController();
+                case "TypingGameController": return new TypingGameController();
+                default: throw new IllegalArgumentException("Unknown controller: " + controllerName);
+            }
+        });
+
+        // Ensure the FXML file does not declare a controller in fx:controller attribute
         loader.setController(controller);
 
+        // Load the FXML and set the root of the scene
         Parent root = loader.load();
         scene.setRoot(root);
     }
+
+
 
     public static void settingsPopupView() throws IOException {
         setRoot(POPUP_VIEWS_PATH + "SettingsPopup.fxml");

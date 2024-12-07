@@ -31,7 +31,6 @@
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
       <children>
          <Button fx:id="MainMenuButton" mnemonicParsing="false" onAction="#handleMainMenuButton" text="Main Menu" />
-         <Button fx:id="PracticeMenuButton" mnemonicParsing="false" onAction="#handlePracticeMenuButton" text="Practice Menu" />
       </children>
    </HBox>
 </VBox>

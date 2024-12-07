@@ -16,22 +16,22 @@ public class PracticeModesPopupController {
 
     @FXML
     private void handleListening(ActionEvent event) throws IOException {
-        App.generalizedHamRadioView("Listening Game");
+        App.generalizedHamRadioView("ListeningGameController");
     }
 
     @FXML
     private void handleTyping(ActionEvent event) throws IOException {
-        App.generalizedHamRadioView("Typing Game");
+        App.generalizedHamRadioView("TypingGameController");
     }
 
     @FXML
     private void handleTuning(ActionEvent event) throws IOException {
-        App.generalizedHamRadioView("Tuning Game");
+        App.generalizedHamRadioView("TuningGameController");
     }
 
     @FXML
     private void handleCwAlphabet(ActionEvent event) throws IOException {
-        App.generalizedHamRadioView("Alphabet Game");
+        App.generalizedHamRadioView("AlphabetGameController");
     }
 
 }
