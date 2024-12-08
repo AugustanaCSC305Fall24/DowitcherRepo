@@ -2,31 +2,48 @@ package org.example.ui.practice;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.App;
+import org.example.data.RadioApiRequestHandler;
 import org.example.data.User;
 import org.example.utility.MorseCodeTranslator;
 import org.example.utility.RadioFunctions;
+import org.example.utility.Sound;
 
 import java.io.IOException;
 
 public class TypingGameController implements MorseCodeOutput {
 
+
+    //Top Hbox Elements
+    @FXML private HBox topHBox;
+    @FXML private Button settingsButton;
+    @FXML private Button menuButton;
+    @FXML private Label screenName;
+    private final String ROOM_NAME = "Typing Game";
+
+
+    //Right Vbox Elements
     @FXML private VBox rightVBox;
+    @FXML private TextField cwInputTextField;
+    @FXML private Button sendButton;
 
-    private TextArea cwInputTextArea;
-    private Button translateButton;
+    //Bottom Hbox Elements
+    @FXML private HBox bottomHBox;
+    @FXML private Button paddleModeButton;
+    @FXML private Button straightKeyModeButton;
+
+    //mainTextArea stuff
+    @FXML private TextArea mainTextArea;
     private TextArea englishOutput;
-    private Button paddleModeButton;
-    private Button straightKeyModeButton;
-    private Button backButton;
-    private Label currentModeLabel;
-    private Label ditKeyLabel;
-    private Label dahKeyLabel;
-    private Label straightKeyLabel;
 
-    private MorseCodeTranslator morseCodeTranslator;
+
+    //Objects
     private RadioFunctions radioFunctions;
+    private MorseCodeTranslator morseCodeTranslator;
+    private Sound sound;
+
 
     @FXML
     public void initialize() {
@@ -43,124 +60,148 @@ public class TypingGameController implements MorseCodeOutput {
 
     private void initializeUIElements() {
         // Create UI elements dynamically
-        cwInputTextArea = new TextArea();
-        cwInputTextArea.setDisable(true);
-        cwInputTextArea.setStyle("-fx-opacity: 1.0;");
+        topHboxInitialized();
+        sideVboxInitialized();
+        botHboxInitialized();
 
-        englishOutput = new TextArea();
-        englishOutput.setDisable(true);
-        englishOutput.setStyle("-fx-opacity: 1.0;");
-
-        backButton = new Button("Back");
-        backButton.setOnAction(e -> {
-            try {
-                App.homeScreenView();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        translateButton = new Button("Translate");
-        translateButton.setOnAction(e -> translateMorseCode());
-
-        paddleModeButton = new Button("Paddle Mode");
-        paddleModeButton.setOnAction(e -> handlePaddleMode());
-
-        straightKeyModeButton = new Button("Straight Key Mode");
-        straightKeyModeButton.setOnAction(e -> handleStraightKeyMode());
-
-        currentModeLabel = new Label("Current Mode: None");
-        ditKeyLabel = new Label();
-        dahKeyLabel = new Label();
-        straightKeyLabel = new Label();
-
-        updateKeyLabels();
-
-        // Add elements to the right VBox
-        rightVBox.getChildren().addAll(
-                new Label("Typing Practice"),
-                cwInputTextArea,
-                backButton,
-                translateButton,
-                englishOutput,
-                paddleModeButton,
-                straightKeyModeButton,
-                currentModeLabel,
-                ditKeyLabel,
-                dahKeyLabel,
-                straightKeyLabel
-        );
+        mainTextArea.setEditable(false);
+        mainTextArea.setFocusTraversable(false); // Makes it undetectable
+        mainTextArea.setStyle("-fx-font-size: 30px;"); // Larger text size
     }
 
-    private void updateKeyLabels() {
-        String ditKeyCode = User.getKeyForAction("ditKey").getName();
-        String dahKeyCode = User.getKeyForAction("dahKey").getName();
-        String straightKeyCode = User.getKeyForAction("straightKey").getName();
+    private void botHboxInitialized() {
+        if (bottomHBox == null) {
+            bottomHBox = new HBox();
+        }
 
-        ditKeyLabel.setText("Dit  ->  " + ditKeyCode);
-        dahKeyLabel.setText("Dah  ->  " + dahKeyCode);
-        straightKeyLabel.setText("Straight Key  ->  " + straightKeyCode);
+        if (paddleModeButton == null) {
+            paddleModeButton = new Button("Paddle Mode");
+            paddleModeButton.setOnAction(event -> handlePaddleMode());
+            paddleModeButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+        }
+
+        if (straightKeyModeButton == null) {
+            straightKeyModeButton = new Button("Straight Key Mode");
+            straightKeyModeButton.setOnAction(event -> handleStraightKeyMode());
+            straightKeyModeButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+        }
+
+        bottomHBox.getChildren().clear();
+        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton);
+    }
+
+    private void sideVboxInitialized() {
+        if (rightVBox == null) {
+            rightVBox = new VBox();
+        }
+
+        Slider volumeSlider = new Slider(0, 100, 50); // Create new volume slider
+        volumeSlider.setBlockIncrement(1);
+        volumeSlider.setShowTickLabels(true);
+        volumeSlider.setShowTickMarks(true);
+        volumeSlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> User.setVolume(volumeSlider.getValue()));
+        volumeSlider.getStyleClass().add("slider"); // Apply slider style from the CSS
+
+        Label yourInputLabel = new Label("Your input:");
+        yourInputLabel.getStyleClass().add("label"); // Apply label style from the CSS
+
+        if (cwInputTextField == null) {
+            cwInputTextField = new TextField();
+            cwInputTextField.getStyleClass().add("text-field"); // Apply text field style from the CSS
+        }
+        cwInputTextField.setFocusTraversable(false);
+
+        if (sendButton == null) {
+            sendButton = new Button("Send");
+            sendButton.setOnAction(event -> handleSendButton());
+            sendButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+        }
+
+        rightVBox.getChildren().clear();
+        rightVBox.getChildren().addAll(
+                volumeSlider,
+                yourInputLabel,
+                cwInputTextField,
+                sendButton
+        );
     }
 
     @FXML
     private void handlePaddleMode() {
         paddleModeButton.setDisable(true);
         straightKeyModeButton.setDisable(false);
-        currentModeLabel.setText("Current Mode: Paddle");
-
         radioFunctions.stopTypingMode();
         radioFunctions.setTypingOutputController(this);
         radioFunctions.handleTyping("Paddle", this);
     }
 
+    // Handle Straight Key Mode
     @FXML
     private void handleStraightKeyMode() {
         paddleModeButton.setDisable(false);
         straightKeyModeButton.setDisable(true);
-        currentModeLabel.setText("Current Mode: Straight Key");
-
         radioFunctions.stopTypingMode();
         radioFunctions.setTypingOutputController(this);
         radioFunctions.handleTyping("Straight", this);
     }
 
     public void addCwToInput(String cwChar) {
-        String currentText = cwInputTextArea.getText();
+        String currentText = cwInputTextField.getText();
         if (cwChar.equals("/")) {
             if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != '/') {
-                cwInputTextArea.setText(currentText + "/");
+                cwInputTextField.setText(currentText + "/");
             }
         } else if (cwChar.equals(" ")) {
             if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != ' ' && currentText.charAt(currentText.length() - 1) != '/') {
-                cwInputTextArea.setText(currentText + " ");
+                cwInputTextField.setText(currentText + " ");
             }
         } else {
-            cwInputTextArea.setText(currentText + cwChar);
+            cwInputTextField.setText(currentText + cwChar);
         }
     }
 
     @FXML
     private void clearInput() {
-        cwInputTextArea.clear();
+        cwInputTextField.clear();
     }
 
     @FXML
-    private void translateMorseCode() {
-        String morseCode = cwInputTextArea.getText();
+    private void handleSendButton() {
+        String morseCode = cwInputTextField.getText();
         String translatedText = MorseCodeTranslator.translateMorseCode(morseCode);
-        englishOutput.setText(translatedText);
-        cwInputTextArea.clear();
+        mainTextArea.setText(translatedText);
+        cwInputTextField.clear();
     }
 
-    @FXML
-    private void switchToHomeScreenView() throws IOException {
-        radioFunctions.stopTypingMode();
-        App.homeScreenView();
-    }
+    private void topHboxInitialized() {
+        if (topHBox == null) {
+            topHBox = new HBox();
+        }
 
-    @FXML
-    private void switchToSettingsView() throws IOException {
-        radioFunctions.stopTypingMode();
-        App.settingsPopupView();
+        // Create the "Settings" button
+        settingsButton = new Button("Settings");
+        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton));
+        settingsButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Create the "Menu" button
+        Button menuButton = new Button("Menu");
+        menuButton.setOnAction(event -> {
+            try {
+                App.homeScreenView();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to return to home screen", e);
+            }
+        });
+        menuButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Add the buttons to the topHBox
+        topHBox.getChildren().clear();
+        topHBox.getChildren().addAll(menuButton, settingsButton);
+
+        // Ensure topHBox has the expected components before adding "AI Chat" label
+        Label screenName = new Label(ROOM_NAME);
+        screenName.getStyleClass().add("label"); // Apply label style from the CSS
+        topHBox.getChildren().add(1, screenName); // Insert label between menu and settings buttons
     }
 }
