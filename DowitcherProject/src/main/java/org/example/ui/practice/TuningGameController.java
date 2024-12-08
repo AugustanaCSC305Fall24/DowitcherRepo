@@ -82,6 +82,7 @@ public class TuningGameController  {
         });
 
         // Start sound and static threads
+        isPlaying = true;
         playSound(testSound);
         double initialVolume = getStaticVolume();
         playStatic(initialVolume);
@@ -105,7 +106,7 @@ public class TuningGameController  {
         resetButton.setOnAction(e -> onReset());
         backButton.setOnAction(e -> {
             try {
-                App.homeScreenView();
+                back();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -130,10 +131,8 @@ public class TuningGameController  {
     }
 
     @FXML
-    private void back(ActionEvent event) throws IOException {
+    private void back() throws IOException {
         sound.setIsStaticPlaying(false);
-        staticThread.interrupt();
-        messageThread.interrupt();
         isPlaying = false;
         App.homeScreenView();
     }
