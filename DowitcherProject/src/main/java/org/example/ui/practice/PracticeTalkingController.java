@@ -24,10 +24,13 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
     @FXML private HBox bottomHBox;
     @FXML private HBox topHBox;
     @FXML private TextArea mainTextArea;
+
     @FXML private Button paddleModeButton;
     @FXML private Button straightKeyModeButton;
+
     @FXML private Slider filterSlider;
     @FXML private Slider frequencySlider;
+
     @FXML private Button mainMenuButton;
     @FXML private TextField cwInputTextField;
     @FXML private Button sendButton;
@@ -39,6 +42,7 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
     private RadioApiRequestHandler radioApiRequestHandler;
     private MorseCodeTranslator morseCodeTranslator;
     private Sound sound;
+
     private ChatBot lastPlayedBot = null;
     private boolean isPlaybackActive = false;
     private double lastLoggedThreshold = -1;
