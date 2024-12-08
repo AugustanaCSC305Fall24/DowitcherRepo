@@ -47,10 +47,6 @@ public class TypingGameController implements MorseCodeOutput {
 
     @FXML
     public void initialize() {
-        if (rightVBox == null) {
-            rightVBox = new VBox(); // Ensure rightVBox is initialized
-        }
-
         morseCodeTranslator = new MorseCodeTranslator();
         radioFunctions = new RadioFunctions(this);
         App.currentUser.addView("PracticeTypingView");

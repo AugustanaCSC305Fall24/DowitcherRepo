@@ -10,6 +10,7 @@ import org.example.App;
 import org.example.data.ChatMessage;
 import org.example.data.User;
 import org.example.ui.practice.MorseCodeOutput;
+import org.example.utility.MorseCodeTranslator;
 import org.example.utility.RadioFunctions;
 import java.io.*;
 import java.net.URI;
@@ -21,142 +22,200 @@ import javax.sound.sampled.LineUnavailableException;
 
 @ClientEndpoint
 public class LiveChatChatRoomController implements MorseCodeOutput {
+    //Top Hbox
+    @FXML private HBox topHBox;
+    @FXML private Button settingsButton;
+    @FXML private Button menuButton;
+    @FXML private Label screenName;
+    private final String ROOM_NAME = "Live Chat";
 
-    // UI elements injected from FXML
-    @FXML private Button practiceMenuButton;
-    @FXML private TextArea mainTextArea; // Corresponds to center TextArea in FXML
-    @FXML private VBox rightVBox; // Corresponds to the default right VBox in FXML
-    @FXML private HBox bottomHBox; // Corresponds to the bottom HBox in FXML
-    @FXML private VBox chatLogVBox;
+    //Right Vbox
+    @FXML private VBox rightVBox;
+    @FXML private Slider filterSlider;
+    @FXML private Slider frequencySlider;
+    @FXML private Slider volumeSlider;
+    @FXML private TextArea chatLogTextArea;
+    @FXML private Button sendButton; // Send button for sending messages
+    @FXML private TextField cwInputTextField;
+
+
+    //Bottom Hbox
+    @FXML private HBox bottomHBox;
     @FXML private Button paddleModeButton;
     @FXML private Button straightKeyModeButton;
-    @FXML private Slider filterSlider; // Injected filterSlider
-    @FXML private Slider frequencySlider; // Injected frequencySlider
-    @FXML private Button mainMenuButton;
-    @FXML private Label roomTitleLabel;
-    @FXML private TextField cwInputTextField;
-    @FXML private Button sendButton; // Send button for sending messages
-    @FXML private RadioFunctions radioFunctions;
     @FXML private Button connectButton;
-    @FXML private TextArea chatLogTextArea;
 
+    //Class Objects
+    private RadioFunctions radioFunctions;
+    private MorseCodeTranslator morseCodeTranslator;
+    private Sound sound;
+
+    //Data
+    @FXML private TextArea mainTextArea;
     private Session session;
     final String USER_NAME = "user" + new Random().nextInt(1000);
 
     @FXML
     public void initialize() {
+        morseCodeTranslator = new MorseCodeTranslator();
         radioFunctions = new RadioFunctions(this);
-
-        // Initialize all UI elements
+        //App.currentUser.addView("LiveChat");
         initializeUIElements();
     }
 
     private void initializeUIElements() {
-        // Initialize labels
-        if (roomTitleLabel == null) {
-            roomTitleLabel = new Label("Live Chat Room");
+        topHboxInitialized();
+        sideVboxInitialized();
+        botHboxInitialized();
+
+        mainTextArea.setEditable(false);
+        mainTextArea.setFocusTraversable(false); // Makes it undetectable
+        mainTextArea.setStyle("-fx-font-size: 30px;"); // Larger text size
+
+    }
+
+    private void topHboxInitialized() {
+        if (topHBox == null) {
+            topHBox = new HBox();
         }
 
-        // Initialize chat log TextArea
-        if (chatLogTextArea == null) {
-            chatLogTextArea = new TextArea();
-            chatLogTextArea.setEditable(false);
-            chatLogTextArea.setPrefHeight(300);
-        }
+        // Create the "Settings" button
+        settingsButton = new Button("Settings");
+        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton));
+        settingsButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
 
-        // Initialize frequency slider
+        // Create the "Menu" button
+        Button menuButton = new Button("Menu");
+        menuButton.setOnAction(event -> {
+            try {
+                App.homeScreenView();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to return to home screen", e);
+            }
+        });
+        menuButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Add the buttons to the topHBox
+        topHBox.getChildren().clear();
+        topHBox.getChildren().addAll(menuButton, settingsButton);
+
+        // Ensure topHBox has the expected components before adding "AI Chat" label
+        Label screenName = new Label(ROOM_NAME);
+        screenName.getStyleClass().add("label"); // Apply label style from the CSS
+        topHBox.getChildren().add(1, screenName); // Insert label between menu and settings buttons
+    }
+
+    private void sideVboxInitialized() {
         if (frequencySlider == null) {
-            frequencySlider = new Slider(0, 100, 50);  // Set a default range and value
+            frequencySlider = new Slider(0, 100, 50);
             frequencySlider.setBlockIncrement(1);
             frequencySlider.setShowTickLabels(true);
             frequencySlider.setShowTickMarks(true);
+            frequencySlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
+            frequencySlider.valueProperty().addListener((observable, oldValue, newValue) -> updateMainTextArea());
+            frequencySlider.getStyleClass().add("slider"); // Apply slider style from the CSS
         }
 
-        // Initialize filter slider
+        Slider volumeSlider = new Slider(0, 100, 50); // Create new volume slider
+        volumeSlider.setBlockIncrement(1);
+        volumeSlider.setShowTickLabels(true);
+        volumeSlider.setShowTickMarks(true);
+        volumeSlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> updateMainTextArea());
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> User.setVolume(volumeSlider.getValue()));
+        volumeSlider.getStyleClass().add("slider"); // Apply slider style from the CSS
+
         if (filterSlider == null) {
             filterSlider = new Slider(0, 1, 0.5);
             filterSlider.setShowTickLabels(true);
             filterSlider.setShowTickMarks(true);
+            filterSlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
+            filterSlider.valueProperty().addListener((observable, oldValue, newValue) -> updateMainTextArea());
+            filterSlider.getStyleClass().add("slider"); // Apply slider style from the CSS
         }
 
-        // Initialize buttons and actions
+        // Create and add "Your input" label and text field
+        Label yourInputLabel = new Label("Your input:");
+        yourInputLabel.getStyleClass().add("label"); // Apply label style from the CSS
+
+        if (cwInputTextField == null) {
+            cwInputTextField = new TextField();
+            cwInputTextField.getStyleClass().add("text-field"); // Apply text field style from the CSS
+        }
+        cwInputTextField.setFocusTraversable(false);
+
+        if (sendButton == null) {
+            sendButton = new Button("Send");
+            sendButton.setOnAction(event -> handleSendButton());
+            sendButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+        }
+
+        // Initialize and configure the chatLogTextArea
+        chatLogTextArea = new TextArea();
+        chatLogTextArea.setEditable(false); // Prevent editing
+        chatLogTextArea.setWrapText(true); // Optional: Wrap text for better formatting
+        chatLogTextArea.getStyleClass().add("text-area"); // Apply text area style from the CSS
+
+        // Clear and add elements to rightVBox
+        rightVBox.getChildren().clear();
+        rightVBox.getChildren().addAll(
+                frequencySlider,
+                volumeSlider,
+                filterSlider,
+                yourInputLabel,
+                cwInputTextField,
+                sendButton,
+                chatLogTextArea // Add the chatLogTextArea to the VBox
+        );
+    }
+
+    private void updateMainTextArea() {
+        double frequencyValue = frequencySlider.getValue();
+        double volumeValue = User.getVolume();
+        double filterValue = filterSlider.getValue();
+
+        mainTextArea.setText(String.format(
+                "Frequency: %.2f\nVolume: %.2f\nFilter: %.2f",
+                frequencyValue,
+                volumeValue,
+                filterValue
+        ));
+    }
+
+    private void botHboxInitialized() {
+        if (bottomHBox == null) {
+            bottomHBox = new HBox();
+        }
+
         if (paddleModeButton == null) {
             paddleModeButton = new Button("Paddle Mode");
             paddleModeButton.setOnAction(event -> handlePaddleMode());
+            paddleModeButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
         }
 
         if (straightKeyModeButton == null) {
             straightKeyModeButton = new Button("Straight Key Mode");
             straightKeyModeButton.setOnAction(event -> handleStraightKeyMode());
+            straightKeyModeButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
         }
 
-        if (sendButton == null) {
-            sendButton = new Button("Send");
-            sendButton.setOnAction(event -> handleSendButton());
-        }
-
-        if (practiceMenuButton == null) {
-            practiceMenuButton = new Button("Practice Menu");
-            practiceMenuButton.setOnAction(event -> {
-                try {
-                    handlePracticeMenuButton(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-
-        if (mainMenuButton == null) {
-            mainMenuButton = new Button("Main Menu");
-            mainMenuButton.setOnAction(event -> {
-                try {
-                    handleMainMenuButton(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-
-        // Initialize chat input field
-        if (cwInputTextField == null) {
-            cwInputTextField = new TextField();
-        }
-
-        // Initialize the connect button
-        if (connectButton == null) {
+        if (connectButton == null){
             connectButton = new Button("Connect");
             connectButton.setOnAction(event -> {
                 try {
                     connectToServer();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             });
+            connectButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
         }
-
-        // Add elements directly to rightVBox
-        rightVBox.getChildren().clear();  // Clear any previous children
-        rightVBox.getChildren().addAll(
-                roomTitleLabel,
-                chatLogTextArea,
-                frequencySlider,
-                filterSlider,
-                sendButton,
-                practiceMenuButton,
-                mainMenuButton
-        );
-
-        // Add elements to the bottomHBox
         bottomHBox.getChildren().clear();
-        bottomHBox.getChildren().addAll(
-                paddleModeButton,
-                straightKeyModeButton,
-                connectButton // Add the connect button to the bottomHBox
-        );
+        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, connectButton);
     }
 
 
-    @FXML
+@FXML
     private void connectToServer() throws Exception {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
