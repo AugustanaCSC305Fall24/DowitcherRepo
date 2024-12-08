@@ -18,10 +18,12 @@ public class AlphabetGameController implements MorseCodeOutput {
 
     // All FXML elements on screen that are interacted with
     @FXML private VBox rightVBox;
+    @FXML private HBox topHBox;
     @FXML private ScrollPane previousTranslationsScrollPane;
     @FXML private AnchorPane previousTranslationsAnchorPane;
     @FXML private TextFlow currentLetterTextFlow;
     @FXML private TextField cwInputTextField;
+    @FXML private BorderPane mainBorderPane;
 
     private Button checkAnswerButton;
     private Button skipNextButton;
@@ -48,6 +50,9 @@ public class AlphabetGameController implements MorseCodeOutput {
     private Sound sound;
     private List<TextFlow> checkedInputList = new ArrayList<>();
     private List<Text> checkedLetterList = new ArrayList<>();
+
+    // Room Name
+    private final String ROOM_NAME = "Alphabet Game";
 
     @FXML
     private void handleSettingsButton() throws IOException {
@@ -98,6 +103,7 @@ public class AlphabetGameController implements MorseCodeOutput {
 
         // Initialize previousTranslationsScrollPane content
         previousTranslationsScrollPane.setContent(translationsContainer);
+        mainBorderPane.setCenter(previousTranslationsScrollPane);
 
         // Initialize RadioFunctions and Sound
         radioFunctions = new RadioFunctions(this);
@@ -117,17 +123,20 @@ public class AlphabetGameController implements MorseCodeOutput {
     }
 
     private void initializeUIElements() {
+        topHboxInitialized();
         // Create the necessary UI elements dynamically
         checkAnswerButton = new Button("Check Answer");
-        skipNextButton = new Button("Skip Next");
-        restartButton = new Button("Restart");
+        skipNextButton = new Button("Skip");
+        restartButton = new Button("Restart Alphabet");
         settingsButton = new Button("Settings");
         practiceMenuButton = new Button("Practice Menu");
         mainMenuButton = new Button("Main Menu");
-        showLetterButton = new Button("Show Character");
+        showLetterButton = new Button("Hide Character");
         paddleModeButton = new Button("Paddle Mode");
         straightKeyModeButton = new Button("Straight Key Mode");
         cwInputTextField = new TextField();
+        cwInputTextField.setDisable(true);
+        cwInputTextField.setOpacity(1);
 
         // Add handlers for buttons
         checkAnswerButton.setOnAction(e -> checkAnswer());
@@ -163,16 +172,43 @@ public class AlphabetGameController implements MorseCodeOutput {
                 checkAnswerButton,
                 skipNextButton,
                 restartButton,
-                settingsButton,
-                practiceMenuButton,
-                mainMenuButton,
                 showLetterButton,
-                paddleModeButton,
-                straightKeyModeButton,
+                currentLetterTextFlow,
                 cwInputTextField,
-                currentLetterTextFlow,  // Make sure the current letter flow is added
-                previousTranslationsScrollPane // Add ScrollPane as well
+                paddleModeButton,
+                straightKeyModeButton
         );
+    }
+
+    private void topHboxInitialized() {
+        if (topHBox == null) {
+            topHBox = new HBox();
+        }
+
+        // Create the "Settings" button
+        Button settingsButton = new Button("Settings");
+        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton));
+        settingsButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Create the "Menu" button
+        Button menuButton = new Button("Menu");
+        menuButton.setOnAction(event -> {
+            try {
+                App.homeScreenView();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to return to home screen", e);
+            }
+        });
+        menuButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Add the buttons to the topHBox
+        topHBox.getChildren().clear();
+        topHBox.getChildren().addAll(menuButton, settingsButton);
+
+        // Ensure topHBox has the expected components before adding "AI Chat" label
+        Label screenName = new Label(ROOM_NAME);
+        screenName.getStyleClass().add("label"); // Apply label style from the CSS
+        topHBox.getChildren().add(1, screenName); // Insert label between menu and settings buttons
     }
 
     public void generateRandomOrder() {
