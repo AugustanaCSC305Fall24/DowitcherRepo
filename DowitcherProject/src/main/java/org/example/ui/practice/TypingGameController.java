@@ -19,6 +19,7 @@ public class TypingGameController implements MorseCodeOutput {
     private TextArea englishOutput;
     private Button paddleModeButton;
     private Button straightKeyModeButton;
+    private Button backButton;
     private Label currentModeLabel;
     private Label ditKeyLabel;
     private Label dahKeyLabel;
@@ -50,6 +51,15 @@ public class TypingGameController implements MorseCodeOutput {
         englishOutput.setDisable(true);
         englishOutput.setStyle("-fx-opacity: 1.0;");
 
+        backButton = new Button("Back");
+        backButton.setOnAction(e -> {
+            try {
+                App.homeScreenView();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
         translateButton = new Button("Translate");
         translateButton.setOnAction(e -> translateMorseCode());
 
@@ -70,6 +80,7 @@ public class TypingGameController implements MorseCodeOutput {
         rightVBox.getChildren().addAll(
                 new Label("Typing Practice"),
                 cwInputTextArea,
+                backButton,
                 translateButton,
                 englishOutput,
                 paddleModeButton,
