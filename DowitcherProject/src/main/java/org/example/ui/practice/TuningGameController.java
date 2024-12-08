@@ -20,19 +20,20 @@ public class TuningGameController  {
     @FXML
     private VBox rightVBox;
 
-    @FXML
-    private TextArea mainTextArea;
+    @FXML private HBox topHBox;
 
     @FXML
-    private Button backButton;
+    private TextArea mainTextArea;
 
     @FXML
     private Label modeTitleText;
 
     private Slider frequencySlider;
     private Slider filterWidthSlider;
+    private Slider volumeSlider;
     private Label frequencyLabel;
     private Label filterLabel;
+    private Label volumeLabel;
     private Label targetFrequencyLabel;
     private Label feedbackLabel;
     private Button transmitButton;
@@ -52,6 +53,9 @@ public class TuningGameController  {
     private Thread staticThread;
     private Thread messageThread;
 
+    // Room Name
+    private final String ROOM_NAME = "Practice Tuning";
+
     @FXML
     public void initialize() {
         // Initialize the right VBox before adding elements to it
@@ -66,14 +70,20 @@ public class TuningGameController  {
         // Add UI elements dynamically to the right VBox
         initializeUIElements();
 
-        // Set up sliders and their listeners
-        setRandomTargetFrequency();
+        volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            volumeLabel.setText(String.format("Volume: %.1f", newVal.doubleValue()));
+            updateMainTextArea();
+        });
+
         frequencySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             frequencyLabel.setText(String.format("%.3f MHz", newVal.doubleValue()));
             checkFrequencyMatch();
+            updateMainTextArea();
         });
+
         filterWidthSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             filterLabel.setText(String.format("Filter Width: %.1f KHz", newVal.doubleValue()));
+            updateMainTextArea();
             try {
                 Sound.adjustVolumeOfStatic(getStaticVolume());
             } catch (LineUnavailableException e) {
@@ -89,28 +99,25 @@ public class TuningGameController  {
     }
 
     private void initializeUIElements() {
+
+        topHboxInitialized();
+
         // Create and configure UI components
         frequencySlider = new Slider(MIN_FREQUENCY, MAX_FREQUENCY, MIN_FREQUENCY);
         frequencyLabel = new Label(String.format("%.3f MHz", MIN_FREQUENCY));
         filterWidthSlider = new Slider(0.5, 5.0, 1.0);
         filterLabel = new Label("Filter Width: 0.5 KHz");
+        volumeSlider = new Slider(0.0, 100.0, 50.0);
+        volumeLabel = new Label("Volume");
         targetFrequencyLabel = new Label(String.format("Target Frequency: %.3f MHz", MIN_FREQUENCY));
         feedbackLabel = new Label();
         feedbackLabel.setStyle("-fx-text-fill: green;");
         transmitButton = new Button("Transmit");
         resetButton = new Button("Reset");
-        backButton = new Button("Back");
 
         // Set button actions
         transmitButton.setOnAction(e -> onTransmit());
         resetButton.setOnAction(e -> onReset());
-        backButton.setOnAction(e -> {
-            try {
-                back();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
 
         // Layout setup: Use HBox for the top section with the title
         HBox topBox = new HBox();
@@ -119,15 +126,65 @@ public class TuningGameController  {
 
         // Create the side button box (if needed)
         HBox sideButtonsBox = new HBox();
-        sideButtonsBox.getChildren().addAll(backButton, transmitButton, resetButton);
+        sideButtonsBox.getChildren().addAll(transmitButton, resetButton);
         sideButtonsBox.setStyle("-fx-alignment: center; -fx-spacing: 10px; -fx-padding: 10px;");
 
         // Add components to the right VBox
-        rightVBox.getChildren().addAll(topBox, sideButtonsBox,
+        rightVBox.getChildren().addAll(topBox, sideButtonsBox, volumeSlider, volumeLabel,
                 new Label("Tuning Frequency (MHz)"), frequencySlider, frequencyLabel,
                 new Label("Filter Width (KHz)"), filterWidthSlider, filterLabel,
-                targetFrequencyLabel, feedbackLabel);
+                feedbackLabel);
 
+        // Configure mainTextArea to display slider values, be non-editable, and have larger text
+        mainTextArea.setEditable(false);
+        mainTextArea.setFocusTraversable(false); // Makes it undetectable
+        mainTextArea.setStyle("-fx-font-size: 30px;"); // Larger text size
+        updateMainTextArea();
+
+    }
+
+    private void topHboxInitialized() {
+        if (topHBox == null) {
+            topHBox = new HBox();
+        }
+
+        // Create the "Settings" button
+        Button settingsButton = new Button("Settings");
+        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton));
+        settingsButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Create the "Menu" button
+        Button menuButton = new Button("Menu");
+        menuButton.setOnAction(event -> {
+            try {
+                back();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to return to home screen", e);
+            }
+        });
+        menuButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Add the buttons to the topHBox
+        topHBox.getChildren().clear();
+        topHBox.getChildren().addAll(menuButton, settingsButton);
+
+        // Ensure topHBox has the expected components before adding "AI Chat" label
+        Label screenName = new Label(ROOM_NAME);
+        screenName.getStyleClass().add("label"); // Apply label style from the CSS
+        topHBox.getChildren().add(1, screenName); // Insert label between menu and settings buttons
+    }
+
+    private void updateMainTextArea() {
+        double frequencyValue = frequencySlider.getValue();
+        double volumeValue = volumeSlider.getValue();
+        double filterValue = filterWidthSlider.getValue();
+
+        mainTextArea.setText(String.format(
+                "Frequency: %.3f\nVolume: %.2f\nFilter: %.2f",
+                frequencyValue,
+                volumeValue,
+                filterValue
+        ));
     }
 
     @FXML
