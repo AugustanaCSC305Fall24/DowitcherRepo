@@ -51,7 +51,7 @@ public class HomeScreenController {
      */
     @FXML
     void handleLiveChat(ActionEvent event) throws IOException {
-        App.generalizedHamRadioView("Live Chat");
+        App.generalizedHamRadioView("LiveChatChatRoomController");
     }
 
     /**

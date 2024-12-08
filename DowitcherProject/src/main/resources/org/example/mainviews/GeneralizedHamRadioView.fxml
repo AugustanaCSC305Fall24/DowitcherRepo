@@ -6,21 +6,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="652.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <stylesheets>
       <URL value="@../styles/HamRadioStyles.css" />
    </stylesheets>
 
    <top>
-      <HBox fx:id="topHBox" alignment="CENTER" prefHeight="49.0" prefWidth="300.0" spacing="30.0" BorderPane.alignment="CENTER" styleClass="top-hbox"/>
+      <HBox fx:id="topHBox" alignment="CENTER" prefHeight="98.0" prefWidth="985.0" spacing="30.0" styleClass="top-hbox" BorderPane.alignment="CENTER" />
    </top>
    <bottom>
-      <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="40.0" prefWidth="300.0" spacing="30.0" BorderPane.alignment="CENTER" styleClass="bottom-hbox"/>
+      <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="99.0" prefWidth="985.0" spacing="30.0" styleClass="bottom-hbox" BorderPane.alignment="CENTER" />
    </bottom>
    <right>
-      <VBox fx:id="rightVBox" alignment="CENTER" prefHeight="200.0" prefWidth="75.0" spacing="30.0" BorderPane.alignment="CENTER" styleClass="right-vbox"/>
+      <VBox fx:id="rightVBox" alignment="CENTER" prefHeight="514.0" prefWidth="326.0" spacing="30.0" styleClass="right-vbox" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <TextArea fx:id="mainTextArea" prefHeight="200.0" prefWidth="200.0" styleClass="center-text-area"/>
+      <TextArea fx:id="mainTextArea" prefHeight="563.0" prefWidth="580.0" styleClass="center-text-area" />
    </center>
 </BorderPane>

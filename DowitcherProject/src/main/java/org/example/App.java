@@ -19,11 +19,9 @@ import java.util.Map;
 
 import javafx.stage.Window;
 import org.example.data.User;
+import org.example.ui.LiveChatChatRoomController;
 import org.example.ui.generalizedHamRadioController;
-import org.example.ui.practice.AlphabetGameController;
-import org.example.ui.practice.ListeningGameController;
-import org.example.ui.practice.TuningGameController;
-import org.example.ui.practice.TypingGameController;
+import org.example.ui.practice.*;
 
 /**
  * JavaFX App
@@ -45,6 +43,8 @@ public class App extends Application {
         CONTROLLER_MAP.put("ListeningGameController", new ListeningGameController());
         CONTROLLER_MAP.put("TuningGameController", new TuningGameController());
         CONTROLLER_MAP.put("TypingGameController", new TypingGameController());
+        CONTROLLER_MAP.put("PracticeTalkingController", new PracticeTalkingController());
+        CONTROLLER_MAP.put("LiveChatChatRoomController", new LiveChatChatRoomController());
     }
 
     @Override
@@ -111,6 +111,8 @@ public class App extends Application {
                 case "ListeningGameController": return new ListeningGameController();
                 case "TuningGameController": return new TuningGameController();
                 case "TypingGameController": return new TypingGameController();
+                case "PracticeTalkingController": return new PracticeTalkingController();
+                case "LiveChatChatRoomController": return new LiveChatChatRoomController();
                 default: throw new IllegalArgumentException("Unknown controller: " + controllerName);
             }
         });

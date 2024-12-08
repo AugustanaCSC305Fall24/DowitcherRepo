@@ -1,12 +1,8 @@
 package org.example.ui.practice;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -18,28 +14,30 @@ import org.example.utility.Sound;
 import java.io.IOException;
 import java.util.*;
 
-public class AlphabetGameController implements MorseCodeOutput{
+public class AlphabetGameController implements MorseCodeOutput {
 
     // All FXML elements on screen that are interacted with
-    @FXML private Button checkAnswerButton;
-    @FXML private Button skipNextButton;
-    @FXML private Button restartButton;
-    @FXML private Button settingsButton;
-    @FXML private Button practiceMenuButton;
-    @FXML private Button mainMenuButton;
-    @FXML private Button showLetterButton;
-    @FXML private Button paddleModeButton;
-    @FXML private Button straightKeyModeButton;
+    @FXML private VBox rightVBox;
     @FXML private ScrollPane previousTranslationsScrollPane;
     @FXML private AnchorPane previousTranslationsAnchorPane;
-    @FXML public TextFlow currentLetterTextFlow;
+    @FXML private TextFlow currentLetterTextFlow;
     @FXML private TextField cwInputTextField;
 
+    private Button checkAnswerButton;
+    private Button skipNextButton;
+    private Button restartButton;
+    private Button settingsButton;
+    private Button practiceMenuButton;
+    private Button mainMenuButton;
+    private Button showLetterButton;
+    private Button paddleModeButton;
+    private Button straightKeyModeButton;
+
     private Random random = new Random();
-    public Stack<String> cwStack = new Stack<>();
-    public Stack<String> letterStack = new Stack<>();
-    public String currentCW;
-    public String currentLetter;
+    private Stack<String> cwStack = new Stack<>();
+    private Stack<String> letterStack = new Stack<>();
+    private String currentCW;
+    private String currentLetter;
     private Text currentLetterText = new Text();
     private boolean correctAnswer = false;
     private int numCorrect;
@@ -51,36 +49,131 @@ public class AlphabetGameController implements MorseCodeOutput{
     private List<TextFlow> checkedInputList = new ArrayList<>();
     private List<Text> checkedLetterList = new ArrayList<>();
 
-    //All view switching button presses
-    @FXML private void handleSettingsButton() throws IOException {
+    @FXML
+    private void handleSettingsButton() throws IOException {
         radioFunctions.stopTypingMode();
         App.settingsPopupView();
     }
-    @FXML private void handlePracticeMenuButton() throws IOException {
+
+    @FXML
+    private void handlePracticeMenuButton() throws IOException {
         radioFunctions.stopTypingMode();
         App.practiceModesPopupView();
     }
-    @FXML private void handleMainMenuButton() throws IOException {
+
+    @FXML
+    private void handleMainMenuButton() throws IOException {
         radioFunctions.stopTypingMode();
         App.homeScreenView();
     }
 
     @FXML
     private void initialize() {
+        if (rightVBox == null) {
+            rightVBox = new VBox(); // Initialize VBox if not provided
+        }
+        if (cwInputTextField == null) {
+            cwInputTextField = new TextField(); // Initialize the TextField manually
+        }
+        cwInputTextField.setEditable(true);
+        cwInputTextField.setPromptText("Enter Morse Code");
+
+        // Ensure previousTranslationsScrollPane is initialized if it's null
+        if (previousTranslationsScrollPane == null) {
+            previousTranslationsScrollPane = new ScrollPane(); // Initialize ScrollPane
+        }
+
+        // Ensure previousTranslationsAnchorPane is initialized if it's null
+        if (previousTranslationsAnchorPane == null) {
+            previousTranslationsAnchorPane = new AnchorPane(); // Initialize AnchorPane
+        }
+
         App.currentUser.addView("CwAlphabetView");
-        currentLetterText.setFont(new Font(48));
+
+        // Initialize the currentLetterTextFlow
+        currentLetterTextFlow = new TextFlow();
         currentLetterTextFlow.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+        currentLetterText.setFont(new Font(48));
+
+        // Initialize previousTranslationsScrollPane content
         previousTranslationsScrollPane.setContent(translationsContainer);
+
+        // Initialize RadioFunctions and Sound
         radioFunctions = new RadioFunctions(this);
         sound = new Sound();
+
+        // Call restart method
         restartAlphabet();
 
+        // Disable previous translations container and input
         previousTranslationsAnchorPane.setDisable(true);
         previousTranslationsAnchorPane.setStyle("-fx-opacity: 1.0;");
         cwInputTextField.setDisable(true);
         cwInputTextField.setStyle("-fx-opacity: 1.0;");
+
+        // Initialize all UI elements dynamically
+        initializeUIElements();
     }
 
+    private void initializeUIElements() {
+        // Create the necessary UI elements dynamically
+        checkAnswerButton = new Button("Check Answer");
+        skipNextButton = new Button("Skip Next");
+        restartButton = new Button("Restart");
+        settingsButton = new Button("Settings");
+        practiceMenuButton = new Button("Practice Menu");
+        mainMenuButton = new Button("Main Menu");
+        showLetterButton = new Button("Show Character");
+        paddleModeButton = new Button("Paddle Mode");
+        straightKeyModeButton = new Button("Straight Key Mode");
+        cwInputTextField = new TextField();
+
+        // Add handlers for buttons
+        checkAnswerButton.setOnAction(e -> checkAnswer());
+        skipNextButton.setOnAction(e -> handleSkipNextButton());
+        restartButton.setOnAction(e -> restartAlphabet());
+        settingsButton.setOnAction(e -> {
+            try {
+                handleSettingsButton();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        practiceMenuButton.setOnAction(e -> {
+            try {
+                handlePracticeMenuButton();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        mainMenuButton.setOnAction(e -> {
+            try {
+                handleMainMenuButton();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        showLetterButton.setOnAction(e -> handleShowLetter());
+        paddleModeButton.setOnAction(e -> handlePaddleMode());
+        straightKeyModeButton.setOnAction(e -> handleStraightKeyMode());
+
+        // Add elements to rightVBox
+        rightVBox.getChildren().addAll(
+                checkAnswerButton,
+                skipNextButton,
+                restartButton,
+                settingsButton,
+                practiceMenuButton,
+                mainMenuButton,
+                showLetterButton,
+                paddleModeButton,
+                straightKeyModeButton,
+                cwInputTextField,
+                currentLetterTextFlow,  // Make sure the current letter flow is added
+                previousTranslationsScrollPane // Add ScrollPane as well
+        );
+    }
 
     public void generateRandomOrder() {
         List<Map.Entry<String, String>> cwAlphabetList = new ArrayList<>(MorseCodeTranslator.getCwAlphabet().entrySet());
@@ -97,7 +190,6 @@ public class AlphabetGameController implements MorseCodeOutput{
 
             cwAlphabetList.remove(randIndex);
         }
-
     }
 
     @FXML
@@ -116,7 +208,6 @@ public class AlphabetGameController implements MorseCodeOutput{
         letter.setStyle("-fx-font-size: 25px;");
         TextFlow letterToDisplay = new TextFlow(letter);
 
-        // Add the new TextFlows to the VBox container
         HBox translationPair = new HBox(10); // To display the two TextFlows side by side
 
         checkedInputList.add(checkedUserInput);
@@ -128,12 +219,8 @@ public class AlphabetGameController implements MorseCodeOutput{
             translationPair.getChildren().addAll(checkedUserInput);
         }
 
-        // Add spacing and style if needed
         translationPair.setSpacing(20); // Spacing between the user input and correct translation
-
         translationsContainer.getChildren().add(translationPair);
-
-        // Ensure the scroll pane scrolls to the bottom after adding new content
         previousTranslationsScrollPane.layout();
         previousTranslationsScrollPane.setVvalue(1.0);
 
@@ -149,9 +236,6 @@ public class AlphabetGameController implements MorseCodeOutput{
 
         generateNewLetter();
         correctAnswer = false;
-
-        // For Testing
-        System.out.println("numCorrect - " + numCorrect);
     }
 
     @FXML
@@ -159,11 +243,6 @@ public class AlphabetGameController implements MorseCodeOutput{
         if (!cwStack.isEmpty() || !letterStack.isEmpty()) {
             currentCW = cwStack.pop();
             currentLetter = letterStack.pop();
-
-            // For Testing
-            System.out.println(currentCW);
-            System.out.println(currentLetter);
-
         } else {
             currentCW = "";
             currentLetter = "Done";
@@ -196,7 +275,7 @@ public class AlphabetGameController implements MorseCodeOutput{
             currentLetterTextFlow.getChildren().clear();
 
             translationsContainer.getChildren().clear();
-            for( int i = 0; i < checkedInputList.size(); i++) {
+            for (int i = 0; i < checkedInputList.size(); i++) {
                 HBox translationPair = new HBox(10); // To display the two TextFlows side by side
                 translationPair.getChildren().addAll(checkedInputList.get(i));
                 translationPair.setSpacing(20); // Spacing between the user input and correct translation
@@ -210,7 +289,7 @@ public class AlphabetGameController implements MorseCodeOutput{
             currentLetterTextFlow.getChildren().add(currentLetterText);
 
             translationsContainer.getChildren().clear();
-            for( int i = 0; i < checkedInputList.size(); i++) {
+            for (int i = 0; i < checkedInputList.size(); i++) {
                 HBox translationPair = new HBox(10); // To display the two TextFlows side by side
                 translationPair.getChildren().addAll(checkedLetterList.get(i), checkedInputList.get(i));
                 translationPair.setSpacing(20); // Spacing between the user input and correct translation
@@ -220,7 +299,6 @@ public class AlphabetGameController implements MorseCodeOutput{
             showLetterButton.setText("Hide Character");
         }
 
-        // Ensure the scroll pane scrolls to the bottom after adding new content
         previousTranslationsScrollPane.layout();
         previousTranslationsScrollPane.setVvalue(1.0);
     }
@@ -234,7 +312,6 @@ public class AlphabetGameController implements MorseCodeOutput{
     private void handlePaddleMode() {
         paddleModeButton.setDisable(true);
         straightKeyModeButton.setDisable(false);
-        //currentModeLabel.setText("Current Mode - Paddle");
 
         radioFunctions.stopTypingMode();
         radioFunctions.setTypingOutputController(this);
@@ -245,7 +322,6 @@ public class AlphabetGameController implements MorseCodeOutput{
     private void handleStraightKeyMode() {
         paddleModeButton.setDisable(false);
         straightKeyModeButton.setDisable(true);
-        //currentModeLabel.setText("Current Mode - Straight Key");
 
         radioFunctions.stopTypingMode();
         radioFunctions.setTypingOutputController(this);
@@ -260,17 +336,11 @@ public class AlphabetGameController implements MorseCodeOutput{
                 cwInputTextField.setText(currentText + "/");
             }
         } else if (cwChar.equals(" ")) {
-            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != ' ' && currentText.charAt(currentText.length() - 1) != '/') {
+            if (!currentText.isEmpty() && currentText.charAt(currentText.length() - 1) != ' ') {
                 cwInputTextField.setText(currentText + " ");
             }
         } else {
             cwInputTextField.setText(currentText + cwChar);
         }
     }
-
-    @FXML
-    private void clearInput() {
-        cwInputTextField.clear();
-    }
-
 }

@@ -1,27 +1,37 @@
 /* Style for the top HBox */
 .top-hbox {
-    -fx-background-color: black; /* Black background */
+    -fx-background-image: url("/textures/Solid_black_texture.png"); /* Texture as background */
+    -fx-background-repeat: repeat; /* Repeat the texture */
     -fx-alignment: center;
     -fx-padding: 10px;
 }
 
 /* Style for the bottom HBox */
 .bottom-hbox {
-    -fx-background-color: black; /* Black background */
+    -fx-background-image: url("/textures/Solid_black_texture.png"); /* Texture as background */
+    -fx-background-repeat: repeat; /* Repeat the texture */
     -fx-padding: 20px;
     -fx-alignment: center;
 }
 
 /* Style for the right VBox */
 .right-vbox {
-    -fx-background-color: black; /* Black background */
+    -fx-background-image: url("/textures/GrateTexture.png"); /* Texture as background */
+    -fx-background-repeat: repeat; /* Repeat the texture */
     -fx-padding: 10px;
 }
 
 /* Style for the center TextArea */
-.center-text-area .content {
-    -fx-background-color: grey;
+.center-text-area {
+    -fx-background-image: url("/textures/ScreenTexture.png"); /* Texture as background */
+    -fx-background-repeat: repeat; /* Repeat the texture */
     -fx-border-color: #ccc; /* Light border color */
+}
+
+/* Ensuring the TextArea's internal background is also textured */
+.center-text-area .content {
+    -fx-background-image: url("/textures/ScreenTexture.png"); /* Texture as background */
+    -fx-background-repeat: repeat; /* Repeat the texture */
 }
 
 /* General button styles (if needed for buttons or custom elements) */
