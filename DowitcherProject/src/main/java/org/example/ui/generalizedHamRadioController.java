@@ -1,94 +1,50 @@
 package org.example.ui;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
-import javafx.stage.Popup;
+import javafx.scene.layout.HBox;
 import org.example.App;
 
 import java.io.IOException;
 
 public abstract class generalizedHamRadioController {
+    protected Button settingsButton;
+    protected Button menuButton;
+    protected HBox topHBox;
 
-    // Default Buttons
-    @FXML private Button backButton;
-    @FXML private ImageView backImage;
-    @FXML private Button settingsButton;
-    @FXML private ImageView settingsImage;
+    public generalizedHamRadioController() {
+        settingsButton = new Button("Settings");
+        menuButton = new Button("Menu");
+        topHBox = new HBox();
 
-    // Dynamic UI elements
-    @FXML private TextArea mainTextArea;
-    @FXML private Text modeTitleText;
+        initializeMenuSettingsButtons();
+    }
 
-    private Popup settingsPopup; // Popup instance for settings
+    protected void initializeMenuSettingsButtons() {
+        // Initialize menu button
+        menuButton.setOnAction(event -> goToMainMenu());
 
-    /**
-     * Initializes the view with the given mode title.
-     *
-     * @param modeTitle The title of the mode (e.g., "Alphabet Game").
-     */
-    public void initializeMode(String modeTitle) {
-        // Update the mode title text
-        modeTitleText.setText("Mode: " + modeTitle);
+        // Initialize settings button
+        settingsButton.setOnAction(event -> goToSettingsMenu());
 
-        // Add logic to update other UI elements based on the mode
-        switch (modeTitle) {
-            case "Alphabet Game":
-                mainTextArea.setText("Welcome to the Alphabet Game! Practice your CW alphabet here.");
-                break;
-            case "Listening Game":
-                mainTextArea.setText("Listening Game activated. Sharpen your CW decoding skills!");
-                break;
-            case "Tuning Game":
-                mainTextArea.setText("Tune into the correct frequencies in the Tuning Game.");
-                break;
-            case "Typing Game":
-                mainTextArea.setText("Enhance your CW typing accuracy with the Typing Game.");
-                break;
-            default:
-                mainTextArea.setText("Welcome to the Generalized Ham Radio View!");
+        // Add buttons to topHBox
+        topHBox.getChildren().clear();
+        topHBox.getChildren().addAll(menuButton, settingsButton);
+    }
+
+    // Shared logic for navigation buttons
+    protected void goToMainMenu() {
+        try {
+            App.homeScreenView();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    // Navigation: Back button
-    @FXML
-    void back(ActionEvent event) throws IOException {
-        App.back();
-    }
-
-    // Settings button popup handler
-    @FXML
-    void handleSettingsButton(ActionEvent event) {
-        if (settingsPopup == null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("SettingsPopup.fxml"));
-                Parent settingsContent = loader.load();
-
-                settingsPopup = new Popup();
-                settingsPopup.getContent().add(settingsContent);
-
-                settingsPopup.setAutoHide(true);
-                settingsPopup.setHideOnEscape(true);
-
-                settingsPopup.show(settingsButton.getScene().getWindow(),
-                        settingsButton.getLayoutX() + settingsButton.getWidth(),
-                        settingsButton.getLayoutY() + settingsButton.getHeight());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            if (settingsPopup.isShowing()) {
-                settingsPopup.hide();
-            } else {
-                settingsPopup.show(settingsButton.getScene().getWindow(),
-                        settingsButton.getLayoutX() + settingsButton.getWidth(),
-                        settingsButton.getLayoutY() + settingsButton.getHeight());
-            }
+    protected void goToSettingsMenu() {
+        try {
+            App.settingsPopupView();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

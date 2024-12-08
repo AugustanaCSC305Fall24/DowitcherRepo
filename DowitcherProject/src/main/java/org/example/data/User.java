@@ -114,8 +114,8 @@ public class User implements Serializable {
         this.cwSpeed = cwSpeed;
     }
 
-    public void setVolume(double volume) {
-        this.volume = volume;
+    public static void setVolume(double newVol) {
+        volume = newVol;
     }
 
     public void setStaticAmount(double staticAmount) {

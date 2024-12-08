@@ -15,7 +15,7 @@ import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.Random;
 
-public class TuningGameController extends generalizedHamRadioController {
+public class TuningGameController  {
 
     @FXML
     private VBox rightVBox;

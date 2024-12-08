@@ -66,4 +66,8 @@ public class SettingsController {
         System.out.println("Saving user data and exiting..."); // Optional logging
         Platform.exit(); // Exits the application
     }
+
+    public void handleExitButton(ActionEvent actionEvent) {
+        App.exitProgram();
+    }
 }

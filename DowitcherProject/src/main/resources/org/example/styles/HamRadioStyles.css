@@ -1,40 +1,30 @@
 /* Style for the top HBox */
 .top-hbox {
-    -fx-background-image: url("/textures/Solid_black_texture.png"); /* Texture as background */
-    -fx-background-repeat: repeat; /* Repeat the texture */
+    -fx-background-color: #333; /* Dark background for the top section */
     -fx-alignment: center;
     -fx-padding: 10px;
 }
 
 /* Style for the bottom HBox */
 .bottom-hbox {
-    -fx-background-image: url("/textures/Solid_black_texture.png"); /* Texture as background */
-    -fx-background-repeat: repeat; /* Repeat the texture */
+    -fx-background-color: #333; /* Dark background for the bottom section */
     -fx-padding: 20px;
     -fx-alignment: center;
 }
 
 /* Style for the right VBox */
 .right-vbox {
-    -fx-background-image: url("/textures/GrateTexture.png"); /* Texture as background */
-    -fx-background-repeat: repeat; /* Repeat the texture */
+    -fx-background-color: #444; /* Dark background for the right section */
     -fx-padding: 10px;
 }
 
 /* Style for the center TextArea */
 .center-text-area {
-    -fx-background-image: url("/textures/ScreenTexture.png"); /* Texture as background */
-    -fx-background-repeat: repeat; /* Repeat the texture */
+    -fx-background-color: #f4f4f4; /* Light background */
     -fx-border-color: #ccc; /* Light border color */
 }
 
-/* Ensuring the TextArea's internal background is also textured */
-.center-text-area .content {
-    -fx-background-image: url("/textures/ScreenTexture.png"); /* Texture as background */
-    -fx-background-repeat: repeat; /* Repeat the texture */
-}
-
-/* General button styles (if needed for buttons or custom elements) */
+/* General button styles */
 .custom-button {
     -fx-background-color: #4CAF50; /* Green background */
     -fx-text-fill: white;
@@ -46,4 +36,74 @@
 
 .custom-button:hover {
     -fx-background-color: #45a049; /* Darker green on hover */
+}
+
+/* Style for sliders */
+.slider {
+    -fx-background-color: #666; /* Darker background for sliders */
+    -fx-base: #888; /* Slider thumb color */
+    -fx-border-color: #ccc; /* Light border color */
+    -fx-padding: 5px;
+}
+
+/* Slider values */
+.slider .track {
+    -fx-background-color: #555; /* Track color */
+}
+
+.slider .thumb {
+    -fx-background-color: #4CAF50; /* Green thumb */
+}
+
+/* Style for text fields */
+.text-field {
+    -fx-font-size: 14px;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #ccc;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+}
+
+/* Style for text areas */
+.text-area {
+    -fx-font-size: 16px;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #ccc;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+/* Style for labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Specific button styles for Paddle and Straight Key Modes */
+.paddle-mode-button, .straight-key-mode-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.paddle-mode-button:hover, .straight-key-mode-button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Style for the menu and settings buttons */
+.menu-button, .settings-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.menu-button:hover, .settings-button:hover {
+    -fx-background-color: #45a049;
 }
