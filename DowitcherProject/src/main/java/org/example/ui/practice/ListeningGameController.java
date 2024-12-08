@@ -2,6 +2,8 @@ package org.example.ui.practice;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -16,6 +18,8 @@ import java.util.*;
 public class ListeningGameController {
 
     @FXML private VBox rightVBox;
+    @FXML private HBox  topHBox;
+    @FXML private BorderPane mainBorderPane;
 
     private Button mainMenuButton;
     private Button playPauseAudioButton;
@@ -36,6 +40,9 @@ public class ListeningGameController {
     private final List<TextFlow> userInputsList = new ArrayList<>();
     private final Random random = new Random();
 
+    // Room Name
+    private final String ROOM_NAME = "Practice Listening";
+
     @FXML
     public void initialize() {
         if (rightVBox == null) {
@@ -49,10 +56,12 @@ public class ListeningGameController {
 
     private void initializeUIElements() {
         // Initialize buttons
+        topHboxInitialized();
+
         mainMenuButton = new Button("Main Menu");
         mainMenuButton.setOnAction(e -> switchToMainMenu());
 
-        playPauseAudioButton = new Button("Play");
+        playPauseAudioButton = new Button("Play Audio");
         playPauseAudioButton.setOnAction(e -> {
             try {
                 playPauseAudio();
@@ -61,7 +70,7 @@ public class ListeningGameController {
             }
         });
 
-        restartAudioButton = new Button("Restart");
+        restartAudioButton = new Button("Restart Audio");
         restartAudioButton.setOnAction(e -> {
             try {
                 restartAudio();
@@ -80,15 +89,45 @@ public class ListeningGameController {
         userInputDisplay = new TextFlow();
         feedbackLabel = new Label();
 
+        mainBorderPane.setCenter(userInputDisplay);
+
         // Add components to the right VBox
         rightVBox.getChildren().addAll(
-                new Label("Practice Listening"),
-                mainMenuButton, playPauseAudioButton, restartAudioButton,
+                playPauseAudioButton, restartAudioButton,
                 newAudioButton, checkTranslationButton,
-                new Label("Your Input: "), userInputTextField,
-                new Label("Feedback: "), feedbackLabel,
-                new Label("Previous Inputs: "), userInputDisplay
+                new Label("Your Input: "), userInputTextField
         );
+    }
+
+    private void topHboxInitialized() {
+        if (topHBox == null) {
+            topHBox = new HBox();
+        }
+
+        // Create the "Settings" button
+        Button settingsButton = new Button("Settings");
+        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton));
+        settingsButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Create the "Menu" button
+        Button menuButton = new Button("Menu");
+        menuButton.setOnAction(event -> {
+            try {
+                App.homeScreenView();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to return to home screen", e);
+            }
+        });
+        menuButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+
+        // Add the buttons to the topHBox
+        topHBox.getChildren().clear();
+        topHBox.getChildren().addAll(menuButton, settingsButton);
+
+        // Ensure topHBox has the expected components before adding "AI Chat" label
+        Label screenName = new Label(ROOM_NAME);
+        screenName.getStyleClass().add("label"); // Apply label style from the CSS
+        topHBox.getChildren().add(1, screenName); // Insert label between menu and settings buttons
     }
 
     private void switchToMainMenu() {
@@ -118,7 +157,7 @@ public class ListeningGameController {
 
     private void checkTranslation() {
         String userTranslation = userInputTextField.getText();
-        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, cwMessage, "16"));
+        List<Object> checkedList = new ArrayList<>(RadioFunctions.checkTranslation(userTranslation, cwMessage, "42"));
         TextFlow checkedUserInput = (TextFlow) checkedList.get(0);
 
         // Update user inputs
