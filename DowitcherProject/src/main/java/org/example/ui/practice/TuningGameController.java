@@ -37,6 +37,7 @@ public class TuningGameController  {
     private Label feedbackLabel;
     private Button transmitButton;
     private Button resetButton;
+    private Button staticButton;
 
     private static final double MIN_FREQUENCY = 7.000; // MHz
     private static final double MAX_FREQUENCY = 7.067; // MHz
@@ -47,6 +48,7 @@ public class TuningGameController  {
     private String testSound = "... --- ...";
     private boolean isMatched;
     private boolean isPlaying = true;
+    private boolean isStaticPlaying = false;
 
     private Sound sound = new Sound();
     private Thread staticThread;
@@ -84,8 +86,6 @@ public class TuningGameController  {
         // Start sound and static threads
         isPlaying = true;
         playSound(testSound);
-        double initialVolume = getStaticVolume();
-        playStatic(initialVolume);
     }
 
     private void initializeUIElements() {
@@ -98,11 +98,13 @@ public class TuningGameController  {
         feedbackLabel = new Label();
         feedbackLabel.setStyle("-fx-text-fill: green;");
         transmitButton = new Button("Transmit");
+        staticButton = new Button("Play Static");
         resetButton = new Button("Reset");
         backButton = new Button("Back");
 
         // Set button actions
         transmitButton.setOnAction(e -> onTransmit());
+        staticButton.setOnAction(e -> handleStatic());
         resetButton.setOnAction(e -> onReset());
         backButton.setOnAction(e -> {
             try {
@@ -119,7 +121,7 @@ public class TuningGameController  {
 
         // Create the side button box (if needed)
         HBox sideButtonsBox = new HBox();
-        sideButtonsBox.getChildren().addAll(backButton, transmitButton, resetButton);
+        sideButtonsBox.getChildren().addAll(backButton, transmitButton, staticButton, resetButton);
         sideButtonsBox.setStyle("-fx-alignment: center; -fx-spacing: 10px; -fx-padding: 10px;");
 
         // Add components to the right VBox
@@ -128,6 +130,19 @@ public class TuningGameController  {
                 new Label("Filter Width (KHz)"), filterWidthSlider, filterLabel,
                 targetFrequencyLabel, feedbackLabel);
 
+    }
+
+    private void handleStatic() {
+        if (isStaticPlaying) {
+            staticButton.setText("Play Static");
+            staticThread.interrupt();
+            sound.setIsStaticPlaying(false);
+            isStaticPlaying = false;
+        } else {
+            staticButton.setText("Pause Static");
+            playStatic(getStaticVolume());
+            isStaticPlaying = true;
+        }
     }
 
     @FXML
