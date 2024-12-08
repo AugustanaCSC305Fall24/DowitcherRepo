@@ -64,13 +64,15 @@ public class PracticeTalkingController implements MorseCodeOutput {
         chatLogTextArea = new TextArea();
         chatLogTextArea.setPrefHeight(300);
         chatLogTextArea.setEditable(false);
+        chatLogTextArea.setWrapText(true);  // Enable text wrapping for better readability
 
-        // Initialize sliders
+        // Initialize sliders and make them horizontal
         if (frequencySlider == null) {
             frequencySlider = new Slider(0, 100, 50);
             frequencySlider.setBlockIncrement(1);
             frequencySlider.setShowTickLabels(true);
             frequencySlider.setShowTickMarks(true);
+            frequencySlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
             frequencySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
                 try {
                     handleNearbyBotDetection(newValue.doubleValue());
@@ -78,6 +80,23 @@ public class PracticeTalkingController implements MorseCodeOutput {
                     throw new RuntimeException(e);
                 }
             });
+        }
+
+        if (filterSlider == null) {
+            filterSlider = new Slider(0, 1, 0.5);
+            filterSlider.setShowTickLabels(true);
+            filterSlider.setShowTickMarks(true);
+            filterSlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
+        }
+
+        // Initialize input text field and send button
+        if (cwInputTextField == null) {
+            cwInputTextField = new TextField();
+        }
+
+        if (sendButton == null) {
+            sendButton = new Button("Send");
+            sendButton.setOnAction(event -> handleSendButton());
         }
 
         // Initialize buttons
@@ -91,31 +110,35 @@ public class PracticeTalkingController implements MorseCodeOutput {
             straightKeyModeButton.setOnAction(event -> handleStraightKeyMode());
         }
 
-        if (sendButton == null) {
-            sendButton = new Button("Send");
-            sendButton.setOnAction(event -> handleSendButton());
-        }
+        // Create "Go to Main Menu" button
+        Button mainMenuButton = new Button("Go to Main Menu");
+        mainMenuButton.setOnAction(event -> {
+            try {
+                App.homeScreenView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        // Initialize text fields
-        if (cwInputTextField == null) {
-            cwInputTextField = new TextField();
-        }
+        // Create "Go to Add/Edit/Remove Bot" button
+        Button botManagementButton = new Button("Go to Bot Management");
+        botManagementButton.setOnAction(event -> {
+            try {
+                App.botView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        // Initialize filterSlider
-        if (filterSlider == null) {
-            filterSlider = new Slider(0, 1, 0.5);
-            filterSlider.setShowTickLabels(true);
-            filterSlider.setShowTickMarks(true);
-        }
-
-        // Add elements to rightVBox and bottomHBox
+        // Add elements to rightVBox
         rightVBox.getChildren().clear();
-        rightVBox.getChildren().addAll(roomTitleLabel, chatLogTextArea, frequencySlider);
+        rightVBox.getChildren().addAll(roomTitleLabel, chatLogTextArea, filterSlider, frequencySlider, cwInputTextField, sendButton);
 
+        // Add elements to bottomHBox
         bottomHBox.getChildren().clear();
-        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, sendButton);
+        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, mainMenuButton, botManagementButton);
 
-        // Initialize other UI elements
+        // Initialize mainTextArea (now chatLogTextArea) with welcome message
         mainTextArea.setText("Welcome to Practice Talking. Start by sending a message.\n");
     }
 
