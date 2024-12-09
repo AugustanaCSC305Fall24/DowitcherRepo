@@ -54,7 +54,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML(MAIN_VIEWS_PATH + "LoginView.fxml"), 640, 480);
         stage.setScene(scene);
-        stage.setFullScreen(true);
+        stage.setFullScreen(false);
+        stage.setMaximized(true);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(null);
         stage.show();
@@ -146,30 +147,6 @@ public class App extends Application {
         Platform.exit();
     }
 
-    public static void setBackgroundImage(String imagePath) {
-        InputStream imageStream = App.class.getResourceAsStream("/" + imagePath);
-        if (imageStream == null) {
-            System.err.println("Error: Image not found at path " + imagePath);
-            return;
-        }
-
-        Image backgroundImage = new Image(imageStream);
-        BackgroundImage background = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT
-        );
-
-        Node root = getScene().getRoot();
-        if (root instanceof VBox) {
-            ((VBox) root).setBackground(new Background(background));
-        } else {
-            System.err.println("Unsupported layout type for background: " + root.getClass().getSimpleName());
-        }
-    }
-
     public static void togglePopup(String fxmlFile, Node anchorNode) {
         try {
             Stage popupStage = (Stage) POPUP_MAP.get(fxmlFile);
@@ -257,6 +234,4 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-
-
 }
