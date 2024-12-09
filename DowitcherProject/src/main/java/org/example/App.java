@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +34,7 @@ public class App extends Application {
     private static Scene scene;
     public static User currentUser;
     private static final Map<String, Object> CONTROLLER_MAP = new HashMap<>();
-    private static final Map<String, Popup> POPUP_MAP = new HashMap<>();
+    private static final Map<String, Object> POPUP_MAP = new HashMap<>();
 
     // Paths for organized FXML files
     private static final String MAIN_VIEWS_PATH = "org/example/mainviews/";
@@ -170,26 +172,27 @@ public class App extends Application {
 
     public static void togglePopup(String fxmlFile, Node anchorNode) {
         try {
-            Popup popup = POPUP_MAP.get(fxmlFile);
+            Stage popupStage = (Stage) POPUP_MAP.get(fxmlFile);
 
             // If the popup isn't initialized, create it
-            if (popup == null) {
+            if (popupStage == null) {
                 var resource = App.class.getResource("/" + POPUP_VIEWS_PATH + fxmlFile);
                 if (resource == null) {
                     throw new IOException("FXML file not found for popup: " + fxmlFile);
                 }
                 FXMLLoader loader = new FXMLLoader(resource);
                 Parent content = loader.load();
-                popup = new Popup();
-                popup.getContent().add(content);
-                popup.setAutoHide(true);
-                popup.setHideOnEscape(true);
-                POPUP_MAP.put(fxmlFile, popup);
+                popupStage = new Stage(StageStyle.DECORATED); // Adds decorations
+                popupStage.setScene(new Scene(content));
+                popupStage.initModality(Modality.NONE); // Allows interaction with other windows
+                popupStage.setTitle("Popup - " + fxmlFile); // Optional title
+                popupStage.setOnCloseRequest(e -> POPUP_MAP.remove(fxmlFile)); // Cleanup on close
+                POPUP_MAP.put(fxmlFile, popupStage);
             }
 
             // Toggle popup visibility
-            if (popup.isShowing()) {
-                popup.hide();
+            if (popupStage.isShowing()) {
+                popupStage.hide();
             } else {
                 // Get screen coordinates for popup placement
                 Window window = anchorNode.getScene().getWindow();
@@ -198,19 +201,23 @@ public class App extends Application {
                 double yPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMaxY()
                         + window.getY() + 10;
 
-                popup.show(window, xPos, yPos);
+                popupStage.setX(xPos);
+                popupStage.setY(yPos);
+                popupStage.show();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
     public static void togglePopupWithScroll(String fxmlFile, Button triggerButton, double width, double height) {
         try {
-            Popup popup = POPUP_MAP.get(fxmlFile);
+            // Retrieve existing stage from the map
+            Stage popupStage = (Stage) POPUP_MAP.get(fxmlFile);
 
             // If the popup isn't initialized, create it
-            if (popup == null) {
+            if (popupStage == null) {
                 var resource = App.class.getResource("/" + POPUP_VIEWS_PATH + fxmlFile);
                 if (resource == null) {
                     throw new IOException("FXML file not found for popup: " + fxmlFile);
@@ -225,27 +232,31 @@ public class App extends Application {
                 scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
                 scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-                popup = new Popup();
-                popup.getContent().add(scrollPane);
-                popup.setAutoHide(true);
-                popup.setHideOnEscape(true);
-
-                POPUP_MAP.put(fxmlFile, popup);
+                popupStage = new Stage(StageStyle.DECORATED); // Add window decorations (title bar, close button)
+                popupStage.setScene(new Scene(scrollPane));
+                popupStage.initModality(Modality.NONE); // Allows interaction with other windows
+                popupStage.setTitle("Popup - " + fxmlFile); // Optional title
+                popupStage.setOnCloseRequest(e -> POPUP_MAP.remove(fxmlFile)); // Cleanup on close
+                POPUP_MAP.put(fxmlFile, popupStage);
             }
 
             // Toggle popup visibility
-            if (popup.isShowing()) {
-                popup.hide();
+            if (popupStage.isShowing()) {
+                popupStage.hide();
             } else {
                 // Get screen coordinates for popup placement
                 Window window = triggerButton.getScene().getWindow();
                 double xPos = triggerButton.localToScene(triggerButton.getBoundsInLocal()).getMinX() + window.getX();
                 double yPos = triggerButton.localToScene(triggerButton.getBoundsInLocal()).getMaxY() + window.getY() + 10;
 
-                popup.show(window, xPos, yPos);
+                popupStage.setX(xPos);
+                popupStage.setY(yPos);
+                popupStage.show();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }

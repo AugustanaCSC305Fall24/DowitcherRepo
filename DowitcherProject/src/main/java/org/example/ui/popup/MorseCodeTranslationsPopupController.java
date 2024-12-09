@@ -15,7 +15,6 @@ public class MorseCodeTranslationsPopupController {
 
     @FXML public void initialize() {
         closeButton.setOnAction(e -> closePopup());
-
     }
 
     private void closePopup() {

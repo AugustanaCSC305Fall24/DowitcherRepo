@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 <?import java.net.URL?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20.0"
-      xmlns="http://javafx.com/javafx/22"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.ui.popup.CWAcronymsPopupController"
-      style="-fx-background-color: #333333; -fx-padding: 10px;">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: #333333; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.CWAcronymsPopupController">
 
     <stylesheets>
         <URL value="@../styles/translation-label.css" />
     </stylesheets>
 
     <children>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CW Acronyms">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Text>
+        <!-- Title for the Popup -->
+        <Label styleClass="title-label" text="CW Acronyms" />
 
-        <VBox fx:id="acronymsContainer" spacing="10.0" style="-fx-padding: 5;">
+        <!-- Container for CW Acronyms and their meanings -->
+        <VBox fx:id="acronymsContainer" alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="10.0" style="-fx-padding: 5;">
+            <!-- Acronyms and their meanings -->
+            <Label styleClass="translation-label" text="CQ - Calling any station" />
+            <Label styleClass="translation-label" text="DE - From" />
+            <Label styleClass="translation-label" text="QTH - Location" />
+            <Label styleClass="translation-label" text="RST - Readability, Signal Strength, Tone" />
+            <Label styleClass="translation-label" text="QSL - Acknowledgment of receipt" />
+            <Label styleClass="translation-label" text="QRZ? - Who is calling me?" />
+            <Label styleClass="translation-label" text="QRL? - Is the frequency in use?" />
+            <Label styleClass="translation-label" text="73 - Best regards" />
+            <Label styleClass="translation-label" text="88 - Love and kisses" />
+            <Label styleClass="translation-label" text="QSB - Fading" />
+            <Label styleClass="translation-label" text="QRP - Low power transmission" />
+            <Label styleClass="translation-label" text="QSY - Change frequency" />
+            <Label styleClass="translation-label" text="QSO - A communication or contact" />
+            <Label styleClass="translation-label" text="QRM - Interference from other stations" />
+            <Label styleClass="translation-label" text="QRN - Static interference" />
+            <Label styleClass="translation-label" text="QRX - Will call you later" />
+            <Label styleClass="translation-label" text="QRV - Ready to receive" />
+            <Label styleClass="translation-label" text="QRO - Increase power" />
+            <Label styleClass="translation-label" text="SK - Silent key (a deceased operator)" />
         </VBox>
 
-        <Button fx:id="closeButton" text="Close" styleClass="custom-button" />
+        <!-- Close Button -->
+        <Button fx:id="closeButton" styleClass="custom-button" text="Close" />
     </children>
 </VBox>
