@@ -376,6 +376,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
 
     private void handleStatic() {
         if (isStaticPlaying) {
+            staticButton.setText("Play Static");
             stopStatic();
         } else {
             staticButton.setText("Pause Static");
