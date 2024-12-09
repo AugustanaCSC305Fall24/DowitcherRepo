@@ -80,6 +80,18 @@
     -fx-font-weight: bold;
 }
 
+.popup-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.popup-title{
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
 /* Specific button styles for Paddle and Straight Key Modes */
 .paddle-mode-button, .straight-key-mode-button {
     -fx-background-color: #4CAF50;

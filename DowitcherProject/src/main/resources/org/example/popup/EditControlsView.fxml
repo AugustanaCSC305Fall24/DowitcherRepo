@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="347.0" spacing="3.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.ControlsHotkeysPopupController">
+   <stylesheets>
+      <URL value="@../styles/HomeScreenStyles.css" />
+   </stylesheets>
+
+   <children>
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-title" text="Controls">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER" prefHeight="250.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="332.0" prefWidth="99.0" spacing="35.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Exit Program" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Settings" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Dah (Long)" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Dit (Short)" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="StraightKey" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Frequency Up" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Frequency Down" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Filter Up" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="popup-label" text="Filter Down" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="83.0" spacing="25.0">
+               <children>
+                  <TextField fx:id="exitKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="settingsKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="dahKeyField" editable="false" prefHeight="25.0" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="ditKeyField" editable="false" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="straightKeyField" editable="false" styleClass="text-field" />
+                  <TextField fx:id="frequencyUpTextField" editable="false" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="frequencyDownTextField" editable="false" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="filterUpTextField" editable="false" prefWidth="50.0" styleClass="text-field" />
+                  <TextField fx:id="filterDownTextField" editable="false" prefWidth="50.0" styleClass="text-field" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="270.0" prefWidth="195.0" spacing="10.0">
+               <children>
+                  <Button fx:id="changeExitKeyButton" mnemonicParsing="false" onAction="#handleChangeExitKeyButton" styleClass="custom-button" text="Change Exit Key" />
+                  <Button fx:id="changeSettingsKeyButton" mnemonicParsing="false" onAction="#handleChangeSettingsKeyButton" styleClass="custom-button" text="Change Settings Key" />
+                  <Button fx:id="changeDahKeyButton" mnemonicParsing="false" onAction="#handleChangeDahKeyButton" styleClass="custom-button" text="Change Dah Key" />
+                  <Button fx:id="changeDitKeyButton" mnemonicParsing="false" onAction="#handleChangeDitKeyButton" styleClass="custom-button" text="Change Dit Key" />
+                  <Button fx:id="changeStraightKeyButton" mnemonicParsing="false" onAction="#handleChangeStraightKeyButton" styleClass="custom-button" text="Change Straight Key" />
+                  <Button fx:id="changeFrequencyUpKeyButton" mnemonicParsing="false" onAction="#handleChangeFrequencyUpKeyButton" styleClass="custom-button" text="Change Frequency Up Key" />
+                  <Button fx:id="changeFrequencyDownKeyButton" mnemonicParsing="false" onAction="#handleChangeFrequencyDownKeyButton" styleClass="custom-button" text="Change Frequency Down Key" />
+                  <Button fx:id="changeFilterUpKeyChangeButton" mnemonicParsing="false" onAction="#handleChangeFilterUpKeyChangeButton" styleClass="custom-button" text="Change Filter Up Key" />
+                  <Button fx:id="changeFilterDownKeyChangeButton" mnemonicParsing="false" onAction="#handleChangeFilterDownKeyChangeButton" styleClass="custom-button" text="Change Filter Down Key" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

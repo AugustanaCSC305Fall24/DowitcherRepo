@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import java.net.URL?>
 
-<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.SettingsPopupController" style="-fx-background-color: #333333; -fx-padding: 10px;">
+<VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #333333; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.SettingsPopupController">
    <stylesheets>
       <URL value="@../styles/HomeScreenStyles.css" />
    </stylesheets>
@@ -21,11 +20,10 @@
       </Text>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CW Speed" />
       <Slider fx:id="cwSpeedSlider" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
-      <Button fx:id="showCWLettersButton" mnemonicParsing="false" onAction="#handleShowCWLettersButton" text="Morse Code Cheat Sheet" styleClass="custom-button"/>
-      <Button fx:id="showCWAcronymsButton" mnemonicParsing="false" onAction="#handleShowCWAcroymnsButton" text="CW Cheat Sheet" styleClass="custom-button"/>
-      <Button fx:id="showControlHotkeysButton" mnemonicParsing="false" onAction="#handleShowControlHotkeysButton" text="Controls Hotkey Cheat Sheet" styleClass="custom-button"/>
-      <Button fx:id="editControlsButton" mnemonicParsing="false" onAction="#handleEditControlsButton" text="Edit Controls" styleClass="custom-button"/>
-      <Button fx:id="saveButton" text="Save" onAction="#handleSaveButton" styleClass="custom-button" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0"/>
-      <Button fx:id="exitButton" text="Exit" onAction="#handleExitButton" styleClass="custom-button" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0"/>
+      <Button fx:id="showCWLettersButton" mnemonicParsing="false" onAction="#handleShowCWLettersButton" styleClass="custom-button" text="Morse Code Popup" />
+      <Button fx:id="showCWAcronymsButton" mnemonicParsing="false" onAction="#handleShowCWAcroymnsButton" styleClass="custom-button" text="CW Popup" />
+      <Button fx:id="editControlsButton" mnemonicParsing="false" onAction="#editControlsButton" styleClass="custom-button" text="Controls Popup" />
+      <Button fx:id="saveButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSaveButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Save" />
+      <Button fx:id="exitButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleExitButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Exit" />
    </children>
 </VBox>

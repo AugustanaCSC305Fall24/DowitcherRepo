@@ -3,10 +3,16 @@ package org.example.ui.popup;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
+import javafx.stage.Stage;
 import org.example.App;
+
+import java.io.IOException;
 
 public class SettingsPopupController {
     // UI Elements
@@ -15,7 +21,6 @@ public class SettingsPopupController {
     @FXML private Button showCWAcronymsButton;
     @FXML private Button saveButton;
     @FXML private Button editControlsButton;
-    @FXML private Button showControlHotkeysButton;
 
     @FXML
     public void initialize() {
@@ -45,15 +50,16 @@ public class SettingsPopupController {
         App.exitProgram();
     }
 
-    public void handleShowCWAcroymnsButton(ActionEvent actionEvent) {
+    @FXML public void handleShowCWAcroymnsButton(ActionEvent actionEvent) {
         App.togglePopupWithScroll("CWAcronymsPopup.fxml", showCWAcronymsButton, 200, 400);
     }
 
-    public void handleShowCWLettersButton(ActionEvent actionEvent) {
+    @FXML public void handleShowCWLettersButton(ActionEvent actionEvent) {
         App.togglePopupWithScroll("MorseCodeTranslationsPopup.fxml", showCWLettersButton, 200, 400);
     }
 
-    public void handleShowControlHotkeysButton(ActionEvent actionEvent) {
-        App.togglePopupWithScroll("ControlsHotkeysPopup.fxml", showControlHotkeysButton, 200, 400);
+    @FXML
+    private void editControlsButton(ActionEvent event) {
+        App.togglePopup("EditControlsView.fxml", editControlsButton);
     }
 }
