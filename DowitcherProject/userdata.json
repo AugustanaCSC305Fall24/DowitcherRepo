@@ -4,6 +4,31 @@
     "viewStack": [],
     "staticAmount": 50.0,
     "showCWLetters": true,
-    "showCWAcronyms": true
+    "showCWAcronyms": true,
+    "isStatic": false
+  },
+  {
+    "callSign": "w123w",
+    "viewStack": [],
+    "staticAmount": 50.0,
+    "showCWLetters": true,
+    "showCWAcronyms": true,
+    "isStatic": false
+  },
+  {
+    "callSign": "a123b",
+    "viewStack": [],
+    "staticAmount": 50.0,
+    "showCWLetters": true,
+    "showCWAcronyms": true,
+    "isStatic": false
+  },
+  {
+    "callSign": "w123d",
+    "viewStack": [],
+    "staticAmount": 50.0,
+    "showCWLetters": true,
+    "showCWAcronyms": true,
+    "isStatic": false
   }
 ]
