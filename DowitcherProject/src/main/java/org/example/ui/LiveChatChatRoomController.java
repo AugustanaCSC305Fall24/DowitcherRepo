@@ -137,6 +137,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
             filterSlider.setShowTickMarks(true);
             filterSlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
             filterSlider.valueProperty().addListener((observable, oldValue, newValue) -> updateMainTextArea());
+            filterSlider.valueProperty().addListener((observable, oldValue, newValue) -> adjustStaticVolume());
             filterSlider.getStyleClass().add("slider"); // Apply slider style from the CSS
         }
 
@@ -347,7 +348,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
             stopStatic();
         } else {
             staticButton.setText("Pause Static");
-            playStatic(100);
+            playStatic(getStaticVolume());
             isStaticPlaying = true;
         }
     }
@@ -364,6 +365,17 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         });
         staticThread.setDaemon(true);
         staticThread.start();
+    }
+
+    private void adjustStaticVolume() {
+        // Adjust the volume directly if the static sound is playing
+        if (isStaticPlaying && sound != null) {
+            sound.adjustVolume(getStaticVolume());
+        }
+    }
+
+    private double getStaticVolume() {
+        return (filterSlider.getValue());
     }
 
     private void stopStatic() {
