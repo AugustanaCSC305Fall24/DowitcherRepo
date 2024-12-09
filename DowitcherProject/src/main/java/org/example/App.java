@@ -161,6 +161,11 @@ public class App extends Application {
                 Parent content = loader.load();
                 popupStage = new Stage(StageStyle.DECORATED); // Adds decorations
                 popupStage.setScene(new Scene(content));
+
+                // Set the size of the popup
+                popupStage.setWidth(400);  // Set the width to 300
+                popupStage.setHeight(600); // Set the height to 600
+
                 popupStage.initModality(Modality.NONE); // Allows interaction with other windows
                 popupStage.setTitle("Popup - " + fxmlFile); // Optional title
                 popupStage.setOnCloseRequest(e -> POPUP_MAP.remove(fxmlFile)); // Cleanup on close
@@ -173,10 +178,8 @@ public class App extends Application {
             } else {
                 // Get screen coordinates for popup placement
                 Window window = anchorNode.getScene().getWindow();
-                double xPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMinX()
-                        + window.getX();
-                double yPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMaxY()
-                        + window.getY() + 10;
+                double xPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMinX() + window.getX();
+                double yPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMaxY() + window.getY() + 10;
 
                 popupStage.setX(xPos);
                 popupStage.setY(yPos);
@@ -186,7 +189,6 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-
 
     public static void togglePopupWithScroll(String fxmlFile, Button triggerButton, double width, double height) {
         try {
@@ -211,6 +213,11 @@ public class App extends Application {
 
                 popupStage = new Stage(StageStyle.DECORATED); // Add window decorations (title bar, close button)
                 popupStage.setScene(new Scene(scrollPane));
+
+                // Set the size of the popup
+                popupStage.setWidth(400);  // Set the width to 300
+                popupStage.setHeight(700); // Set the height to 600
+
                 popupStage.initModality(Modality.NONE); // Allows interaction with other windows
                 popupStage.setTitle("Popup - " + fxmlFile); // Optional title
                 popupStage.setOnCloseRequest(e -> POPUP_MAP.remove(fxmlFile)); // Cleanup on close

@@ -73,6 +73,12 @@
     -fx-border-radius: 5px;
 }
 
+.title-label {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
 /* Style for labels */
 .label {
     -fx-font-size: 14px;
