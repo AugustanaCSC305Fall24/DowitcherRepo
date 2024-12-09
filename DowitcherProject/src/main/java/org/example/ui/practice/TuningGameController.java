@@ -93,6 +93,9 @@ public class TuningGameController  {
         frequencySlider = new Slider(MIN_FREQUENCY, MAX_FREQUENCY, MIN_FREQUENCY);
         frequencyLabel = new Label(String.format("%.3f MHz", MIN_FREQUENCY));
         filterWidthSlider = new Slider(0.5, 5.0, 1.0);
+        filterWidthSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            adjustStaticVolume(); // Adjust the static volume dynamically
+        });
         filterLabel = new Label("Filter Width: 0.5 KHz");
         targetFrequencyLabel = new Label(String.format("Target Frequency: %.3f MHz", MIN_FREQUENCY));
         feedbackLabel = new Label();
@@ -183,7 +186,7 @@ public class TuningGameController  {
 
     private double getStaticVolume() {
         double sliderValue = filterWidthSlider.getValue();
-        return 1.0 - (sliderValue / 5.0);
+        return (sliderValue / 5.0);
     }
 
     private void playSound(String message) {
@@ -218,6 +221,13 @@ public class TuningGameController  {
         });
         staticThread.setDaemon(true);
         staticThread.start();
+    }
+
+    private void adjustStaticVolume() {
+        // Adjust the volume directly if the static sound is playing
+        if (isStaticPlaying && sound != null) {
+            sound.adjustVolume(getStaticVolume());
+        }
     }
 
     private int getFrequencyForSound() {

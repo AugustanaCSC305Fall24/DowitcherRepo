@@ -21,6 +21,9 @@ public class Sound {
     private Boolean isStaticPlaying = false;
     private Boolean isStraightTonePlaying = false;
 
+    private SourceDataLine sourceDataLine;
+    private FloatControl volumeControl;
+
     public static void playDit() throws LineUnavailableException {
         playTone(ditFrequency,ditDuration);
     }
@@ -114,22 +117,40 @@ public class Sound {
         isStaticPlaying = isPlaying;
         AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
-        SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
 
+        sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
         sourceDataLine.open(format);
         sourceDataLine.start();
-        adjustVolumeOfStatic(sliderVolume);
+
+        // Initialize volume control
+        volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+        setVolume(volumeControl, sliderVolume);
 
         byte[] data = new byte[1024];
-        while(isStaticPlaying) {
+        while (isStaticPlaying) {
             for (int i = 0; i < data.length; i++) {
                 data[i] = (byte) (Math.random() * 256 - 128);
             }
-
             sourceDataLine.write(data, 0, data.length);
         }
         sourceDataLine.drain();
         sourceDataLine.close();
+        sourceDataLine = null; // Clean up after stopping
+    }
+
+
+    // Helper method to set volume
+    private void setVolume(FloatControl volumeControl, double sliderVolume) {
+        float db = (float) (Math.log10(sliderVolume) * 20); // Convert linear volume to decibels.
+        volumeControl.setValue(db);
+    }
+
+    public void adjustVolume(double volume) {
+        if (sourceDataLine != null && sourceDataLine.isOpen()) {
+            FloatControl volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+            float db = (float) (Math.log10(volume) * 20); // Map volume [0.0, 1.0] to dB
+            volumeControl.setValue(db);
+        }
     }
 
     public void setIsStaticPlaying(Boolean isStaticPlaying) {
