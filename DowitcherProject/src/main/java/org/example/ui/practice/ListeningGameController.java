@@ -59,9 +59,11 @@ public class ListeningGameController {
         topHboxInitialized();
 
         mainMenuButton = new Button("Main Menu");
+        mainMenuButton.getStyleClass().add("custom-button");
         mainMenuButton.setOnAction(e -> switchToMainMenu());
 
         playPauseAudioButton = new Button("Play Audio");
+        playPauseAudioButton.getStyleClass().add("custom-button");
         playPauseAudioButton.setOnAction(e -> {
             try {
                 playPauseAudio();
@@ -71,6 +73,7 @@ public class ListeningGameController {
         });
 
         restartAudioButton = new Button("Restart Audio");
+        restartAudioButton.getStyleClass().add("custom-button");
         restartAudioButton.setOnAction(e -> {
             try {
                 restartAudio();
@@ -80,9 +83,11 @@ public class ListeningGameController {
         });
 
         checkTranslationButton = new Button("Check");
+        checkTranslationButton.getStyleClass().add("custom-button");
         checkTranslationButton.setOnAction(e -> checkTranslation());
 
         newAudioButton = new Button("New Audio");
+        newAudioButton.getStyleClass().add("custom-button");
         newAudioButton.setOnAction(e -> newAudio());
 
         userInputTextField = new TextField();

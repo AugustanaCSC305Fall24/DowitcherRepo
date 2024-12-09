@@ -128,14 +128,23 @@ public class AlphabetGameController implements MorseCodeOutput {
         topHboxInitialized();
         // Create the necessary UI elements dynamically
         checkAnswerButton = new Button("Check Answer");
+        checkAnswerButton.getStyleClass().add("custom-button");
         skipNextButton = new Button("Skip");
+        skipNextButton.getStyleClass().add("custom-button");
         restartButton = new Button("Restart Alphabet");
+        restartButton.getStyleClass().add("custom-button");
         settingsButton = new Button("Settings");
+        restartButton.getStyleClass().add("custom-button");
         practiceMenuButton = new Button("Practice Menu");
+        practiceMenuButton.getStyleClass().add("custom-button");
         mainMenuButton = new Button("Main Menu");
+        mainMenuButton.getStyleClass().add("custom-button");
         showLetterButton = new Button("Hide Character");
+        showLetterButton.getStyleClass().add("custom-button");
         paddleModeButton = new Button("Paddle Mode");
+        paddleModeButton.getStyleClass().add("custom-button");
         straightKeyModeButton = new Button("Straight Key Mode");
+        straightKeyModeButton.getStyleClass().add("custom-button");
         cwInputTextField = new TextField();
         cwInputTextField.setDisable(true);
         cwInputTextField.setOpacity(1);

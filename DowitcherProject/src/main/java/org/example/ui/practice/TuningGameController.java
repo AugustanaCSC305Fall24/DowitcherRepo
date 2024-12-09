@@ -113,8 +113,11 @@ public class TuningGameController  {
         feedbackLabel = new Label();
         feedbackLabel.setStyle("-fx-text-fill: green;");
         transmitButton = new Button("Transmit");
+        transmitButton.getStyleClass().add("custom-button");
         staticButton = new Button("Play Static");
+        staticButton.getStyleClass().add("custom-button");
         resetButton = new Button("Reset");
+        resetButton.getStyleClass().add("custom-button");
 
         // Set button actions
         transmitButton.setOnAction(e -> onTransmit());
