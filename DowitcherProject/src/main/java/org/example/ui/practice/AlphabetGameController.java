@@ -44,7 +44,7 @@ public class AlphabetGameController implements MorseCodeOutput {
     private boolean correctAnswer = false;
     private int numCorrect;
     private VBox translationsContainer = new VBox();
-    private final String textSize = "20";
+    private final String textSize = "42";
     private boolean showLetter = true;
     @FXML private RadioFunctions radioFunctions;
     private Sound sound;
@@ -100,6 +100,7 @@ public class AlphabetGameController implements MorseCodeOutput {
         currentLetterTextFlow.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
 
         currentLetterText.setFont(new Font(48));
+        currentLetterText.setStyle("-fx-fill: white;");
 
         // Initialize previousTranslationsScrollPane content
         previousTranslationsScrollPane.setContent(translationsContainer);
@@ -241,7 +242,7 @@ public class AlphabetGameController implements MorseCodeOutput {
         }
 
         Text letter = new Text(currentLetter);
-        letter.setStyle("-fx-font-size: 25px;");
+        letter.setStyle("-fx-font-size: 50px;");
         TextFlow letterToDisplay = new TextFlow(letter);
 
         HBox translationPair = new HBox(10); // To display the two TextFlows side by side

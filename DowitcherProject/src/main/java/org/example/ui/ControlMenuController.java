@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.example.App;
+import org.example.ui.popup.KeyChangePopupController;
 
 import java.io.IOException;
 import java.util.HashMap;

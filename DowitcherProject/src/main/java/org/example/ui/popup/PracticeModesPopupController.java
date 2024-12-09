@@ -1,4 +1,4 @@
-package org.example.ui;
+package org.example.ui.popup;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
