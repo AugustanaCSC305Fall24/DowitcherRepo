@@ -20,4 +20,6 @@ module org.example {
     exports org.example.ui.practice;
     exports org.example.ui.popup;
     opens org.example.ui.popup to javafx.fxml;
+    exports org.example.ui.mainviews;
+    opens org.example.ui.mainviews to javafx.fxml;
 }

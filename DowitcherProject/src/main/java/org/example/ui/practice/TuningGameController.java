@@ -1,14 +1,11 @@
 package org.example.ui.practice;
 
-import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import org.example.App;
 import org.example.data.User;
-import org.example.ui.generalizedHamRadioController;
 import org.example.utility.Sound;
 
 import javax.sound.sampled.LineUnavailableException;

@@ -4,7 +4,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.App;
-import org.example.ui.practice.MorseCodeOutput;
+import org.example.ui.MorseCodeOutput;
 import org.example.data.User;
 import javax.sound.sampled.LineUnavailableException;
 import java.util.ArrayList;

@@ -8,22 +8,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import javafx.stage.Window;
 import org.example.data.User;
-import org.example.ui.LiveChatChatRoomController;
-import org.example.ui.generalizedHamRadioController;
+import org.example.ui.mainviews.AiChatController;
+import org.example.ui.mainviews.LiveChatController;
 import org.example.ui.practice.*;
 
 /**
@@ -46,8 +42,8 @@ public class App extends Application {
         CONTROLLER_MAP.put("ListeningGameController", new ListeningGameController());
         CONTROLLER_MAP.put("TuningGameController", new TuningGameController());
         CONTROLLER_MAP.put("TypingGameController", new TypingGameController());
-        CONTROLLER_MAP.put("PracticeTalkingController", new PracticeTalkingController());
-        CONTROLLER_MAP.put("LiveChatChatRoomController", new LiveChatChatRoomController());
+        CONTROLLER_MAP.put("PracticeTalkingController", new AiChatController());
+        CONTROLLER_MAP.put("LiveChatChatRoomController", new LiveChatController());
     }
 
     @Override
@@ -84,7 +80,7 @@ public class App extends Application {
     }
 
     public static void controlMenuView() throws IOException {
-        setRoot(MAIN_VIEWS_PATH + "EditControlsView.fxml");
+        setRoot(MAIN_VIEWS_PATH + "ControlsPopup.fxml");
     }
 
     public static void homeScreenView() throws IOException {
@@ -115,8 +111,8 @@ public class App extends Application {
                 case "ListeningGameController": return new ListeningGameController();
                 case "TuningGameController": return new TuningGameController();
                 case "TypingGameController": return new TypingGameController();
-                case "PracticeTalkingController": return new PracticeTalkingController();
-                case "LiveChatChatRoomController": return new LiveChatChatRoomController();
+                case "PracticeTalkingController": return new AiChatController();
+                case "LiveChatChatRoomController": return new LiveChatController();
                 default: throw new IllegalArgumentException("Unknown controller: " + controllerName);
             }
         });
@@ -136,7 +132,7 @@ public class App extends Application {
     }
 
     public static void practiceModesPopupView() throws IOException {
-        setRoot(POPUP_VIEWS_PATH + "PracticeModesPopup.fxml");
+        setRoot(POPUP_VIEWS_PATH + "LearnModesPopup.fxml");
     }
 
     public static void keyChangePopupView() throws IOException {

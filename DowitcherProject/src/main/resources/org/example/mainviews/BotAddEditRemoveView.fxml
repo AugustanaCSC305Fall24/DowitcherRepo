@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" prefHeight="700.0" prefWidth="922.0" spacing="10.0" style="-fx-padding: 10;" styleClass="bottom-hbox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.practice.BotCreationController">
+<HBox alignment="CENTER" prefHeight="700.0" prefWidth="922.0" spacing="10.0" style="-fx-padding: 10;" styleClass="bottom-hbox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.mainviews.BotCreationController">
     <stylesheets>
         <URL value="@../styles/HamRadioStyles.css" />
     </stylesheets>

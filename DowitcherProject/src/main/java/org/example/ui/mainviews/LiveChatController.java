@@ -1,4 +1,4 @@
-package org.example.ui;
+package org.example.ui.mainviews;
 
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import org.example.App;
 import org.example.data.ChatMessage;
 import org.example.data.User;
-import org.example.ui.practice.MorseCodeOutput;
+import org.example.ui.MorseCodeOutput;
 import org.example.utility.MorseCodeTranslator;
 import org.example.utility.RadioFunctions;
 import java.io.*;
@@ -21,7 +21,7 @@ import org.example.utility.Sound;
 import javax.sound.sampled.LineUnavailableException;
 
 @ClientEndpoint
-public class LiveChatChatRoomController implements MorseCodeOutput {
+public class LiveChatController implements MorseCodeOutput {
     //Top Hbox
     @FXML private HBox topHBox;
     @FXML private Button settingsButton;

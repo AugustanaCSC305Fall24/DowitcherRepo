@@ -7,6 +7,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.App;
+import org.example.ui.MorseCodeOutput;
 import org.example.utility.RadioFunctions;
 import org.example.utility.MorseCodeTranslator;
 import org.example.utility.Sound;

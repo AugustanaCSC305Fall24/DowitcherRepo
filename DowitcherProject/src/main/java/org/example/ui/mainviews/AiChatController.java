@@ -1,15 +1,14 @@
-package org.example.ui.practice;
+package org.example.ui.mainviews;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.App;
 import org.example.data.ChatBot;
 import org.example.data.User;
-import org.example.ui.generalizedHamRadioController;
+import org.example.ui.MorseCodeOutput;
 import org.example.utility.MorseCodeTranslator;
 import org.example.utility.RadioFunctions;
 import org.example.data.RadioApiRequestHandler;
@@ -17,7 +16,7 @@ import org.example.utility.Sound;
 
 import java.io.IOException;
 
-public class PracticeTalkingController extends generalizedHamRadioController implements MorseCodeOutput {
+public class AiChatController implements MorseCodeOutput {
 
     // FXML injected elements
     @FXML private VBox rightVBox;

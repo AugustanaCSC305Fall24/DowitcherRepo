@@ -1,4 +1,4 @@
-package org.example.ui.practice;
+package org.example.ui.mainviews;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,6 @@ import org.example.data.ChatBot;
 import org.example.data.User;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class BotCreationController {
 

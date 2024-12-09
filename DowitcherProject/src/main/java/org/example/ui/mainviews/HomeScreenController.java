@@ -1,10 +1,7 @@
-package org.example.ui;
+package org.example.ui.mainviews;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,7 +32,7 @@ public class HomeScreenController {
      */
     @FXML
     void handleLearnCW(ActionEvent event) {
-        App.togglePopup("PracticeModesPopup.fxml", learnCWButton);
+        App.togglePopup("LearnModesPopup.fxml", learnCWButton);
     }
 
     /**

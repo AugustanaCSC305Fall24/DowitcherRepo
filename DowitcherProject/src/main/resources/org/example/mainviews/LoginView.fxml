@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.AccountCreationController">
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.mainviews.AccountCreationController">
    <stylesheets>
       <URL value="@../styles/HomeScreenStyles.css" />
    </stylesheets>

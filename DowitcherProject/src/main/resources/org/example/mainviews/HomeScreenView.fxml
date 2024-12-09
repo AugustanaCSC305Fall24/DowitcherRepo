@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.HomeScreenController">
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.mainviews.HomeScreenController">
    <stylesheets>
       <URL value="@../styles/HomeScreenStyles.css" />
    </stylesheets>

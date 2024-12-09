@@ -51,15 +51,15 @@ public class SettingsPopupController {
     }
 
     @FXML public void handleShowCWAcroymnsButton(ActionEvent actionEvent) {
-        App.togglePopupWithScroll("CWAcronymsPopup.fxml", showCWAcronymsButton, 200, 400);
+        App.togglePopupWithScroll("AcronymsPopup.fxml", showCWAcronymsButton, 200, 400);
     }
 
     @FXML public void handleShowCWLettersButton(ActionEvent actionEvent) {
-        App.togglePopupWithScroll("MorseCodeTranslationsPopup.fxml", showCWLettersButton, 200, 400);
+        App.togglePopupWithScroll("MorseTranslationsPopup.fxml", showCWLettersButton, 200, 400);
     }
 
     @FXML
     private void editControlsButton(ActionEvent event) {
-        App.togglePopup("EditControlsView.fxml", editControlsButton);
+        App.togglePopup("ControlsPopup.fxml", editControlsButton);
     }
 }
