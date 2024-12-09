@@ -1,4 +1,4 @@
-package org.example.ui;
+package org.example.ui.popup;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
@@ -167,7 +168,7 @@ public class App extends Application {
         }
     }
 
-    public static void togglePopup(String fxmlFile, Button anchorButton) {
+    public static void togglePopup(String fxmlFile, Node anchorNode) {
         try {
             Popup popup = POPUP_MAP.get(fxmlFile);
 
@@ -191,10 +192,10 @@ public class App extends Application {
                 popup.hide();
             } else {
                 // Get screen coordinates for popup placement
-                Window window = anchorButton.getScene().getWindow();
-                double xPos = anchorButton.localToScene(anchorButton.getBoundsInLocal()).getMinX()
+                Window window = anchorNode.getScene().getWindow();
+                double xPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMinX()
                         + window.getX();
-                double yPos = anchorButton.localToScene(anchorButton.getBoundsInLocal()).getMaxY()
+                double yPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMaxY()
                         + window.getY() + 10;
 
                 popup.show(window, xPos, yPos);
@@ -203,4 +204,52 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+
+    public static void togglePopupWithScroll(String fxmlFile, Button triggerButton, double width, double height) {
+        try {
+            Popup popup = POPUP_MAP.get(fxmlFile);
+
+            // If the popup isn't initialized, create it
+            if (popup == null) {
+                var resource = App.class.getResource("/" + POPUP_VIEWS_PATH + fxmlFile);
+                if (resource == null) {
+                    throw new IOException("FXML file not found for popup: " + fxmlFile);
+                }
+
+                FXMLLoader loader = new FXMLLoader(resource);
+                Parent content = loader.load();
+
+                // Wrap content in a ScrollPane
+                ScrollPane scrollPane = new ScrollPane(content);
+                scrollPane.setPrefSize(width, height);
+                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+                popup = new Popup();
+                popup.getContent().add(scrollPane);
+                popup.setAutoHide(true);
+                popup.setHideOnEscape(true);
+
+                POPUP_MAP.put(fxmlFile, popup);
+            }
+
+            // Toggle popup visibility
+            if (popup.isShowing()) {
+                popup.hide();
+            } else {
+                // Get screen coordinates for popup placement
+                Window window = triggerButton.getScene().getWindow();
+                double xPos = triggerButton.localToScene(triggerButton.getBoundsInLocal()).getMinX() + window.getX();
+                double yPos = triggerButton.localToScene(triggerButton.getBoundsInLocal()).getMaxY() + window.getY() + 10;
+
+                popup.show(window, xPos, yPos);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }

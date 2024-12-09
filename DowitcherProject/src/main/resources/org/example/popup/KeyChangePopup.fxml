@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="149.0" prefWidth="216.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.KeyChangePopupController">
+<VBox alignment="CENTER" prefHeight="149.0" prefWidth="216.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.KeyChangePopupController">
    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Press any key" />
     <Label fx:id="keyDisplayLabel" />
     <Button fx:id = "confirmButton" onAction="#handleConfirmButton" text="Confirm" />
