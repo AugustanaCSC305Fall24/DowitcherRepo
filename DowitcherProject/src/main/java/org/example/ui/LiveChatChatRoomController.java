@@ -50,6 +50,11 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     private RadioFunctions radioFunctions;
     private MorseCodeTranslator morseCodeTranslator;
     private Sound sound;
+    private int sendFrequency;
+    private static final double MIN_FREQUENCY = 7.000; // MHz
+    private static final double MAX_FREQUENCY = 7.067; // MHz
+    private int targetFrequency;
+    private boolean isMatched = false;
 
     //Data
     @FXML private TextArea mainTextArea;
@@ -66,6 +71,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         sound = new Sound();
         //App.currentUser.addView("LiveChat");
         initializeUIElements();
+        getSendMessageFrequency();
     }
 
     private void initializeUIElements() {
@@ -113,7 +119,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
 
     private void sideVboxInitialized() {
         if (frequencySlider == null) {
-            frequencySlider = new Slider(0, 100, 50);
+            frequencySlider = new Slider(MIN_FREQUENCY, MAX_FREQUENCY, MIN_FREQUENCY);
             frequencySlider.setBlockIncrement(1);
             frequencySlider.setShowTickLabels(true);
             frequencySlider.setShowTickMarks(true);
@@ -137,6 +143,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
             filterSlider.setShowTickMarks(true);
             filterSlider.setOrientation(javafx.geometry.Orientation.HORIZONTAL);
             filterSlider.valueProperty().addListener((observable, oldValue, newValue) -> updateMainTextArea());
+            filterSlider.valueProperty().addListener((observable, oldValue, newValue) -> adjustStaticVolume());
             filterSlider.getStyleClass().add("slider"); // Apply slider style from the CSS
         }
 
@@ -243,22 +250,41 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         System.out.println("Received WebSocket message: " + jsonMessage);
         ChatMessage chatMessage = new Gson().fromJson(jsonMessage, ChatMessage.class);
         playMessage(chatMessage);
-        mainTextArea.appendText(chatMessage.getSender() + " : " + chatMessage.getText() + "\n");
+        targetFrequency = chatMessage.getFrequency();
+        chatLogTextArea.appendText(chatMessage.getSender() + " : " + chatMessage.getText() + "\n");
+    }
+
+    private void checkFrequencySlider(){
+        double tolerence = 0.1;
+        if(Math.abs(frequencySlider.getValue() - targetFrequency) <= tolerence){
+            isMatched = true;
+        }
+    }
+
+    private int getFrequencyForSound() {
+        double sliderValue = frequencySlider.getValue();
+        checkFrequencySlider();
+        if (isMatched) return 600;
+
+        double maxDeviation = Math.max(targetFrequency - MIN_FREQUENCY, MAX_FREQUENCY - targetFrequency);
+        double deviation = (sliderValue - targetFrequency) / maxDeviation;
+        return Math.max(200, Math.min(1200, (int) (600 + deviation * 600)));
     }
 
     private void playMessage(ChatMessage chatMessage) throws InterruptedException {
         String msg = chatMessage.getText();
         char[] messageArray = msg.toCharArray();
+        int frequency = getFrequencyForSound();
         for (int i = 0; i < messageArray.length; i++) {
             if (messageArray[i] == '-') {
                 try {
-                    Sound.playDah();
+                    Sound.playDah(frequency);
                 } catch (LineUnavailableException e) {
                     throw new RuntimeException(e);
                 }
             } else if (messageArray[i] == '.') {
                 try {
-                    Sound.playDit();
+                    Sound.playDit(frequency);
                 } catch (LineUnavailableException e) {
                     throw new RuntimeException(e);
                 }
@@ -274,8 +300,14 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         }
     }
 
+    private void getSendMessageFrequency(){
+        Random rand = new Random();
+        sendFrequency = 400 + rand.nextInt(800);
+    }
+
+
     private void sendMessage(String message) throws IOException {
-        ChatMessage msg = new ChatMessage(message, USER_NAME, 7000);
+        ChatMessage msg = new ChatMessage(message, USER_NAME, sendFrequency);
         Gson gson = new Gson();
         String jsonText = gson.toJson(msg);
         System.out.println("Sending WebSocket message: " + jsonText);
@@ -347,7 +379,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
             stopStatic();
         } else {
             staticButton.setText("Pause Static");
-            playStatic(100);
+            playStatic(getStaticVolume());
             isStaticPlaying = true;
         }
     }
@@ -364,6 +396,17 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         });
         staticThread.setDaemon(true);
         staticThread.start();
+    }
+
+    private void adjustStaticVolume() {
+        // Adjust the volume directly if the static sound is playing
+        if (isStaticPlaying && sound != null) {
+            sound.adjustVolume(getStaticVolume());
+        }
+    }
+
+    private double getStaticVolume() {
+        return (filterSlider.getValue());
     }
 
     private void stopStatic() {
