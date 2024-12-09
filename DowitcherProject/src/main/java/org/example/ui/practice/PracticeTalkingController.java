@@ -415,12 +415,6 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
             cwInputTextField.setText(currentText + cwChar);
         }
 
-        // Append the processed Morse code character to the chat log
-        String updatedChatLog = chatLogTextArea.getText() + (cwChar.equals(" ") ? "SPACE" : cwChar) + "\n";
-        chatLogTextArea.setText(updatedChatLog);
-
-        // Optionally scroll to the bottom of the chat log to show the newest message
-        chatLogTextArea.setScrollTop(Double.MAX_VALUE);
     }
 
     private void handleStatic() {
