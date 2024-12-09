@@ -302,6 +302,8 @@ public class AlphabetGameController implements MorseCodeOutput {
         if (!showLetter) {
             currentLetterTextFlow.getChildren().clear();
         }
+
+        System.out.println(currentLetter + " " + currentCW);
     }
 
     @FXML
