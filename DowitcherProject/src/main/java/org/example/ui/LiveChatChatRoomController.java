@@ -53,6 +53,8 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     private int sendFrequency;
     private static final double MIN_FREQUENCY = 7.000; // MHz
     private static final double MAX_FREQUENCY = 7.067; // MHz
+    private int targetFrequency;
+    private boolean isMatched = false;
 
     //Data
     @FXML private TextArea mainTextArea;
@@ -242,7 +244,6 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
             e.printStackTrace();
         }
     }
-    private int targetFrequency;
 
     @OnMessage
     public void onMessage(String jsonMessage) throws InterruptedException {
@@ -252,7 +253,6 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         targetFrequency = chatMessage.getFrequency();
         chatLogTextArea.appendText(chatMessage.getSender() + " : " + chatMessage.getText() + "\n");
     }
-    private boolean isMatched = false;
 
     private void checkFrequencySlider(){
         double tolerence = 0.1;
