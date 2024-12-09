@@ -44,6 +44,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     @FXML private Button paddleModeButton;
     @FXML private Button straightKeyModeButton;
     @FXML private Button connectButton;
+    @FXML private Button staticButton;
 
     //Class Objects
     private RadioFunctions radioFunctions;
@@ -54,11 +55,15 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
     @FXML private TextArea mainTextArea;
     private Session session;
     final String USER_NAME = "user" + new Random().nextInt(1000);
+    private boolean isPlaying = true;
+    private boolean isStaticPlaying = false;
+    private Thread staticThread;
 
     @FXML
     public void initialize() {
         morseCodeTranslator = new MorseCodeTranslator();
         radioFunctions = new RadioFunctions(this);
+        sound = new Sound();
         //App.currentUser.addView("LiveChat");
         initializeUIElements();
     }
@@ -88,6 +93,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         Button menuButton = new Button("Menu");
         menuButton.setOnAction(event -> {
             try {
+                stopStatic();
                 App.homeScreenView();
             } catch (IOException e) {
                 throw new RuntimeException("Failed to return to home screen", e);
@@ -210,8 +216,15 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
             });
             connectButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
         }
+
+        if(staticButton == null) {
+            staticButton = new Button("Play Static");
+            staticButton.setOnAction(e -> handleStatic());
+            staticButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+        }
+
         bottomHBox.getChildren().clear();
-        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, connectButton);
+        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, connectButton, staticButton);
     }
 
 
@@ -327,5 +340,35 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         } else {
             cwInputTextField.setText(currentText + cwChar);
         }
+    }
+
+    private void handleStatic() {
+        if (isStaticPlaying) {
+            stopStatic();
+        } else {
+            staticButton.setText("Pause Static");
+            playStatic(100);
+            isStaticPlaying = true;
+        }
+    }
+
+    private void playStatic(double volume) {
+        staticThread = new Thread(() -> {
+            try {
+                sound.staticSound(volume, true);
+                while (isPlaying) Thread.sleep(100);
+                sound.staticSound(volume, false);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        staticThread.setDaemon(true);
+        staticThread.start();
+    }
+
+    private void stopStatic() {
+        staticThread.interrupt();
+        sound.setIsStaticPlaying(false);
+        isStaticPlaying = false;
     }
 }

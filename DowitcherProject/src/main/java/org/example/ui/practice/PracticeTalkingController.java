@@ -34,6 +34,7 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
     @FXML private Button mainMenuButton;
     @FXML private TextField cwInputTextField;
     @FXML private Button sendButton;
+    @FXML private Button staticButton;
 
     // Internal data
     private Label roomTitleLabel;
@@ -47,6 +48,9 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
     private boolean isPlaybackActive = false;
     private double lastLoggedThreshold = -1;
     private boolean isWithinRange = false;
+    private boolean isPlaying = true;
+    private boolean isStaticPlaying = false;
+    private Thread staticThread;
 
     // Room Name
     private final String ROOM_NAME = "AI Chat";
@@ -148,6 +152,12 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
             sendButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
         }
 
+        if(staticButton == null) {
+            staticButton = new Button("Play Static");
+            staticButton.setOnAction(e -> handleStatic());
+            staticButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
+        }
+
         // Initialize and configure the chatLogTextArea
         chatLogTextArea = new TextArea();
         chatLogTextArea.setEditable(false); // Prevent editing
@@ -182,6 +192,7 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
         Button botManagementButton = new Button("Go to Bot Management");
         botManagementButton.setOnAction(event -> {
             try {
+                stopStatic();
                 App.botView();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -191,7 +202,7 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
 
         // Add elements to bottomHBox (unchanged)
         bottomHBox.getChildren().clear();
-        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, botManagementButton);
+        bottomHBox.getChildren().addAll(paddleModeButton, straightKeyModeButton, botManagementButton, staticButton);
 
         // Configure mainTextArea to display slider values, be non-editable, and have larger text
         mainTextArea.setEditable(false);
@@ -214,6 +225,7 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
         Button menuButton = new Button("Menu");
         menuButton.setOnAction(event -> {
             try {
+                stopStatic();
                 App.homeScreenView();
             } catch (IOException e) {
                 throw new RuntimeException("Failed to return to home screen", e);
@@ -409,6 +421,37 @@ public class PracticeTalkingController extends generalizedHamRadioController imp
 
         // Optionally scroll to the bottom of the chat log to show the newest message
         chatLogTextArea.setScrollTop(Double.MAX_VALUE);
+    }
+
+    private void handleStatic() {
+        if (isStaticPlaying) {
+            staticButton.setText("Play Static");
+            stopStatic();
+        } else {
+            staticButton.setText("Pause Static");
+            playStatic(100);
+            isStaticPlaying = true;
+        }
+    }
+
+    private void playStatic(double volume) {
+        staticThread = new Thread(() -> {
+            try {
+                sound.staticSound(volume, true);
+                while (isPlaying) Thread.sleep(100);
+                sound.staticSound(volume, false);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        staticThread.setDaemon(true);
+        staticThread.start();
+    }
+
+    private void stopStatic() {
+        staticThread.interrupt();
+        sound.setIsStaticPlaying(false);
+        isStaticPlaying = false;
     }
 
 }
