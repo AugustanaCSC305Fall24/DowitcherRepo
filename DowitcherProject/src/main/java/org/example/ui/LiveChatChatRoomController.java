@@ -250,7 +250,7 @@ public class LiveChatChatRoomController implements MorseCodeOutput {
         ChatMessage chatMessage = new Gson().fromJson(jsonMessage, ChatMessage.class);
         playMessage(chatMessage);
         targetFrequency = chatMessage.getFrequency();
-        mainTextArea.appendText(chatMessage.getSender() + " : " + chatMessage.getText() + "\n");
+        chatLogTextArea.appendText(chatMessage.getSender() + " : " + chatMessage.getText() + "\n");
     }
     private boolean isMatched = false;
 
