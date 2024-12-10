@@ -1,0 +1,72 @@
+/* Default grey background for the HBox */
+.default-background {
+    -fx-background-color: grey; /* Keep the grey background */
+    -fx-pref-height: 300px; /* Adjust the height if needed */
+    -fx-pref-width: 100%; /* Adjust the width if needed */
+}
+
+/* Background image for Login screen */
+.background-image-view {
+    -fx-image: url("/org/example/styles/LoginScreenBackground.png"); /* Path to the image */
+    -fx-fit-height: 100%; /* Make the image fit inside the ImageView */
+    -fx-fit-width: 100%; /* Make the image fit inside the ImageView */
+    -fx-preserve-ratio: true; /* Maintain the aspect ratio of the image */
+}
+
+/* Title text styling */
+.title-text {
+    -fx-font-size: 36px; /* Make title larger */
+    -fx-font-weight: bold; /* Bold title */
+    -fx-fill: Black;
+}
+
+/* Custom text field styling */
+.custom-text-field {
+    -fx-background-color: white; /* White background for the text field */
+    -fx-border-color: gray; /* Gray border color */
+    -fx-font-size: 16px; /* Slightly smaller font size */
+    -fx-padding: 10px; /* Padding for text field */
+}
+
+/* Button styling */
+.custom-button {
+    -fx-font-size: 18px; /* Font size for buttons */
+    -fx-background-color: #4CAF50; /* Green background */
+    -fx-text-fill: white; /* White text */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-padding: 10px 20px; /* Padding around the button */
+}
+
+/* Button hover effect */
+.custom-button:hover {
+    -fx-background-color: #45a049; /* Darker green on hover */
+}
+
+/* Bottom HBox containing buttons */
+.bottom-hbox {
+    -fx-background-color: #333; /* Dark background for the bottom section */
+    -fx-padding: 20px; /* Padding for bottom section */
+}
+
+/* Error message label */
+.popup-label {
+    -fx-font-size: 14px; /* Font size for error messages */
+    -fx-text-fill: white; /* White color for text */
+    -fx-font-weight: bold; /* Bold text */
+}
+
+/* Style for the ImageView inside the HBox */
+.background-image-view {
+    -fx-image: url("/org/example/styles/LoginScreenBackground.png"); /* Path to the image */
+    -fx-fit-height: 100%; /* Make the image fit inside the ImageView */
+    -fx-fit-width: 100%; /* Make the image fit inside the ImageView */
+    -fx-preserve-ratio: true; /* Maintain the aspect ratio of the image */
+}
+
+/* Background Pane for Login screen */
+#backgroundPane {
+    -fx-background-image: url("file:src/main/resources/org/example/styles/LoginScreenBackground.png");
+    -fx-background-size: cover; /* Cover the entire background */
+    -fx-background-position: center center; /* Center the background */
+    -fx-background-repeat: no-repeat; /* Prevent background repeat */
+}

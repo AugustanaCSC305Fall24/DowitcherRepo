@@ -16,7 +16,7 @@ import org.example.data.UserSerialization;
 
 import java.io.IOException;
 
-public class AccountCreationController {
+public class LoginController {
 
     @FXML private StackPane stackPane;  // StackPane for background
     @FXML private ImageView backgroundImageView;  // ImageView for background
@@ -31,15 +31,8 @@ public class AccountCreationController {
 
     @FXML
     private void initialize() {
-        // Load and set the background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/AccountCreationBackground.png"));
-        backgroundImageView.setImage(backgroundImage);
-
-        // Bind the ImageView's dimensions to the StackPane's dimensions
-        backgroundImageView.fitHeightProperty().bind(stackPane.heightProperty());
-        backgroundImageView.fitWidthProperty().bind(stackPane.widthProperty());
-
         // Ensure resizing behavior for buttons (if needed for consistency with HomeScreenController)
+
         VBox.setVgrow(loginButton, Priority.ALWAYS);
         VBox.setVgrow(signUpButton, Priority.ALWAYS);
         VBox.setVgrow(continueButton, Priority.ALWAYS);

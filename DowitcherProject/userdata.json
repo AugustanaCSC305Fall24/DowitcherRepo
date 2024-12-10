@@ -38,5 +38,13 @@
     "showCWLetters": true,
     "showCWAcronyms": true,
     "isStatic": false
+  },
+  {
+    "callSign": "K089HP",
+    "viewStack": [],
+    "staticAmount": 50.0,
+    "showCWLetters": true,
+    "showCWAcronyms": true,
+    "isStatic": false
   }
 ]
