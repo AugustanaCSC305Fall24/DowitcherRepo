@@ -38,7 +38,6 @@ public class User implements Serializable {
         this.showCWAcronyms = true; // Default value
 
         // Setting default keys for the action map
-        KeyCode exitProgramKey = KeyCode.valueOf("ESCAPE");
         KeyCode settingsKey = KeyCode.valueOf("TAB");
         KeyCode dahKey = KeyCode.valueOf("D");
         KeyCode ditKey = KeyCode.valueOf("A");
@@ -49,7 +48,7 @@ public class User implements Serializable {
         KeyCode filterDownKey = KeyCode.valueOf("DOWN");
 
         // Call setActionMap with KeyCode
-        setActionMap(exitProgramKey, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+        setActionMap(settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
     }
 
     // Default constructor
@@ -131,16 +130,15 @@ public class User implements Serializable {
     }
 
     // Set Action Maps for keys and actions
-    public void setActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
+    public void setActionMap(KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
                              KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
-        setKeyFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
-        setActionFirstActionMap(exitProgram, settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+        setKeyFirstActionMap(settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
+        setActionFirstActionMap(settingsKey, dahKey, ditKey, straightKey, frequencyUpKey, frequencyDownKey, filterUpKey, filterDownKey);
     }
 
-    private void setKeyFirstActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
+    private void setKeyFirstActionMap(KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
                                       KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
         // Map keyboard keys to actions
-        keyFirstActionMap.put(exitProgram, "exitProgram");
         keyFirstActionMap.put(settingsKey, "settingsKey");
         keyFirstActionMap.put(dahKey, "dahKey");
         keyFirstActionMap.put(ditKey, "ditKey");
@@ -151,10 +149,9 @@ public class User implements Serializable {
         keyFirstActionMap.put(filterDownKey, "filterDownKey");
     }
 
-    private void setActionFirstActionMap(KeyCode exitProgram, KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
+    private void setActionFirstActionMap(KeyCode settingsKey, KeyCode dahKey, KeyCode ditKey, KeyCode straightKey,
                                          KeyCode frequencyUpKey, KeyCode frequencyDownKey, KeyCode filterUpKey, KeyCode filterDownKey) {
         // Map actions to keyboard keys
-        actionFirstActionMap.put("exitProgram", exitProgram);
         actionFirstActionMap.put("settingsKey", settingsKey);
         actionFirstActionMap.put("dahKey", dahKey);
         actionFirstActionMap.put("ditKey", ditKey);

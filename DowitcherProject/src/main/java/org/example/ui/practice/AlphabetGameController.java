@@ -198,7 +198,7 @@ public class AlphabetGameController implements MorseCodeOutput {
 
         // Create the "Settings" button
         Button settingsButton = new Button("Settings");
-        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton));
+        settingsButton.setOnAction(event -> App.togglePopup("SettingsPopup.fxml", settingsButton, 500, 300));
         settingsButton.getStyleClass().add("custom-button"); // Apply button style from the CSS
 
         // Create the "Menu" button

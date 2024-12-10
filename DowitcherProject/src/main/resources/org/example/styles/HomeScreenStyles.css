@@ -15,3 +15,10 @@
 .custom-button:hover {
     -fx-background-color: #45a049; /* Darker green on hover */
 }
+
+
+.popup-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

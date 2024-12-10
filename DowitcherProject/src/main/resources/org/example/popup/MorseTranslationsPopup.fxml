@@ -5,61 +5,55 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="1145.0" prefWidth="236.0" spacing="20.0" style="-fx-background-color: #333333; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.MorseCodeTranslationsPopupController">
-
-
+<VBox alignment="CENTER" prefHeight="479.0" prefWidth="347.0" spacing="3.0" style="-fx-background-color: #333333; -fx-padding: 10px;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.popup.MorseCodeTranslationsPopupController">
     <stylesheets>
         <URL value="@../styles/translation-label.css" />
     </stylesheets>
 
     <children>
-        <!-- Title for the Popup -->
         <Label styleClass="title-label" text="Morse Code Translations" />
 
-        <!-- Container with Hardcoded Translations -->
-        <VBox fx:id="translationsContainer" alignment="CENTER" prefHeight="1067.0" prefWidth="92.0" spacing="10.0" style="-fx-padding: 5;">
-            <!-- Letters A-Z -->
-            <Label styleClass="translation-label" text="A - .-" />
-            <Label styleClass="translation-label" text="B - -..." />
-            <Label styleClass="translation-label" text="C - -.-." />
-            <Label styleClass="translation-label" text="D - -.." />
-            <Label styleClass="translation-label" text="E - ." />
-            <Label styleClass="translation-label" text="F - ..-." />
-            <Label styleClass="translation-label" text="G - --." />
-            <Label styleClass="translation-label" text="H - ...." />
-            <Label styleClass="translation-label" text="I - .." />
-            <Label styleClass="translation-label" text="J - .---" />
-            <Label styleClass="translation-label" text="K - -.-" />
-            <Label styleClass="translation-label" text="L - .-.." />
-            <Label styleClass="translation-label" text="M - --" />
-            <Label styleClass="translation-label" text="N - -." />
-            <Label styleClass="translation-label" text="O - ---" />
-            <Label styleClass="translation-label" text="P - .--." />
-            <Label styleClass="translation-label" text="Q - --.-" />
-            <Label styleClass="translation-label" text="R - .-." />
-            <Label styleClass="translation-label" text="S - ..." />
-            <Label styleClass="translation-label" text="T - -" />
-            <Label styleClass="translation-label" text="U - ..-" />
-            <Label styleClass="translation-label" text="V - ...-" />
-            <Label styleClass="translation-label" text="W - .--" />
-            <Label styleClass="translation-label" text="X - -..-" />
-            <Label styleClass="translation-label" text="Y - -.--" />
-            <Label styleClass="translation-label" text="Z - --.." />
+        <!-- Letters A-Z -->
+        <Label styleClass="translation-label" text="A - .-" />
+        <Label styleClass="translation-label" text="B - -..." />
+        <Label styleClass="translation-label" text="C - -.-." />
+        <Label styleClass="translation-label" text="D - -.." />
+        <Label styleClass="translation-label" text="E - ." />
+        <Label styleClass="translation-label" text="F - ..-." />
+        <Label styleClass="translation-label" text="G - --." />
+        <Label styleClass="translation-label" text="H - ...." />
+        <Label styleClass="translation-label" text="I - .." />
+        <Label styleClass="translation-label" text="J - .---" />
+        <Label styleClass="translation-label" text="K - -.-" />
+        <Label styleClass="translation-label" text="L - .-.." />
+        <Label styleClass="translation-label" text="M - --" />
+        <Label styleClass="translation-label" text="N - -." />
+        <Label styleClass="translation-label" text="O - ---" />
+        <Label styleClass="translation-label" text="P - .--." />
+        <Label styleClass="translation-label" text="Q - --.-" />
+        <Label styleClass="translation-label" text="R - .-." />
+        <Label styleClass="translation-label" text="S - ..." />
+        <Label styleClass="translation-label" text="T - -" />
+        <Label styleClass="translation-label" text="U - ..-" />
+        <Label styleClass="translation-label" text="V - ...-" />
+        <Label styleClass="translation-label" text="W - .--" />
+        <Label styleClass="translation-label" text="X - -..-" />
+        <Label styleClass="translation-label" text="Y - -.--" />
+        <Label styleClass="translation-label" text="Z - --.." />
 
-            <!-- Numbers 0-9 -->
-            <Label styleClass="translation-label" text="0 - -----" />
-            <Label styleClass="translation-label" text="1 - .----" />
-            <Label styleClass="translation-label" text="2 - ..---" />
-            <Label styleClass="translation-label" text="3 - ...--" />
-            <Label styleClass="translation-label" text="4 - ....-" />
-            <Label styleClass="translation-label" text="5 - ....." />
-            <Label styleClass="translation-label" text="6 - -...." />
-            <Label styleClass="translation-label" text="7 - --..." />
-            <Label styleClass="translation-label" text="8 - ---.." />
-            <Label styleClass="translation-label" text="9 - ----." />
-        </VBox>
+        <!-- Numbers 0-9 -->
+        <Label styleClass="translation-label" text="0 - -----" />
+        <Label styleClass="translation-label" text="1 - .----" />
+        <Label styleClass="translation-label" text="2 - ..---" />
+        <Label styleClass="translation-label" text="3 - ...--" />
+        <Label styleClass="translation-label" text="4 - ....-" />
+        <Label styleClass="translation-label" text="5 - ....." />
+        <Label styleClass="translation-label" text="6 - -...." />
+        <Label styleClass="translation-label" text="7 - --..." />
+        <Label styleClass="translation-label" text="8 - ---.." />
+        <Label styleClass="translation-label" text="9 - ----." />
 
         <!-- Close Button -->
-        <Button fx:id="closeButton" styleClass="custom-button" text="Close" />
+        <Button fx:id="closeButton" styleClass="custom-button" text="Close" onAction="#closePopup" />
     </children>
 </VBox>

@@ -13,7 +13,7 @@
    </stylesheets>
 
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" styleClass="popup-label">
          <font>
             <Font size="18.0" />
          </font>
@@ -23,7 +23,8 @@
       <Button fx:id="showCWLettersButton" mnemonicParsing="false" onAction="#handleShowCWLettersButton" styleClass="custom-button" text="Morse Code Popup" />
       <Button fx:id="showCWAcronymsButton" mnemonicParsing="false" onAction="#handleShowCWAcroymnsButton" styleClass="custom-button" text="CW Popup" />
       <Button fx:id="editControlsButton" mnemonicParsing="false" onAction="#editControlsButton" styleClass="custom-button" text="Controls Popup" />
-      <Button fx:id="saveButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSaveButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Save" />
-      <Button fx:id="exitButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleExitButton" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Exit" />
+      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" styleClass="custom-button" text="Save" />
+      <Button fx:id="closeButton" styleClass="custom-button" text="Close" onAction="#closePopup" />
+      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#handleExitButton" styleClass="custom-button" text="Exit Program" />
    </children>
 </VBox>

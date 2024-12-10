@@ -3,20 +3,18 @@ package org.example;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.stage.Stage;
-import javafx.stage.Modality;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.stage.Window;
 import org.example.data.User;
 import org.example.ui.mainviews.AiChatController;
 import org.example.ui.mainviews.LiveChatController;
@@ -143,7 +141,7 @@ public class App extends Application {
         Platform.exit();
     }
 
-    public static void togglePopup(String fxmlFile, Node anchorNode) {
+    public static void togglePopup(String fxmlFile, Node anchorNode, int height, int width) {
         try {
             Stage popupStage = (Stage) POPUP_MAP.get(fxmlFile);
 
@@ -159,8 +157,8 @@ public class App extends Application {
                 popupStage.setScene(new Scene(content));
 
                 // Set the size of the popup
-                popupStage.setWidth(400);  // Set the width to 300
-                popupStage.setHeight(600); // Set the height to 600
+                popupStage.setWidth(width);  // Set the width to 300
+                popupStage.setHeight(height); // Set the height to 600
 
                 popupStage.initModality(Modality.NONE); // Allows interaction with other windows
                 popupStage.setTitle("Popup - " + fxmlFile); // Optional title
@@ -172,65 +170,16 @@ public class App extends Application {
             if (popupStage.isShowing()) {
                 popupStage.hide();
             } else {
-                // Get screen coordinates for popup placement
-                Window window = anchorNode.getScene().getWindow();
-                double xPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMinX() + window.getX();
-                double yPos = anchorNode.localToScene(anchorNode.getBoundsInLocal()).getMaxY() + window.getY() + 10;
+                // Center the popup on the screen
+                Screen screen = Screen.getPrimary(); // Get the primary screen
+                Rectangle2D bounds = screen.getVisualBounds(); // Get the visual bounds of the screen
 
-                popupStage.setX(xPos);
-                popupStage.setY(yPos);
-                popupStage.show();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+                // Calculate the center position for the popup
+                double centerX = bounds.getMinX() + (bounds.getWidth() - popupStage.getWidth()) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - popupStage.getHeight()) / 2;
 
-    public static void togglePopupWithScroll(String fxmlFile, Button triggerButton, double width, double height) {
-        try {
-            // Retrieve existing stage from the map
-            Stage popupStage = (Stage) POPUP_MAP.get(fxmlFile);
-
-            // If the popup isn't initialized, create it
-            if (popupStage == null) {
-                var resource = App.class.getResource("/" + POPUP_VIEWS_PATH + fxmlFile);
-                if (resource == null) {
-                    throw new IOException("FXML file not found for popup: " + fxmlFile);
-                }
-
-                FXMLLoader loader = new FXMLLoader(resource);
-                Parent content = loader.load();
-
-                // Wrap content in a ScrollPane
-                ScrollPane scrollPane = new ScrollPane(content);
-                scrollPane.setPrefSize(width, height);
-                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-                popupStage = new Stage(StageStyle.DECORATED); // Add window decorations (title bar, close button)
-                popupStage.setScene(new Scene(scrollPane));
-
-                // Set the size of the popup
-                popupStage.setWidth(400);  // Set the width to 300
-                popupStage.setHeight(700); // Set the height to 600
-
-                popupStage.initModality(Modality.NONE); // Allows interaction with other windows
-                popupStage.setTitle("Popup - " + fxmlFile); // Optional title
-                popupStage.setOnCloseRequest(e -> POPUP_MAP.remove(fxmlFile)); // Cleanup on close
-                POPUP_MAP.put(fxmlFile, popupStage);
-            }
-
-            // Toggle popup visibility
-            if (popupStage.isShowing()) {
-                popupStage.hide();
-            } else {
-                // Get screen coordinates for popup placement
-                Window window = triggerButton.getScene().getWindow();
-                double xPos = triggerButton.localToScene(triggerButton.getBoundsInLocal()).getMinX() + window.getX();
-                double yPos = triggerButton.localToScene(triggerButton.getBoundsInLocal()).getMaxY() + window.getY() + 10;
-
-                popupStage.setX(xPos);
-                popupStage.setY(yPos);
+                popupStage.setX(centerX);
+                popupStage.setY(centerY);
                 popupStage.show();
             }
         } catch (IOException e) {

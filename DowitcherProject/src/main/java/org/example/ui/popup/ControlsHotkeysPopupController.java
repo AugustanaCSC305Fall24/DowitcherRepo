@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -29,7 +30,6 @@ public class ControlsHotkeysPopupController {
     @FXML private Button backButton;
 
     // Hotkey TextFields (All are uneditable by the user from clicking on it)
-    @FXML private TextField exitKeyField;
     @FXML private TextField settingsKeyField;
     @FXML private TextField dahKeyField;
     @FXML private TextField ditKeyField;
@@ -43,24 +43,19 @@ public class ControlsHotkeysPopupController {
     @FXML private Button changeDahKeyButton;
     @FXML private Button changeDitKeyButton;
     @FXML private Button changeStraightKeyButton;
-    @FXML private Button changeExitKeyButton;
     @FXML private Button changeFilterDownKeyChangeButton;
     @FXML private Button changeFilterUpKeyChangeButton;
     @FXML private Button changeFrequencyDownKeyButton;
     @FXML private Button changeFrequencyUpKeyButton;
     @FXML private Button changeSettingsKeyButton;
-
-
+    
     private final Map<String, TextField> keyBindings = new HashMap<>();
+    public static String selectedAction;
+    public static TextField targetTextField;
 
-    @FXML
-    public void initialize() {
-        setActionTextField();
-    }
-
-
-
-    private void setActionTextField(){
+    @FXML public void initialize() {updateActionTextField();}
+    
+    public void updateActionTextField(){
         Map<String, KeyCode> actionMap = App.currentUser.getActionFirstActionMap();
         for (Map.Entry<String, KeyCode> entry : actionMap.entrySet()) {
             String action = entry.getKey();
@@ -70,10 +65,6 @@ public class ControlsHotkeysPopupController {
                 keyString = "Escape";
             }
             switch (action) {
-                case "exitProgram":
-                    exitKeyField.setText(keyString);
-                    System.out.println(key);
-                    break;
                 case "settingsKey":
                     settingsKeyField.setText(keyString);
                     System.out.println(key);
@@ -116,104 +107,25 @@ public class ControlsHotkeysPopupController {
         System.out.println("actionMap App Class: " + App.currentUser.getActionFirstActionMap().toString());
     }
 
-    @FXML
-    private void handleSaveButton() {
-        checkForDuplicateKeys(); // Check for duplicate keys before proceeding with saving
-        if (!checkForDuplicateKeys()) {
-            // Retrieve the key bindings from each text field
-            KeyCode exitProgramKeyCode = KeyCode.valueOf(exitKeyField.getText().toUpperCase());
-            KeyCode settingsKeyCode = KeyCode.valueOf(settingsKeyField.getText().toUpperCase());
-            KeyCode dahKeyCode = KeyCode.valueOf(dahKeyField.getText().toUpperCase());
-            KeyCode ditKeyCode = KeyCode.valueOf(ditKeyField.getText().toUpperCase());
-            KeyCode straightKeyCode = KeyCode.valueOf(straightKeyField.getText().toUpperCase());
-            KeyCode frequencyUpKeyCode = KeyCode.valueOf(frequencyUpTextField.getText().toUpperCase());
-            KeyCode frequencyDownKeyCode = KeyCode.valueOf(frequencyDownTextField.getText().toUpperCase());
-            KeyCode filterUpKeyCode = KeyCode.valueOf(filterUpTextField.getText().toUpperCase());
-            KeyCode filterDownKeyCode = KeyCode.valueOf(filterDownTextField.getText().toUpperCase());
-            //exitProgram settingsKey dahKey ditKey frequencyUpKey frequencyDownKey filterUpKey filterDownKey
-            // Update the user's action map with the new bindings
-
-            App.currentUser.setActionMap(
-                    exitProgramKeyCode,
-                    settingsKeyCode,
-                    dahKeyCode,
-                    ditKeyCode,
-                    straightKeyCode,
-                    frequencyUpKeyCode,
-                    frequencyDownKeyCode,
-                    filterUpKeyCode,
-                    filterDownKeyCode
-            );
-
-            // Optionally, provide feedback to the user that the save was successful
-            System.out.println("Key bindings saved successfully.");
-            setActionTextField();
-
-        } else {
-            // Handle the scenario where there are duplicate keys (e.g., show an error message)
-            System.out.println("Duplicate keys detected. Please resolve before saving.");
-        }
-    }
-
-    private boolean checkForDuplicateKeys() {
-        Map<String, Integer> keyCount = new HashMap<>();
-        boolean hasDuplicates = false;
-
-        for (TextField field : keyBindings.values()) {
-            String key = field.getText();
-            keyCount.put(key, keyCount.getOrDefault(key, 0) + 1);
-        }
-
-        for (TextField field : keyBindings.values()) {
-            if (keyCount.get(field.getText()) > 1) {
-                field.setStyle("-fx-background-color: red;");
-                hasDuplicates = true;
-            } else {
-                field.setStyle("");
-            }
-        }
-        closeButton.setDisable(hasDuplicates);
-        saveButton.setDisable(hasDuplicates);
-        backButton.setDisable(hasDuplicates);
-        return hasDuplicates;
-    }
-
     // Handler methods for key changes
-    @FXML void handleChangeDahKeyButton(ActionEvent event) { handleChangeKeyButton(dahKeyField); }
-    @FXML void handleChangeDitKeyButton(ActionEvent event) { handleChangeKeyButton(ditKeyField); }
-    @FXML void handleChangeStraightKeyButton(ActionEvent event) { handleChangeKeyButton(straightKeyField); }
-    @FXML void handleChangeExitKeyButton(ActionEvent event) { handleChangeKeyButton(exitKeyField); }
-    @FXML void handleChangeFilterDownKeyChangeButton(ActionEvent event) { handleChangeKeyButton(filterDownTextField); }
-    @FXML void handleChangeFilterUpKeyChangeButton(ActionEvent event) { handleChangeKeyButton(filterUpTextField); }
-    @FXML void handleChangeFrequencyDownKeyButton(ActionEvent event) { handleChangeKeyButton(frequencyDownTextField); }
-    @FXML void handleChangeFrequencyUpKeyButton(ActionEvent event) { handleChangeKeyButton(frequencyUpTextField); }
-    @FXML void handleChangeSettingsKeyButton(ActionEvent event) { handleChangeKeyButton(settingsKeyField); }
+    @FXML void handleChangeDahKeyButton(ActionEvent event) { handleChangeKeyButton(dahKeyField, "dahKey"); }
+    @FXML void handleChangeDitKeyButton(ActionEvent event) { handleChangeKeyButton(ditKeyField, "ditKey"); }
+    @FXML void handleChangeStraightKeyButton(ActionEvent event) { handleChangeKeyButton(straightKeyField, "straightKey"); }
+    @FXML void handleChangeFilterDownKeyChangeButton(ActionEvent event) { handleChangeKeyButton(filterDownTextField, "filterDownKey"); }
+    @FXML void handleChangeFilterUpKeyChangeButton(ActionEvent event) { handleChangeKeyButton(filterUpTextField, "filterUpKet"); }
+    @FXML void handleChangeFrequencyDownKeyButton(ActionEvent event) { handleChangeKeyButton(frequencyDownTextField, "frequencyDownKey"); }
+    @FXML void handleChangeFrequencyUpKeyButton(ActionEvent event) { handleChangeKeyButton(frequencyUpTextField, "frequencyUpKey"); }
+    @FXML void handleChangeSettingsKeyButton(ActionEvent event) { handleChangeKeyButton(settingsKeyField, "settingsKey"); }
 
-    private void handleChangeKeyButton(TextField targetTextField) {
-        try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/example/popup/KeyChangePopup.fxml"));
-            Parent root = loader.load();
-
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Change Key Binding");
-            popupStage.setScene(new Scene(root));
-            popupStage.initOwner(App.getScene().getWindow());
-
-            popupStage.show();
-
-            KeyChangePopupController popupController = loader.getController();
-            popupController.setTargetTextField(targetTextField);
-            popupController.setAllTextFields(exitKeyField, settingsKeyField, dahKeyField, ditKeyField,
-                    frequencyUpTextField, frequencyDownTextField,
-                    filterUpTextField, filterDownTextField);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleChangeKeyButton(TextField target, String action) {
+        selectedAction = action;
+        targetTextField = target;
+        KeyChangePopupController.controller = (this);
+        App.togglePopup("KeyChangePopup.fxml", changeFrequencyDownKeyButton, 400, 400);
     }
 
     @FXML public void handleCloseButton() {
-        Stage stage = (Stage) saveButton.getScene().getWindow();
+        Stage stage = (Stage) frequencyDownTextField.getScene().getWindow();
         stage.close();
     }
 

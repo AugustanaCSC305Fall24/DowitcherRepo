@@ -17,7 +17,7 @@ public class MorseCodeTranslationsPopupController {
         closeButton.setOnAction(e -> closePopup());
     }
 
-    private void closePopup() {
-        translationsContainer.getScene().getWindow().hide();
+    @FXML public void closePopup() {
+        closeButton.getScene().getWindow().hide();
     }
 }

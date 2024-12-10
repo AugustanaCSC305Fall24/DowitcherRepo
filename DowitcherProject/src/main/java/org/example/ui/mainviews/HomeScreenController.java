@@ -32,7 +32,7 @@ public class HomeScreenController {
      */
     @FXML
     void handleLearnCW(ActionEvent event) {
-        App.togglePopup("LearnModesPopup.fxml", learnCWButton);
+        App.togglePopup("LearnModesPopup.fxml", learnCWButton, 400, 300);
     }
 
     /**
@@ -40,7 +40,7 @@ public class HomeScreenController {
      */
     @FXML
     void handleSettings(ActionEvent event) {
-        App.togglePopup("SettingsPopup.fxml", settingsButton);
+        App.togglePopup("SettingsPopup.fxml", settingsButton, 500, 300);
     }
 
     /**

@@ -33,33 +33,25 @@ public class SettingsPopupController {
         closePopup();
     }
 
-    @FXML
-    private void handleEditControlsButton(ActionEvent event) {
-        try {
-            App.controlMenuView();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void closePopup() {
-        saveButton.getScene().getWindow().hide();
-    }
-
     public void handleExitButton(ActionEvent actionEvent) {
         App.exitProgram();
     }
 
     @FXML public void handleShowCWAcroymnsButton(ActionEvent actionEvent) {
-        App.togglePopupWithScroll("AcronymsPopup.fxml", showCWAcronymsButton, 200, 400);
+        App.togglePopup("AcronymsPopup.fxml", showCWAcronymsButton, 750, 300);
     }
 
     @FXML public void handleShowCWLettersButton(ActionEvent actionEvent) {
-        App.togglePopupWithScroll("MorseTranslationsPopup.fxml", showCWLettersButton, 200, 400);
+        App.togglePopup("MorseTranslationsPopup.fxml", showCWLettersButton, 1000, 300);
     }
 
     @FXML
     private void editControlsButton(ActionEvent event) {
-        App.togglePopup("ControlsPopup.fxml", editControlsButton);
+        App.togglePopup("ControlsPopup.fxml", editControlsButton, 600, 450);
     }
+
+    @FXML public void closePopup() {
+        saveButton.getScene().getWindow().hide();
+    }
+
 }

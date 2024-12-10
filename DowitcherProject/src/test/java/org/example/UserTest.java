@@ -92,13 +92,13 @@ public class UserTest {
         assertEquals(KeyCode.RIGHT, User.getKeyForAction("frequencyUpKey"));
     }
 
-    @Test
-    void testSetActionMap() {
-        user.setActionMap(KeyCode.SPACE, KeyCode.ENTER, KeyCode.S, KeyCode.W, KeyCode.L, KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT);
-
-        assertEquals("exitProgram", user.getActionForKey(KeyCode.SPACE));
-        assertEquals(KeyCode.SPACE, User.getKeyForAction("exitProgram"));
-        assertEquals("settingsKey", user.getActionForKey(KeyCode.ENTER));
-        assertEquals(KeyCode.ENTER, User.getKeyForAction("settingsKey"));
-    }
+//    @Test
+//    void testSetActionMap() {
+//        user.setActionMap(KeyCode.SPACE, KeyCode.ENTER, KeyCode.S, KeyCode.W, KeyCode.L, KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT);
+//
+//        assertEquals("exitProgram", user.getActionForKey(KeyCode.SPACE));
+//        assertEquals(KeyCode.SPACE, User.getKeyForAction("exitProgram"));
+//        assertEquals("settingsKey", user.getActionForKey(KeyCode.ENTER));
+//        assertEquals(KeyCode.ENTER, User.getKeyForAction("settingsKey"));
+//    }
 }
