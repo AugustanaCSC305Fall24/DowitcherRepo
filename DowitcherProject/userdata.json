@@ -30,5 +30,13 @@
     "showCWLetters": true,
     "showCWAcronyms": true,
     "isStatic": false
+  },
+  {
+    "callSign": "TJKLEIN",
+    "viewStack": [],
+    "staticAmount": 50.0,
+    "showCWLetters": true,
+    "showCWAcronyms": true,
+    "isStatic": false
   }
 ]
