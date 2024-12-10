@@ -138,7 +138,7 @@ public class TuningGameController  {
         sideButtonsBox.setStyle("-fx-alignment: center; -fx-spacing: 10px; -fx-padding: 10px;");
 
         // Add components to the right VBox
-        rightVBox.getChildren().addAll(topBox, sideButtonsBox, volumeSlider, volumeLabel,
+        rightVBox.getChildren().addAll(topBox, sideButtonsBox,
                 new Label("Tuning Frequency (MHz)"), frequencySlider, frequencyLabel,
                 new Label("Filter Width (KHz)"), filterWidthSlider, filterLabel,
                 feedbackLabel);
@@ -184,13 +184,11 @@ public class TuningGameController  {
 
     private void updateMainTextArea() {
         double frequencyValue = frequencySlider.getValue();
-        double volumeValue = volumeSlider.getValue();
         double filterValue = filterWidthSlider.getValue();
 
         mainTextArea.setText(String.format(
-                "Frequency: %.3f\nVolume: %.2f\nFilter: %.2f",
+                "Frequency: %.3f\nFilter: %.2f",
                 frequencyValue,
-                volumeValue,
                 filterValue
         ));
     }

@@ -116,7 +116,7 @@ public class LoginController {
     }
 
     private boolean isValidCallSign(String callSign) {
-        // Ensure the call sign is between 4 to 7 characters and contains at least one letter (no digits allowed)
+        // Ensure the call sign is between 4 to 7 characters and contains at least one letter
         return callSign.length() >= 4 && callSign.length() <= 7 && callSign.matches(".*[a-zA-Z]+.*");
     }
 
