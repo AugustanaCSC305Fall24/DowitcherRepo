@@ -257,7 +257,8 @@ public class AiChatController implements MorseCodeOutput {
             //Comment below in when chat box goes away
 //            System.out.println("You (Morse): " + userMessage + "\n");
             // Display English translation in terminal
-            System.out.println("You (English): " + englishMessage + "\n");
+            chatLogTextArea.appendText("You (English): " + englishMessage + "\n");
+//            System.out.println("You (English): " + englishMessage + "\n");
 
             // Get AI response via RadioApiRequestHandler
             new Thread(() -> {
@@ -279,6 +280,7 @@ public class AiChatController implements MorseCodeOutput {
                         String botMorseResponse = morseCodeTranslator.translateToMorseCode(botResponse);
 
                         chatLogTextArea.appendText("Bot (Morse): " + botMorseResponse + "\n");
+                        chatLogTextArea.appendText("Bot (English): " + botResponse + "\n");
                         sound.playAudio(0,botMorseResponse);
                         // Optionally display English response as well for debugging
                         //chatLogTextArea.appendText("Bot (English): " + botResponse + "\n");
