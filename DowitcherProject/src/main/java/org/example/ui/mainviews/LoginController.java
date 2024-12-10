@@ -32,6 +32,8 @@ public class LoginController {
     @FXML
     private void initialize() {
         // Ensure resizing behavior for buttons (if needed for consistency with HomeScreenController)
+        Image image = new Image(getClass().getResource("/org/example/styles/AccountCreationBackground.png").toExternalForm());
+        backgroundImageView.setImage(image);
 
         VBox.setVgrow(loginButton, Priority.ALWAYS);
         VBox.setVgrow(signUpButton, Priority.ALWAYS);

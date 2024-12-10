@@ -19,17 +19,17 @@
     <children>
       <Text text="Welcome To Team Dowitcher Ham Radio Simulator!" styleClass="title-text" />
 
-       <HBox fx:id="topHBox" alignment="CENTER" styleClass="default-background">
+       <HBox fx:id="topHBox" alignment="CENTER" HBox.hgrow="ALWAYS">
           <ImageView fx:id="backgroundImageView" styleClass="background-image-view" />
        </HBox>
 
        <!-- Spacer to push the bottom box down -->
-       <Region VBox.vgrow="ALWAYS" styleClass="default-background"/>  <!-- This acts as a spacer and fills available space -->
+       <Region VBox.vgrow="ALWAYS" />  <!-- This acts as a spacer and fills available space -->
 
       <VBox styleClass="bottom-hbox" alignment="TOP_CENTER">
          <!-- Styled TextField for Call Sign -->
          <TextField fx:id="callSignTextField" promptText="Call Sign"
-                    maxWidth="300" styleClass="custom-text-field" />
+                    maxWidth="300" styleClass="custom-text-field"/>
 
          <!-- Error Message Label -->
          <Label fx:id="messageLabel" text="" style="-fx-text-fill: red;" />

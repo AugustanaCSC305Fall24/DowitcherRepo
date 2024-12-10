@@ -57,11 +57,13 @@
 
 /* Style for the ImageView inside the HBox */
 .background-image-view {
-    -fx-image: url("/org/example/styles/LoginScreenBackground.png"); /* Path to the image */
-    -fx-fit-height: 100%; /* Make the image fit inside the ImageView */
-    -fx-fit-width: 100%; /* Make the image fit inside the ImageView */
-    -fx-preserve-ratio: true; /* Maintain the aspect ratio of the image */
+    -fx-image: url("/org/example/styles/AccountCreationBackground.png");
+    -fx-fit-width: 100%;
+    -fx-fit-height: 100%;
+    -fx-preserve-ratio: true;
+    /* -fx-background-size: cover;  Removed unless needed */
 }
+
 
 /* Background Pane for Login screen */
 #backgroundPane {
