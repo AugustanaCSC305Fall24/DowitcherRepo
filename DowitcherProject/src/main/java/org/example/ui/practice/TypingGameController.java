@@ -166,7 +166,7 @@ public class TypingGameController implements MorseCodeOutput {
     private void handleSendButton() {
         String morseCode = cwInputTextField.getText();
         String translatedText = MorseCodeTranslator.translateMorseCode(morseCode);
-        mainTextArea.setText(translatedText);
+        mainTextArea.setText(mainTextArea.getText() + translatedText + "\n");
         cwInputTextField.clear();
     }
 
