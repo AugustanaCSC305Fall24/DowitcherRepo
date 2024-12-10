@@ -22,3 +22,29 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
+ /* Default grey background for the HBox */
+ .default-background {
+     -fx-background-color: grey; /* Set the default grey background */
+     -fx-pref-height: 300px; /* Adjust the height if needed */
+     -fx-pref-width: 100%; /* Adjust the width if needed */
+ }
+
+ /* The style for the ImageView inside the HBox */
+ .background-image-view {
+     -fx-image: url("/org/example/styles/HomeScreenBackground.png"); /* Path to the image */
+     -fx-fit-height: 100%; /* Make the image fit inside the ImageView */
+     -fx-fit-width: 100%; /* Make the image fit inside the ImageView */
+     -fx-preserve-ratio: true; /* Maintain the aspect ratio of the image */
+ }
+
+
+ #backgroundPane {
+     -fx-background-image: url("file:src/main/resources/org/example/styles/HomeScreenBackground.png");
+     -fx-background-size: cover;
+     -fx-background-position: center center;
+     -fx-background-repeat: no-repeat;
+ }
+
+
+

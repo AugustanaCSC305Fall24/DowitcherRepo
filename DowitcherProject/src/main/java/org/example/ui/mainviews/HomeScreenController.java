@@ -16,6 +16,7 @@ import java.io.IOException;
 public class HomeScreenController {
 
     @FXML private StackPane stackPane; // Bind to the StackPane in FXML
+
     @FXML private ImageView backgroundImageView; // Bind this to the ImageView in the FXML
     @FXML private Button learnCWButton; // Button to load the CW learning popup
     @FXML private Button settingsButton; // Button to open settings popup
@@ -26,6 +27,7 @@ public class HomeScreenController {
     private Popup practiceModesPopup; // Popup for practice modes
 
     @FXML private HBox bottomHBox;
+    @FXML private HBox topHBox;
 
     /**
      * Handle Learn CW button click: Toggles the practice modes popup.
@@ -66,20 +68,14 @@ public class HomeScreenController {
     private void initialize() {
         App.currentUser.addView("HomeScreenView");
 
-        // Load and set the background image
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/HomeScreenBackground.png"));
-        backgroundImageView.setImage(backgroundImage);
-
-        // Bind the ImageView's dimensions to the StackPane's dimensions
-        backgroundImageView.fitHeightProperty().bind(stackPane.heightProperty());
-        backgroundImageView.fitWidthProperty().bind(stackPane.widthProperty());
-
+        // Allow the buttons to expand horizontally in the bottom HBox
         HBox.setHgrow(bottomHBox, Priority.ALWAYS);
 
-        // Enable horizontal resizing of buttons
+        // Enable horizontal resizing of buttons to fill available space
         HBox.setHgrow(liveChatButton, Priority.ALWAYS);
         HBox.setHgrow(aiChatButton, Priority.ALWAYS);
         HBox.setHgrow(learnCWButton, Priority.ALWAYS);
         HBox.setHgrow(settingsButton, Priority.ALWAYS);
     }
+
 }

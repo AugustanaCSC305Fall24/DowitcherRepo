@@ -2,39 +2,35 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.mainviews.HomeScreenController">
+<?import javafx.scene.image.ImageView?>
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ui.mainviews.HomeScreenController">
    <stylesheets>
       <URL value="@../styles/HomeScreenStyles.css" />
    </stylesheets>
 
-   <center>
-      <StackPane fx:id="stackPane">
-         <!-- Background Image -->
-         <ImageView fx:id="backgroundImageView" preserveRatio="false" />
+   <!-- Top HBox with background image -->
+   <HBox fx:id="topHBox" alignment="CENTER" spacing="0" styleClass="default-background">
+      <!-- The ImageView inside the HBox, with its own CSS class for background image -->
+      <ImageView fx:id="backgroundImageView" styleClass="background-image-view" />
+   </HBox>
 
-         <!-- VBox content on top of the background -->
-         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-            <children>
-               <!-- Empty space between the top and bottom content -->
-               <HBox alignment="TOP_RIGHT" prefHeight="619.0" prefWidth="800.0"></HBox>
 
-               <!-- Bottom HBox styled via CSS -->
-               <HBox fx:id="bottomHBox" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="800.0" spacing="30.0" styleClass="bottom-hbox">
-                  <children>
-                     <Button fx:id="liveChatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleLiveChat" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Live Chat" />
-                     <Button fx:id="aiChatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleAiChat" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="AI Chat" />
-                     <Button fx:id="learnCWButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleLearnCW" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Learn CW" />
-                     <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleSettings" prefHeight="200.0" prefWidth="200.0" styleClass="custom-button" text="Settings" />
-                  </children>
-               </HBox>
-            </children>
-         </VBox>
-      </StackPane>
-   </center>
-</BorderPane>
+   <!-- Spacer to push the bottom box down -->
+   <Region VBox.vgrow="ALWAYS" styleClass="default-background"/>  <!-- This acts as a spacer and fills available space -->
+
+   <!-- Bottom HBox with buttons -->
+   <HBox fx:id="bottomHBox" alignment="BOTTOM_CENTER" spacing="30.0" styleClass="bottom-hbox">
+      <children>
+         <Button fx:id="liveChatButton" onAction="#handleLiveChat" styleClass="custom-button" text="Live Chat" />
+         <Button fx:id="aiChatButton" onAction="#handleAiChat" styleClass="custom-button" text="AI Chat" />
+         <Button fx:id="learnCWButton" onAction="#handleLearnCW" styleClass="custom-button" text="Learn CW" />
+         <Button fx:id="settingsButton" onAction="#handleSettings" styleClass="custom-button" text="Settings" />
+      </children>
+   </HBox>
+</VBox>
+
